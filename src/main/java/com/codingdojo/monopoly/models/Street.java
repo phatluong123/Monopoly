@@ -5,31 +5,34 @@ import org.springframework.stereotype.Component;
 @Component
 public class Street extends Property {
 	private String color;
-	private int cost;
 	private int rent;
 	private int rentColorSet;
+	private int numHouses;
 	private int h1;
 	private int h2;
 	private int h3;
 	private int h4;
 	private int hotel;
-	private int houseCost;
-	private int hotelCost;
+	private int housingCost;
+	private Player ownedBy;
+	private boolean isMortgaged;
 	private int mortgage;
 	private int unmortgage;
 
-	public Street(String name, int purchaseValue, String color, int rent, int rentColorSet, int h1, int h2, int h3, int h4, int hotel, int houseCost, int hotelCost) {
+	public Street(String name, int purchaseValue, String color, int rent, int numHouses, int h1, int h2, int h3, int h4, int hotel, int housingCost, boolean isMortgaged, Player ownedBy) {
 		super(name, purchaseValue);
 		this.color = color;
 		this.rent = rent;
-		this.rentColorSet = rentColorSet;
+		this.rentColorSet = rent * 2;
+		this.numHouses = numHouses;
 		this.h1 = h1;
 		this.h2 = h2;
 		this.h3 = h3;
 		this.h4 = h4;
 		this.hotel = hotel;
-		this.houseCost = houseCost;
-		this.hotelCost = hotelCost;
+		this.ownedBy = null;
+		this.isMortgaged = false;
+		this.housingCost = housingCost;
 		this.mortgage = this.getPurchaseValue() / 2;
 		this.unmortgage = mortgage + (mortgage / 10);
 	}
@@ -40,14 +43,6 @@ public class Street extends Property {
 
 	public void setColor(String color) {
 		this.color = color;
-	}
-
-	public int getCost() {
-		return cost;
-	}
-
-	public void setCost(int cost) {
-		this.cost = cost;
 	}
 
 	public int getRent() {
@@ -64,6 +59,15 @@ public class Street extends Property {
 
 	public void setRentColorSet(int rentColorSet) {
 		this.rentColorSet = rentColorSet;
+	}
+	
+
+	public int getNumHouses() {
+		return numHouses;
+	}
+
+	public void setNumHouses(int numHouses) {
+		this.numHouses = numHouses;
 	}
 
 	public int getH1() {
@@ -106,20 +110,28 @@ public class Street extends Property {
 		this.hotel = hotel;
 	}
 
-	public int getHouseCost() {
-		return houseCost;
+	public int getHousingCost() {
+		return housingCost;
 	}
 
-	public void setHouseCost(int houseCost) {
-		this.houseCost = houseCost;
+	public void setHousingCost(int housingCost) {
+		this.housingCost = housingCost;
 	}
 
-	public int getHotelCost() {
-		return hotelCost;
+	public Player getOwnedBy() {
+		return ownedBy;
 	}
 
-	public void setHotelCost(int hotelCost) {
-		this.hotelCost = hotelCost;
+	public void setOwnedBy(Player ownedBy) {
+		this.ownedBy = ownedBy;
+	}
+
+	public boolean isMortgaged() {
+		return isMortgaged;
+	}
+
+	public void setMortgaged(boolean isMortgaged) {
+		this.isMortgaged = isMortgaged;
 	}
 
 	public int getMortgage() {
@@ -137,6 +149,4 @@ public class Street extends Property {
 	public void setUnmortgage(int unmortgage) {
 		this.unmortgage = unmortgage;
 	}
-	
-	
 }
