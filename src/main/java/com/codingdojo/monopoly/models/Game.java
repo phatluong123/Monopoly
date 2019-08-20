@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class Game {
 	Space[] board = new Space[] {
 			new OtherSpace("Go"),
-			new Street("Mediterranean Avenue", 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+			new Street("Mediterranean Avenue", 60, "brown", 2, 4, 10, 30, 90, 160, 250, 50),
 			new ActionSpace("Community Chest", "chest"),
 			new Street("Baltic Avenue"),
 			new TaxSpace("Income Tax", 200),

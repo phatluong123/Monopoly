@@ -19,7 +19,7 @@ public class Street extends Property {
 	private int mortgage;
 	private int unmortgage;
 
-	public Street(String name, int purchaseValue, String color, int rent, int numHouses, int h1, int h2, int h3, int h4, int hotel, int housingCost, boolean isMortgaged, Player ownedBy) {
+	public Street(String name, int purchaseValue, String color, int rent, int numHouses, int h1, int h2, int h3, int h4, int hotel, int housingCost) {
 		super(name, purchaseValue);
 		this.color = color;
 		this.rent = rent;
