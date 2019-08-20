@@ -14,8 +14,6 @@ public class Street extends Property {
 	private int h4;
 	private int hotel;
 	private int housingCost;
-	private int mortgage;
-	private int unmortgage;
 
 	public Street(String name, int purchaseValue, String color, int rent, int numHouses, int h1, int h2, int h3, int h4, int hotel, int housingCost) {
 		super(name, purchaseValue);
@@ -29,8 +27,6 @@ public class Street extends Property {
 		this.h4 = h4;
 		this.hotel = hotel;
 		this.housingCost = housingCost;
-		this.mortgage = this.getPurchaseValue() / 2;
-		this.unmortgage = mortgage + (mortgage / 10);
 	}
 
 	public String getColor() {
@@ -73,14 +69,6 @@ public class Street extends Property {
 		return housingCost;
 	}
 
-	public int getMortgage() {
-		return mortgage;
-	}
-
-	public int getUnmortgage() {
-		return unmortgage;
-	}
-
 	public void setColor(String color) {
 		this.color = color;
 	}
@@ -119,14 +107,6 @@ public class Street extends Property {
 
 	public void setHousingCost(int housingCost) {
 		this.housingCost = housingCost;
-	}
-
-	public void setMortgage(int mortgage) {
-		this.mortgage = mortgage;
-	}
-
-	public void setUnmortgage(int unmortgage) {
-		this.unmortgage = unmortgage;
 	}
 	
 }

@@ -7,10 +7,14 @@ public abstract class Property extends Space {
 	private int purchaseValue;
 	private Player ownedBy = null;
 	private boolean isMortgaged = false;
+	private int mortgage;
+	private int unmortgage;
 
 	public Property(String name, int purchaseValue) {
 		super(name);
 		this.purchaseValue = purchaseValue;
+		this.mortgage = this.getPurchaseValue() / 2;
+		this.unmortgage = mortgage + (mortgage / 10);
 	}
 
 	public int getPurchaseValue() {
@@ -25,6 +29,14 @@ public abstract class Property extends Space {
 		return isMortgaged;
 	}
 
+	public int getMortgage() {
+		return mortgage;
+	}
+
+	public int getUnmortgage() {
+		return unmortgage;
+	}
+
 	public void setPurchaseValue(int purchaseValue) {
 		this.purchaseValue = purchaseValue;
 	}
@@ -35,5 +47,13 @@ public abstract class Property extends Space {
 
 	public void setMortgaged(boolean isMortgaged) {
 		this.isMortgaged = isMortgaged;
+	}
+
+	public void setMortgage(int mortgage) {
+		this.mortgage = mortgage;
+	}
+
+	public void setUnmortgage(int unmortgage) {
+		this.unmortgage = unmortgage;
 	}
 }
