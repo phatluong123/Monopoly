@@ -16,8 +16,6 @@ public class Player {
 	// if they have a "Get out Jail card"
 	private boolean ownJailCard;
 	
-	
-	
 	public Player(String name) {
 		this.name = name;
 		//Default money a player have when start a game;

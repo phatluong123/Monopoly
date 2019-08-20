@@ -1,5 +1,8 @@
 package com.codingdojo.monopoly.models;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -48,6 +51,29 @@ public class Game {
 	};
 	private 
 	public Game() {
+		Scanner userInput = new Scanner(System.in);
+		System.out.println("Enter how many players:");
+		int totalPlayers = Integer.parseInt(userInput.nextLine());
+		boolean moveOn = false;
+		while(moveOn == false) {
+			if(totalPlayers < 2 || totalPlayers > 4) {
+				System.out.println("You must enter a number between 2-4");
+				totalPlayers = Integer.parseInt(userInput.nextLine());
+			}
+			else {
+				moveOn = true;
+			}
+		}
+		
+		ArrayList<Player> playerList = new ArrayList<Player>();
+		
+		for(int i = 0; i < totalPlayers; i++) {
+			System.out.println("Enter name for player " + i + ":");
+			String newName = userInput.nextLine();
+			Player player = new Player(newName);
+			playerList.add(player);
+		}
+		
 		
 	}
 	
