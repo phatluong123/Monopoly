@@ -16,7 +16,7 @@ public class Street extends Property {
 	private int housingCost;
 
 	public Street(String name, int purchaseValue, String color, int rent, int numHouses, int h1, int h2, int h3, int h4, int hotel, int housingCost) {
-		super(name, purchaseValue);
+		super(name, purchaseValue, color);
 		this.color = color;
 		this.rent = rent;
 		this.rentColorSet = rent * 2;

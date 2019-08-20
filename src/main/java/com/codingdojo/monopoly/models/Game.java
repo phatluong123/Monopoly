@@ -1,7 +1,10 @@
 package com.codingdojo.monopoly.models;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Scanner;
+=======
+>>>>>>> branch 'master' of https://github.com/phatluong123/Monopoly.git
 
 import org.springframework.stereotype.Component;
 
@@ -49,6 +52,7 @@ public class Game {
 			new TaxSpace("Luxury Tax", 100),
 			new Street("Boardwalk", 400, "blue", 50, 100, 200, 600, 1400, 1700, 2000, 200)
 	};
+<<<<<<< HEAD
 	private 
 	public Game() {
 		Scanner userInput = new Scanner(System.in);
@@ -75,9 +79,18 @@ public class Game {
 		}
 		
 		
+=======
+	private ArrayList<Player> players;
+	public Game(ArrayList<Player> players) {
+		this.players = players;
+>>>>>>> branch 'master' of https://github.com/phatluong123/Monopoly.git
 	}
 	
 	public Space[] getBoard() {
 		return this.board;
+	}
+	
+	public ArrayList<Player> getPlayers() {
+		return players;
 	}
 }
