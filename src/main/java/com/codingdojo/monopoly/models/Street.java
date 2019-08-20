@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Street extends Property {
-	private String streetName;
 	private String color;
 	private int cost;
 	private int rent;
@@ -18,11 +17,10 @@ public class Street extends Property {
 	private int hotelCost;
 	private int mortgage;
 	private int unmortgage;
-	
-	public Street(String streetName, String color, int cost, int rent, int rentColorSet, int h1, int h2, int h3, int h4, int hotel, int houseCost, int hotelCost) {
-		this.streetName = streetName;
+
+	public Street(String name, int purchaseValue, String color, int rent, int rentColorSet, int h1, int h2, int h3, int h4, int hotel, int houseCost, int hotelCost) {
+		super(name, purchaseValue);
 		this.color = color;
-		this.cost = cost;
 		this.rent = rent;
 		this.rentColorSet = rentColorSet;
 		this.h1 = h1;
@@ -32,16 +30,8 @@ public class Street extends Property {
 		this.hotel = hotel;
 		this.houseCost = houseCost;
 		this.hotelCost = hotelCost;
-		this.mortgage = cost / 2;
+		this.mortgage = this.getPurchaseValue() / 2;
 		this.unmortgage = mortgage + (mortgage / 10);
-	}
-
-	public String getStreetName() {
-		return streetName;
-	}
-
-	public void setStreetName(String streetName) {
-		this.streetName = streetName;
 	}
 
 	public String getColor() {

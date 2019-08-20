@@ -4,6 +4,30 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Game {
-	Object[] board = new Object[40];
-	
+	Space[] board = new Space[] {
+			new OtherSpace("Go"),
+			new Street("Mediterranean Avenue", 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+			new ActionSpace("Community Chest", "chest"),
+			new Street("Baltic Avenue"),
+			new TaxSpace("Income Tax", 200),
+			new Railroad("Reading Railroad"),
+			new Street("Oriental Avenue"),
+			new ActionSpace("Chance", "chance"),
+			new Street("Vermont Avenue"),
+			new Street("Connecticut Avenue"),
+			new OtherSpace("Jail"),
+			new Street("St. Charles Place"),
+			new Utility("Electric Company"),
+			new Street("States Avenue"),
+			new Street("Virginia Avenue"),
+			new Railroad("Pennsylvania Railroad"),
+			new Street("St. James Place"),
+			new ActionSpace("Community Chest", "chest"),
+			new Street("Tennessee Avenue"),
+			new Street("New York Avenue"),
+			new OtherSpace("Free Parking"),
+			new Street("Kentucky Avenue"),
+			new ActionSpace("Chance", "chance"),
+			new Street("Indiana Avenue")
+	};
 }
