@@ -1,5 +1,7 @@
 package com.codingdojo.monopoly.models;
 
+import java.util.ArrayList;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -46,12 +48,16 @@ public class Game {
 			new TaxSpace("Luxury Tax", 100),
 			new Street("Boardwalk", 400, "blue", 50, 100, 200, 600, 1400, 1700, 2000, 200)
 	};
-	private 
-	public Game() {
-		
+	private ArrayList<Player> players;
+	public Game(ArrayList<Player> players) {
+		this.players = players;
 	}
 	
 	public Space[] getBoard() {
 		return this.board;
+	}
+	
+	public ArrayList<Player> getPlayers() {
+		return players;
 	}
 }

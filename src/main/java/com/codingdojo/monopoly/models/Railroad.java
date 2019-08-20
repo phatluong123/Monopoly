@@ -7,7 +7,7 @@ public class Railroad extends Property {
 	private int rent;
 	
 	public Railroad(String name) {
-		super(name, 200);
+		super(name, 200, "railroad");
 		this.rent = 25;
 	}
 

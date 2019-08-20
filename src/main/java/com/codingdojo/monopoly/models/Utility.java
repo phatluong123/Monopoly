@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 public class Utility extends Property {
 	
 	public Utility(String name) {
-		super(name, 150);
+		super(name, 150, "utility");
 	}
 }

@@ -5,20 +5,26 @@ import org.springframework.stereotype.Component;
 @Component
 public abstract class Property extends Space {
 	private int purchaseValue;
+	private String set;
 	private Player ownedBy = null;
 	private boolean isMortgaged = false;
 	private int mortgage;
 	private int unmortgage;
 
-	public Property(String name, int purchaseValue) {
+	public Property(String name, int purchaseValue, String set) {
 		super(name);
 		this.purchaseValue = purchaseValue;
+		this.set = set;
 		this.mortgage = this.getPurchaseValue() / 2;
 		this.unmortgage = mortgage + (mortgage / 10);
 	}
 
 	public int getPurchaseValue() {
 		return purchaseValue;
+	}
+	
+	public String getSet() {
+		return set;
 	}
 
 	public Player getOwnedBy() {
@@ -39,6 +45,10 @@ public abstract class Property extends Space {
 
 	public void setPurchaseValue(int purchaseValue) {
 		this.purchaseValue = purchaseValue;
+	}
+	
+	public void setSet(String set) {
+		this.set = set;
 	}
 
 	public void setOwnedBy(Player ownedBy) {
