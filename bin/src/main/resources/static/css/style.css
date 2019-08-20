@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+	line-height: 0px;
+}
+
+body {
+	margin-left: 50px;
+	margin-top: 20px;
+}
+
+.board {
+	width: 856px;
+	height: 856px;
+	background-image: url("../images/board.jpg");
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-color: green;
+	display: inline-block;
+}
+
+.row {
+	margin: 0;
+	padding: 0;
+	height: 113px;
+	vertical-align: top;
+}
+
+.street {
+	width: 70px;
+	display: inline-block;
+	border: 1px solid red;
+	vertical-align: top;
+}
+
+.corner {
+	width: 113px;
+	border: 1px solid red;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.horizontal-street {
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+}
+
+.street-body {
+	vertical-align: top;
+	width: 113px;
+	border: 1px solid green;
+	height: 70px;
+	vertical-align: top;
+}
+
+.empty-space {
+	width: 621px;
+	height: 630px;
+	border: 1px solid blue;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.player1 img {
+	width: 30%;
+
+}
+
+.player1 {
+	position: relative;
+	top: 70px;
+	left: 70px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
