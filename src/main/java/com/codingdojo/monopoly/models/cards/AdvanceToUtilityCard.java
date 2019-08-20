@@ -14,4 +14,3 @@ public class AdvanceToUtilityCard extends ChanceCard {
 		
 	}
 }
-//test
