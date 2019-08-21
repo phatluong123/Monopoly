@@ -78,6 +78,8 @@ public class Game {
 			Player player = new Player(newName);
 			playerList.add(player);
 		}
+		
+		userInput.close();
 	}
 	public Game(List<Player> players) {
 		Game.players = (ArrayList<Player>)players;
