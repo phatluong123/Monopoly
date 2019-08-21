@@ -9,5 +9,9 @@ public class CommunityChestCard extends ActionCard {
 	public void action(Player player) {
 		
 	}
+	
+	
+	
+	
 }
 //test
