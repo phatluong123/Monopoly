@@ -1,10 +1,13 @@
 package com.codingdojo.monopoly.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
+
 import org.springframework.stereotype.Component;
+
 import com.codingdojo.monopoly.models.cards.ActionCard;
 import com.codingdojo.monopoly.models.cards.AdvanceToBoardwalk;
 import com.codingdojo.monopoly.models.cards.AdvanceToGo;
@@ -17,6 +20,8 @@ import com.codingdojo.monopoly.models.cards.AssessedForStreetRepair;
 import com.codingdojo.monopoly.models.cards.BankError;
 import com.codingdojo.monopoly.models.cards.BankPaysYou;
 import com.codingdojo.monopoly.models.cards.BuildingLoanMatures;
+import com.codingdojo.monopoly.models.cards.ChanceCard;
+import com.codingdojo.monopoly.models.cards.CommunityChestCard;
 import com.codingdojo.monopoly.models.cards.ConsultancyFee;
 import com.codingdojo.monopoly.models.cards.DoctorFee;
 import com.codingdojo.monopoly.models.cards.GetOutJailFreeCommunity;
@@ -99,66 +104,38 @@ public class Game {
 
 	// Create Community Deck Card
 	
-	private final HospitalFee hospitalFee = new HospitalFee("Paying Hospital Fees Pay $100");
-	private final HolidayFundMatures hodidayFundMatures = new HolidayFundMatures("Holiday Fund Matures Receive $100");
-	private final DoctorFee doctorFee = new DoctorFee("Doctor 'S Fees Pay $50");
-	private final BankError bankError = new BankError("Bank error in your favor. Collect $200.");
-	private final ConsultancyFee consultancyFee = new ConsultancyFee("Receive $25 consultancy fee");
-	private final SchoolFee schoolFee =new SchoolFee("School fees. Pay $50");
-	private final GoToJail goToJail= new  GoToJail("Go To Jail");
-	private final GetOutJailFreeCommunity getOutJailFreeCommunity = new GetOutJailFreeCommunity("Get Out of Jail Free");
-	private final AssessedForStreetRepair assessedForStreetRepair = new AssessedForStreetRepair("You are assessed for street repairs: Pay $40 per house and $115 per hotel you own.");
-	private final ItIsYourBirthday isYourBirthday = new ItIsYourBirthday("It is your birthday. Collect $10 from every players");
-	private final InsuranceMatures insuranceMatures = new InsuranceMatures("Life insurance matures – Collect $100");
-	private final WonBeautyContest wonBeautyContest = new WonBeautyContest("You have won second prize in a beauty contest. Collect $10.");
-	private final SaleStock saleStock = new  SaleStock("From sale of stock you get $50.");
-	private final AdvanceToGo advanceToGo = new AdvanceToGo("Advance to \"Go\". (Collect $200) ");
-	private final TaxRefund taxRefund = new TaxRefund("Income tax refund. Collect $20. ") ;
-	private final Inherit inherit = new Inherit("You inherit $100.");
-	
-	private ArrayList<ActionCard> CommunityCards = new ArrayList<ActionCard>() {{
-		CommunityCards.add(hospitalFee);
-		CommunityCards.add(doctorFee);
-		CommunityCards.add(hodidayFundMatures);
-		CommunityCards.add(bankError);
-		CommunityCards.add(consultancyFee);
-		CommunityCards.add(schoolFee);
-		CommunityCards.add(goToJail);
-		CommunityCards.add(getOutJailFreeCommunity);
-		CommunityCards.add(assessedForStreetRepair);
-		CommunityCards.add(isYourBirthday);
-		CommunityCards.add(insuranceMatures);
-		CommunityCards.add(wonBeautyContest);
-		CommunityCards.add(saleStock);
-		CommunityCards.add(advanceToGo);
-		CommunityCards.add(taxRefund);
-		CommunityCards.add(inherit);
+	private static ArrayList<CommunityChestCard> communityDeck = new ArrayList<CommunityChestCard>() {{
+		communityDeck.add(new HospitalFee("Paying Hospital Fees Pay $100"));
+		communityDeck.add(new DoctorFee("Doctor's Fees Pay $50"));
+		communityDeck.add(new HolidayFundMatures("Holiday Fund Matures Receive $100"));
+		communityDeck.add(new BankError("Bank error in your favor. Collect $200."));
+		communityDeck.add(new ConsultancyFee("Receive $25 consultancy fee"));
+		communityDeck.add(new SchoolFee("School fees. Pay $50"));
+		communityDeck.add(new GoToJail("Go To Jail"));
+		communityDeck.add(new GetOutJailFreeCommunity("Get Out of Jail Free"));
+		communityDeck.add(new AssessedForStreetRepair("You are assessed for street repairs: Pay $40 per house and $115 per hotel you own."));
+		communityDeck.add(new ItIsYourBirthday("It is your birthday. Collect $10 from every players"));
+		communityDeck.add(new InsuranceMatures("Life insurance matures – Collect $100"));
+		communityDeck.add(new WonBeautyContest("You have won second prize in a beauty contest. Collect $10."));
+		communityDeck.add(new SaleStock("From sale of stock you get $50."));
+		communityDeck.add(new AdvanceToGo("Advance to \"Go\". (Collect $200) "));
+		communityDeck.add(new TaxRefund("Income tax refund. Collect $20. "));
+		communityDeck.add(new Inherit("You inherit $100."));
 	}};
 
 
 	// Create Chance Deck Card
-	private final GoBack3Spaces goBack3Spaces = new GoBack3Spaces("Go Back Three Spaces.");
-	private final AdvanceToReadingRailroad advanceToReadingRailroad = new AdvanceToReadingRailroad("Advance token to the nearest Railroad and pay owner twice the rental to which he/she {he} is otherwise entitled. If Railroad is unowned, you may buy it from the Bank.");
-	private final AdvanceToBoardwalk advanceToBoardwalk = new AdvanceToBoardwalk("Advance To BoardWalk");
-	private final AdvanceToGoChance advanceToGoChance= new AdvanceToGoChance("Advance to go Collect $200");
-	private final AdvanceToIllinoisAve advanceToIllinoisAve = new AdvanceToIllinoisAve("Advance to Illinois Ave. {Avenue}. If you pass Go, collect $200. ");
-	private final BuildingLoanMatures buildingLoanMatures= new BuildingLoanMatures("Your Building Loan Matures Collect $150");
-	private final AdvanceToRailroad advanceToRailroad = new AdvanceToRailroad("Advance token to the nearest Railroad and pay owner twice the rental to which he/she {he} is otherwise entitled. If Railroad is unowned, you may buy it from the Bank. ");
-	private final AdvanceToRailroad advanceToRailroad2 = new AdvanceToRailroad("Advance token to the nearest Railroad and pay owner twice the rental to which he/she {he} is otherwise entitled. If Railroad is unowned, you may buy it from the Bank. ");
-	private final BankPaysYou bankPaysYou = new BankPaysYou("Bank pays you dividend of $50. ");
-	private final AdvanceToUtilityCard  advanceToUtilityCard = new AdvanceToUtilityCard("Advance token to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total 10 times the amount thrown. ");
-	
-	private ArrayList<ActionCard> ChanceCards = new ArrayList<ActionCard>() {{
-		add(goBack3Spaces);
-		add(advanceToReadingRailroad);
-		add(advanceToBoardwalk);
-		add(advanceToGoChance);
-		add(advanceToIllinoisAve);
-		add(buildingLoanMatures);
-		add(advanceToRailroad);
-		add(advanceToRailroad2);
-		add(bankPaysYou);
-		add(advanceToUtilityCard);
+	private static ArrayList<ChanceCard> chanceDeck = new ArrayList<ChanceCard>() {{
+		add(new GoBack3Spaces("Go Back Three Spaces."));
+		add(new AdvanceToReadingRailroad("Advance token to the nearest Railroad and pay owner twice the rental to which he/she {he} is otherwise entitled. If Railroad is unowned, you may buy it from the Bank."));
+		add(new AdvanceToBoardwalk("Advance To BoardWalk"));
+		add(new AdvanceToGoChance("Advance to go Collect $200"));
+		add(new AdvanceToIllinoisAve("Advance to Illinois Ave. {Avenue}. If you pass Go, collect $200. "));
+		add(new BuildingLoanMatures("Your Building Loan Matures Collect $150"));
+		add(new AdvanceToRailroad("Advance token to the nearest Railroad and pay owner twice the rental to which he/she {he} is otherwise entitled. If Railroad is unowned, you may buy it from the Bank. "));
+		add(new AdvanceToRailroad("Advance token to the nearest Railroad and pay owner twice the rental to which he/she {he} is otherwise entitled. If Railroad is unowned, you may buy it from the Bank. "));
+		add(new BankPaysYou("Bank pays you dividend of $50."));
+		add(new AdvanceToUtilityCard("Advance token to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total 10 times the amount thrown. "));
 		
 	}};
 
@@ -266,6 +243,32 @@ public class Game {
 		return Game.players.get(Game.currentPlayerIndex);
 	}
 	
+	public static ArrayList<CommunityChestCard> getCommunityDeck() {
+		return communityDeck;
+	}
+	
+	public static ArrayList<ChanceCard> getChanceDeck() {
+		return chanceDeck;
+	}
+	
+	public static ActionCard getCard(String deck) {
+		if(deck == "chance") {
+			return chanceDeck.remove(chanceDeck.size()-1);
+		} else if (deck == "chest") {
+			return communityDeck.remove(communityDeck.size()-1);
+		} else {
+			return null;
+		}
+	}
+	
+	public static ChanceCard getChanceCard() {
+		return chanceDeck.remove(chanceDeck.size()-1);
+	}
+	
+	public static CommunityChestCard getCommunityChestCard () {
+		return communityDeck.remove(communityDeck.size()-1);
+	}
+	
 	public static void nextPlayer() {
 		if(Game.currentPlayerIndex == Game.players.size() - 1) {
 			Game.nextTurn();
@@ -302,5 +305,10 @@ public class Game {
 	public static void goBankrupt(Player player) {
 		Game.players.remove(player);
 		Game.bankruptPlayers.add(player);
+	}
+	
+	public static void shuffleDecks() {
+		Collections.shuffle(chanceDeck);
+		Collections.shuffle(communityDeck);
 	}
 }
