@@ -18,6 +18,10 @@ public class Player {
 	private boolean inJail;
 	// if they have a "Get out Jail card"
 	private boolean ownJailCard;
+	//need number of houses metric for a chance card.
+	private int numberOfHouses;
+	//need number of hotels metric for a chance card.
+	private int numberOfHotels;
 	
 	public Player(String name) {
 		this.name = name;
@@ -29,6 +33,8 @@ public class Player {
 		this.setsOwned = new HashMap<>();
 		this.inJail = false;
 		this.ownJailCard = true; 
+		this.numberOfHotels = 0;
+		this.numberOfHouses = 0;
 	}
 	//Method that a player can do
 	public void payOther(int amount) {
@@ -78,6 +84,24 @@ public class Player {
     	return this.getSetsOwned().get(set);
     }
     
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getNumberOfHouses() {
+		return numberOfHouses;
+	}
+	public void setNumberOfHouses(int numberOfHouses) {
+		this.numberOfHouses = numberOfHouses;
+	}
+	public int getNumberOfHotels() {
+		return numberOfHotels;
+	}
+	public void setNumberOfHotels(int numberOfHotels) {
+		this.numberOfHotels = numberOfHotels;
+	}
 	public int getMoney() {
 		return money;
 	}
