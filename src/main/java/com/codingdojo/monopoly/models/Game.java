@@ -1,6 +1,7 @@
 package com.codingdojo.monopoly.models;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ public class Game {
 	// Instantiates a new board (an array of 40 spaces)
 	// Each space is defined, as per a standard Monopoly game.
 	// Index 0 = Go, index 39 = Boardwalk.
-	private Space[] board = new Space[] {
+	private static Space[] board = new Space[] {
 			new OtherSpace("Go"),
 			new Street("Mediterranean Avenue", 60, "brown", 2, 4, 10, 30, 90, 160, 250, 50),
 			new ActionSpace("Community Chest", "chest"),
@@ -52,7 +53,7 @@ public class Game {
 			new TaxSpace("Luxury Tax", 100),
 			new Street("Boardwalk", 400, "blue", 50, 100, 200, 600, 1400, 1700, 2000, 200)
 	};
-	private ArrayList<Player> players;
+	private static ArrayList<Player> players;
 
 	public Game() {
 		Scanner userInput = new Scanner(System.in);
@@ -78,15 +79,23 @@ public class Game {
 			playerList.add(player);
 		}
 	}
-	public Game(ArrayList<Player> players) {
-		this.players = players;
+	public Game(List<Player> players) {
+		Game.players = (ArrayList<Player>)players;
 	}
 	
-	public Space[] getBoard() {
-		return this.board;
+	public static void addPlayer(Player player) {
+		Game.players.add(player);
 	}
 	
-	public ArrayList<Player> getPlayers() {
+	public static void setPlayers(List<Player> players) {
+		Game.players = (ArrayList<Player>) players;
+	}
+	
+	public static Space[] getBoard() {
+		return Game.board;
+	}
+	
+	public static ArrayList<Player> getPlayers() {
 		return players;
 	}
 }

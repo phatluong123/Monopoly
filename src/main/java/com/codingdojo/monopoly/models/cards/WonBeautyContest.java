@@ -4,6 +4,6 @@ import com.codingdojo.monopoly.models.Player;
 
 public class WonBeautyContest extends CommunityChestCard {
 	public void action(Player player) {
-		player.Earn(10);
+		player.earn(10);
 	}
 }
