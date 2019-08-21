@@ -3,7 +3,9 @@ package com.codingdojo.monopoly.models.cards;
 import com.codingdojo.monopoly.models.Player;
 
 public class BuildingLoanMatures extends ChanceCard {
-	private String name = "Your building loan matures";
+	public BuildingLoanMatures(String name) {
+		super(name);
+	}
 	
 	public void action(Player player) {
 		int money = player.getMoney();

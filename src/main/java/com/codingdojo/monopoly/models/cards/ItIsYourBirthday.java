@@ -6,6 +6,10 @@ import com.codingdojo.monopoly.models.Player;
 
 public class ItIsYourBirthday extends CommunityChestCard{
 	
+	public ItIsYourBirthday(String name) {
+		super(name);
+	}
+
 	// Temporary List of players
 	public void action(Player player) {
 		List<Player> allPlayers = Game.getPlayers();
