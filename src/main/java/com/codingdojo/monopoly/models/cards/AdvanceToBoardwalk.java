@@ -6,6 +6,6 @@ public class AdvanceToBoardwalk extends ChanceCard {
 	private String name = "Advance to boardwalk";
 	
 	public void action(Player player) {
-		player.setCurrentLocation(39);
+		player.moveTo(39);
 	}
 }

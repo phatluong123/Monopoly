@@ -6,11 +6,6 @@ public class AdvanceToReadingRailroad extends ChanceCard {
 	private String name = "Advance to Reading Railroad";
 	
 	public void action(Player player) {
-		if(player.getCurrentLocation() > 5) {
-			int money = player.getMoney();
-			money = money + 200;
-			player.setMoney(money);
-		}
-		player.setCurrentLocation(5);
+		player.moveTo(5);
 	}
 }

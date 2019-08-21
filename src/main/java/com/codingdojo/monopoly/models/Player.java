@@ -49,7 +49,12 @@ public class Player {
     	if (getCurrentLocation() + step > 39) 
     		earn(200);
     	setCurrentLocation((getCurrentLocation()+step) % 40);
-    	setCurrentLocation(getCurrentLocation()+step);
+    }
+    
+    public void moveTo(int location) {
+    	if (getCurrentLocation() > location)
+    		earn(200);
+    	setCurrentLocation(location);
     }
 
     public void goToJail() {
