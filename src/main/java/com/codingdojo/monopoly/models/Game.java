@@ -2,7 +2,7 @@ package com.codingdojo.monopoly.models;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import org.springframework.stereotype.Component;
@@ -70,6 +70,7 @@ public class Game {
 	private static Integer turn = 0;
 	private static Integer currentPlayerIndex = 0;
 	private static boolean gameStarted = false;
+	private static int[] lastDiceRoll = { 1, 1 };
 
 	public Game() {
 		Scanner userInput = new Scanner(System.in);
@@ -126,6 +127,10 @@ public class Game {
 		return gameStarted;
 	}
 
+	public static int[] getLastDiceRoll() {
+		return lastDiceRoll;
+	}
+
 	public static void setCurrentPlayerIndex(Integer currentPlayerIndex) {
 		Game.currentPlayerIndex = currentPlayerIndex;
 	}
@@ -144,6 +149,10 @@ public class Game {
 
 	public static void setGameStarted(boolean gameStarted) {
 		Game.gameStarted = gameStarted;
+	}
+
+	public static void setLastDiceRoll(int[] lastDiceRoll) {
+		Game.lastDiceRoll = lastDiceRoll;
 	}
 
 	public static boolean ownsFullSet(Player player, String set) {
@@ -173,6 +182,18 @@ public class Game {
 		} else {
 			Game.currentPlayerIndex++;
 		}
+	}
+	
+	public static int rollDie() {
+		Random r = new Random();
+		return r.nextInt(6) + 1;
+	}
+	
+	public static int[] rollDice() {
+		Random r = new Random();
+		int dice1 = r.nextInt(6) + 1;
+		int dice2 = r.nextInt(6) + 1;
+		return new int[] {dice1, dice2};
 	}
 	
 	public static void nextTurn() {
