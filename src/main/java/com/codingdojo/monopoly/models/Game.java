@@ -76,7 +76,8 @@ public class Game {
 
 	// Create Community Deck Card
 	private ArrayList<ActionCard> CommunityCards = new ArrayList<>();
-
+	
+	
 	private final ActionCard HospitalFee;
 	private final ActionCard HodidayFundMatures;
 	private final ActionCard DoctorFee;

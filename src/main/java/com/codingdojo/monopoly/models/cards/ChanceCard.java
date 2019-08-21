@@ -2,7 +2,11 @@ package com.codingdojo.monopoly.models.cards;
 
 import com.codingdojo.monopoly.models.Player;
 
-public class ChanceCard {
+public class ChanceCard extends ActionCard {
+	public ChanceCard(String name) {
+		super(name);
+	}
+
 	public void action() {
 		
 	}
