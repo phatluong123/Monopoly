@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 import org.springframework.stereotype.Component;
 
+import com.codingdojo.monopoly.models.cards.ActionCard;
+
 @Component
 public class Game {
 	private static final HashMap<String, Integer> sets = new HashMap<String, Integer>() {
@@ -72,6 +74,75 @@ public class Game {
 	private static boolean gameStarted = false;
 	private static int[] lastDiceRoll = { 1, 1 };
 
+	// Create Community Deck Card
+	private ArrayList<ActionCard> CommunityCards = new ArrayList<>();
+
+	private final ActionCard HospitalFee;
+	private final ActionCard HodidayFundMatures;
+	private final ActionCard DoctorFee;
+	private final ActionCard BankError;
+	private final ActionCard ConsultancyFee;
+	private final ActionCard SchoolFee;
+	private final ActionCard GoToJail;
+	private final ActionCard GetOutJailFreeCommunity;
+	private final ActionCard AssessedForStreetRepair;
+	private final ActionCard IsYourBirthday;
+	private final ActionCard InsuranceMatures;
+	private final ActionCard WonBeautyContest;
+	private final ActionCard SaleStock;
+	private final ActionCard AdvanceToGo;
+	private final ActionCard TaxRefund;
+	private final ActionCard Inherit;
+
+	public void addCommunityCards() {
+		CommunityCards.add(HospitalFee);
+		CommunityCards.add(DoctorFee);
+		CommunityCards.add(HodidayFundMatures);
+		CommunityCards.add(BankError);
+		CommunityCards.add(ConsultancyFee);
+		CommunityCards.add(SchoolFee);
+		CommunityCards.add(GoToJail);
+		CommunityCards.add(GetOutJailFreeCommunity);
+		CommunityCards.add(AssessedForStreetRepair);
+		CommunityCards.add(IsYourBirthday);
+		CommunityCards.add(InsuranceMatures);
+		CommunityCards.add(WonBeautyContest);
+		CommunityCards.add(SaleStock);
+		CommunityCards.add(AdvanceToGo);
+		CommunityCards.add(TaxRefund);
+		CommunityCards.add(Inherit);
+	}
+
+	// Create Chance Deck Card
+	private ArrayList<ActionCard> ChanceCards = new ArrayList<>();
+
+	private final ActionCard GoBack3Spaces;
+	private final ActionCard AdvanceToReadingRailroad;
+	private final ActionCard AdvanceToBoardwalk;
+	private final ActionCard AdvanceToGoChance;
+	private final ActionCard AdvanceToIllinoisAve;
+	private final ActionCard BuildingLoanMatures;
+	private final ActionCard AdvanceToRailroad;
+	private final ActionCard AdvanceToRailroad2;
+	private final ActionCard BankPaysYou;
+	private final ActionCard AdvanceToUtilityCard;
+
+	public void addChanceCards() {
+		ChanceCards.add(GoBack3Spaces);
+		ChanceCards.add(AdvanceToReadingRailroad);
+		ChanceCards.add(AdvanceToBoardwalk);
+		ChanceCards.add(AdvanceToGoChance);
+		ChanceCards.add(AdvanceToIllinoisAve);
+		ChanceCards.add(BuildingLoanMatures);
+		ChanceCards.add(AdvanceToRailroad);
+		ChanceCards.add(AdvanceToRailroad2);
+		ChanceCards.add(BankPaysYou);
+		ChanceCards.add(AdvanceToUtilityCard);
+
+	}
+
+	
+	
 	public Game() {
 		Scanner userInput = new Scanner(System.in);
 		System.out.println("Enter how many players:");
