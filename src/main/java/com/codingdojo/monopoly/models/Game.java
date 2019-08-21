@@ -1,15 +1,15 @@
 package com.codingdojo.monopoly.models;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.Scanner;
-=======
->>>>>>> branch 'master' of https://github.com/phatluong123/Monopoly.git
 
 import org.springframework.stereotype.Component;
 
 @Component
 public class Game {
+	// Instantiates a new board (an array of 40 spaces)
+	// Each space is defined, as per a standard Monopoly game.
+	// Index 0 = Go, index 39 = Boardwalk.
 	private Space[] board = new Space[] {
 			new OtherSpace("Go"),
 			new Street("Mediterranean Avenue", 60, "brown", 2, 4, 10, 30, 90, 160, 250, 50),
@@ -52,8 +52,8 @@ public class Game {
 			new TaxSpace("Luxury Tax", 100),
 			new Street("Boardwalk", 400, "blue", 50, 100, 200, 600, 1400, 1700, 2000, 200)
 	};
-<<<<<<< HEAD
-	private 
+	private ArrayList<Player> players;
+
 	public Game() {
 		Scanner userInput = new Scanner(System.in);
 		System.out.println("Enter how many players:");
@@ -77,13 +77,9 @@ public class Game {
 			Player player = new Player(newName);
 			playerList.add(player);
 		}
-		
-		
-=======
-	private ArrayList<Player> players;
+	}
 	public Game(ArrayList<Player> players) {
 		this.players = players;
->>>>>>> branch 'master' of https://github.com/phatluong123/Monopoly.git
 	}
 	
 	public Space[] getBoard() {
