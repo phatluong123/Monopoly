@@ -1,6 +1,7 @@
 package com.codingdojo.monopoly.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -8,10 +9,21 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Game {
-	// Instantiates a new board (an array of 40 spaces)
-	// Each space is defined, as per a standard Monopoly game.
-	// Index 0 = Go, index 39 = Boardwalk.
-	private static Space[] board = new Space[] {
+	private static final HashMap<String, Integer> sets = new HashMap<String, Integer>() {
+		{
+			put("railroad", 4);
+			put("utility", 2);
+			put("brown", 2);
+			put("sky", 3);
+			put("purple", 3);
+			put("orange", 3);
+			put("red", 3);
+			put("yellow", 3);
+			put("green", 3);
+			put("blue", 2);
+		}
+	};
+	private static final Space[] board = new Space[] {
 			new OtherSpace("Go"),
 			new Street("Mediterranean Avenue", 60, "brown", 2, 4, 10, 30, 90, 160, 250, 50),
 			new ActionSpace("Community Chest", "chest"),
@@ -53,7 +65,11 @@ public class Game {
 			new TaxSpace("Luxury Tax", 100),
 			new Street("Boardwalk", 400, "blue", 50, 100, 200, 600, 1400, 1700, 2000, 200)
 	};
-	private static ArrayList<Player> players;
+	private static ArrayList<Player> players = new ArrayList<>();
+	private static ArrayList<Player> bankruptPlayers = new ArrayList<>();
+	private static Integer turn = 0;
+	private static Integer currentPlayerIndex = 0;
+	private static boolean gameStarted = false;
 
 	public Game() {
 		Scanner userInput = new Scanner(System.in);
@@ -81,23 +97,98 @@ public class Game {
 		
 		userInput.close();
 	}
-	public Game(List<Player> players) {
-		Game.players = (ArrayList<Player>)players;
+
+	public static HashMap<String, Integer> getSets() {
+		return sets;
+	}
+
+	public static Space[] getBoard() {
+		return board;
+	}
+
+	public static ArrayList<Player> getPlayers() {
+		return players;
+	}
+
+	public static Integer getTurn() {
+		return turn;
+	}
+
+	public static Integer getCurrentPlayerIndex() {
+		return currentPlayerIndex;
+	}
+
+	public static ArrayList<Player> getBankruptPlayers() {
+		return bankruptPlayers;
+	}
+
+	public static boolean isGameStarted() {
+		return gameStarted;
+	}
+
+	public static void setCurrentPlayerIndex(Integer currentPlayerIndex) {
+		Game.currentPlayerIndex = currentPlayerIndex;
+	}
+
+	public static void setPlayers(ArrayList<Player> players) {
+		Game.players = players;
+	}
+
+	public static void setTurn(Integer turn) {
+		Game.turn = turn;
+	}
+	
+	public static void setBankruptPlayers(ArrayList<Player> bankruptPlayers) {
+		Game.bankruptPlayers = bankruptPlayers;
+	}
+
+	public static void setGameStarted(boolean gameStarted) {
+		Game.gameStarted = gameStarted;
+	}
+
+	public static boolean ownsFullSet(Player player, String set) {
+		return player.getSetsOwned().get(set) == sets.get(set);
 	}
 	
 	public static void addPlayer(Player player) {
 		Game.players.add(player);
 	}
 	
-	public static void setPlayers(List<Player> players) {
-		Game.players = (ArrayList<Player>) players;
+	public static void addPlayer(String name) {
+		Game.players.add(new Player(name));
 	}
 	
-	public static Space[] getBoard() {
-		return Game.board;
+	public static void addPlayer() {
+		Game.players.add(new Player("Player ".concat(Integer.toString(Game.players.size() + 1))));
 	}
 	
-	public static ArrayList<Player> getPlayers() {
-		return players;
+	public static Player getCurrentPlayer() {
+		return Game.players.get(Game.currentPlayerIndex);
+	}
+	
+	public static void nextPlayer() {
+		if(Game.currentPlayerIndex == Game.players.size() - 1) {
+			Game.nextTurn();
+			Game.currentPlayerIndex = 0;
+		} else {
+			Game.currentPlayerIndex++;
+		}
+	}
+	
+	public static void nextTurn() {
+		Game.turn++;
+	}
+	
+	public static int getTotalMoneyInPlay() {
+		int sum = 0;
+		for(Player p: Game.players) {
+			sum += p.getMoney();
+		}
+		return sum;
+	}
+	
+	public static void goBankrupt(Player player) {
+		Game.players.remove(player);
+		Game.bankruptPlayers.add(player);
 	}
 }
