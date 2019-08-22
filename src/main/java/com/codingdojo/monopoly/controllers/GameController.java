@@ -36,7 +36,7 @@ public class GameController {
 	@RequestMapping("/game")
 	public String game(HttpSession session, Model model) {
 		while(Game.isGameStarted() == true) {
-			//For loop just to simulate turns, remove when we're done
+			//For loop just to simulate turns, remove when we're don
 			for(int i = 0; i < 6; i ++) {
 				
 				//Only get nextPlayer if double roll wasn't rolled

@@ -199,7 +199,7 @@ public class Game {
 		
 	}
 	
-	//Method to check if game is over
+	//Method to check if game is ove
 	public static boolean isGameOver(ArrayList<Player> players) {
 		if(players.size() == 1) {
 			return false;
