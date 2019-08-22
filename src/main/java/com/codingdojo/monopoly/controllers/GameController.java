@@ -43,10 +43,10 @@ public class GameController {
 				if(Player.getDoubleRolls() == 0) {
 					Game.nextPlayer();
 				}
-				Player currentPlayer = Game.getPlayers().get(Game.getCurrentPlayerIndex());
+				Player currentPlayer = Game.getCurrentPlayer();
 				
 				//Moves current player to next spot
-				currentPlayer.movePlayer(currentPlayer);
+				currentPlayer.movePlayer();
 				
 				Game.doStuff(currentPlayer);
 				

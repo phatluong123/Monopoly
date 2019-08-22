@@ -10,6 +10,6 @@ public class GetOutOfJailFreeChance extends ChanceCard {
 
 	
 	public void action(Player player) {
-		player.setOwnJailCard(true);
+		player.setOwnsChanceJailCard(true);
 	}
 }

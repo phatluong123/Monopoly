@@ -304,6 +304,27 @@ public class Game {
 		return communityDeck.remove(communityDeck.size()-1);
 	}
 	
+	public static void putCard(ActionCard card, String deck) {
+		switch(deck) {
+		case "chance":
+			Game.putChanceCard((ChanceCard)card);
+			return;
+		case "chest":
+			Game.putChestCard((CommunityChestCard)card);
+			return;
+		default:
+			return;
+		}
+	}
+	
+	public static void putChanceCard(ChanceCard card) {
+		chanceDeck.add(0, card);
+	}
+
+	public static void putChestCard(CommunityChestCard card) {
+		communityDeck.add(0, card);
+	}
+	
 	public static void nextPlayer() {
 		if(Game.currentPlayerIndex >= Game.players.size() - 1) {
 			Game.nextTurn();

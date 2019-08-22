@@ -3,6 +3,9 @@ package com.codingdojo.monopoly.models;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.codingdojo.monopoly.models.cards.GetOutJailFreeCommunity;
+import com.codingdojo.monopoly.models.cards.GetOutOfJailFreeChance;
+
 //test
 
 public class Player {
@@ -18,7 +21,8 @@ public class Player {
 	//Check if they are in jail
 	private boolean inJail;
 	// if they have a "Get out Jail card"
-	private boolean ownJailCard;
+	private boolean ownsChanceJailCard;
+	private boolean ownsChestJailCard;
 	private boolean isBankrupt;
 	//need number of houses metric for a chance card.
 	private int numberOfHouses;
@@ -34,7 +38,7 @@ public class Player {
 		this.ownedProperties= new ArrayList<String>();
 		this.setsOwned = new HashMap<>();
 		this.inJail = false;
-		this.ownJailCard = true; 
+		this.ownsChanceJailCard = true; 
 		this.numberOfHotels = 0;
 		this.numberOfHouses = 0;
 	}
@@ -53,7 +57,7 @@ public class Player {
     	setCurrentLocation((getCurrentLocation()+step) % 40);
     }
     
-    public void movePlayer(Player p) {
+    public void movePlayer() {
     	int dice1 = Game.rollDie();
     	int dice2 = Game.rollDie();
     	if(dice1 == dice2) {
@@ -63,12 +67,12 @@ public class Player {
     		doubleRolls = 0;
     	}
     	if(doubleRolls == 3) {
-    		p.setCurrentLocation(10);
+    		this.setCurrentLocation(10);
     		doubleRolls = 0;
-    		p.setInJail(true);
+    		this.setInJail(true);
     	}
     	else {
-    		p.move(dice1+dice2);
+    		this.move(dice1+dice2);
     	}
     }
     
@@ -187,19 +191,32 @@ public class Player {
 		this.inJail = inJail;
 	}
 
-
-
-	public boolean isOwnJailCard() {
-		return ownJailCard;
-	}
-
-
-
-	public void setOwnJailCard(boolean ownJailCard) {
-		this.ownJailCard = ownJailCard;
+	public void playGetOutOfJailCard() {
+		if(this.ownsChanceJailCard) {
+			this.ownsChanceJailCard = false;
+			this.getOutJail();
+			Game.putChanceCard(new GetOutOfJailFreeChance("Get Out of Jail Free"));
+		}
+		else if (this.ownsChestJailCard) {
+			this.ownsChestJailCard = false;
+			this.getOutJail();
+			Game.putChestCard(new GetOutJailFreeCommunity("Get Out of Jail Free"));
+		}
 	}
 	
 	public static int getDoubleRolls() {
 		return doubleRolls;
+	}
+	public boolean ownsChanceJailCard() {
+		return ownsChanceJailCard;
+	}
+	public boolean ownsChestJailCard() {
+		return ownsChestJailCard;
+	}
+	public void setOwnsChanceJailCard(boolean ownsChanceJailCard) {
+		this.ownsChanceJailCard = ownsChanceJailCard;
+	}
+	public void setOwnsChestJailCard(boolean ownsChestJailCard) {
+		this.ownsChestJailCard = ownsChestJailCard;
 	}
 }
