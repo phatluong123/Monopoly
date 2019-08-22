@@ -36,13 +36,6 @@ import com.codingdojo.monopoly.models.cards.SaleStock;
 import com.codingdojo.monopoly.models.cards.SchoolFee;
 import com.codingdojo.monopoly.models.cards.TaxRefund;
 import com.codingdojo.monopoly.models.cards.WonBeautyContest;
-import com.example.gameTester.ActionSpace;
-import com.example.gameTester.Game;
-import com.example.gameTester.OtherSpace;
-import com.example.gameTester.Player;
-import com.example.gameTester.Property;
-import com.example.gameTester.Space;
-import com.example.gameTester.TaxSpace;
 
 @Component
 public class Game {
@@ -155,9 +148,10 @@ public class Game {
 		Space currentSpace = board[p.getCurrentLocation()];
 		String spaceName = currentSpace.getName();
 		if(currentSpace instanceof Property) {
-			if(currentSpace.getOwnedBy() != null) {
+			Property currentProperty = (Property) currentSpace;
+			if(currentProperty.getOwnedBy() != null) {
 				//Get rent cost if property is already owned
-				int rent = currentSpace.getRentCost();
+				int rent = currentProperty.getRentCost();
 				//Call function to deduct from current player and give money to owner player, send in current player
 				p.payRent(p);
 			}
