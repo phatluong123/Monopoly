@@ -105,22 +105,22 @@ public class Game {
 	// Create Community Deck Card
 	
 	private static ArrayList<CommunityChestCard> communityDeck = new ArrayList<CommunityChestCard>() {{
-		communityDeck.add(new HospitalFee("Paying Hospital Fees Pay $100"));
-		communityDeck.add(new DoctorFee("Doctor's Fees Pay $50"));
-		communityDeck.add(new HolidayFundMatures("Holiday Fund Matures Receive $100"));
-		communityDeck.add(new BankError("Bank error in your favor. Collect $200."));
-		communityDeck.add(new ConsultancyFee("Receive $25 consultancy fee"));
-		communityDeck.add(new SchoolFee("School fees. Pay $50"));
-		communityDeck.add(new GoToJail("Go To Jail"));
-		communityDeck.add(new GetOutJailFreeCommunity("Get Out of Jail Free"));
-		communityDeck.add(new AssessedForStreetRepair("You are assessed for street repairs: Pay $40 per house and $115 per hotel you own."));
-		communityDeck.add(new ItIsYourBirthday("It is your birthday. Collect $10 from every players"));
-		communityDeck.add(new InsuranceMatures("Life insurance matures – Collect $100"));
-		communityDeck.add(new WonBeautyContest("You have won second prize in a beauty contest. Collect $10."));
-		communityDeck.add(new SaleStock("From sale of stock you get $50."));
-		communityDeck.add(new AdvanceToGo("Advance to \"Go\". (Collect $200) "));
-		communityDeck.add(new TaxRefund("Income tax refund. Collect $20. "));
-		communityDeck.add(new Inherit("You inherit $100."));
+		add(new HospitalFee("Paying Hospital Fees Pay $100"));
+		add(new DoctorFee("Doctor's Fees Pay $50"));
+		add(new HolidayFundMatures("Holiday Fund Matures Receive $100"));
+		add(new BankError("Bank error in your favor. Collect $200."));
+		add(new ConsultancyFee("Receive $25 consultancy fee"));
+		add(new SchoolFee("School fees. Pay $50"));
+		add(new GoToJail("Go To Jail"));
+		add(new GetOutJailFreeCommunity("Get Out of Jail Free"));
+		add(new AssessedForStreetRepair("You are assessed for street repairs: Pay $40 per house and $115 per hotel you own."));
+		add(new ItIsYourBirthday("It is your birthday. Collect $10 from every players"));
+		add(new InsuranceMatures("Life insurance matures – Collect $100"));
+		add(new WonBeautyContest("You have won second prize in a beauty contest. Collect $10."));
+		add(new SaleStock("From sale of stock you get $50."));
+		add(new AdvanceToGo("Advance to \"Go\". (Collect $200) "));
+		add(new TaxRefund("Income tax refund. Collect $20. "));
+		add(new Inherit("You inherit $100."));
 	}};
 
 
@@ -141,30 +141,30 @@ public class Game {
 
 	
 	public Game() {
-		Scanner userInput = new Scanner(System.in);
-		System.out.println("Enter how many players:");
-		int totalPlayers = Integer.parseInt(userInput.nextLine());
-		boolean moveOn = false;
-		while(moveOn == false) {
-			if(totalPlayers < 2 || totalPlayers > 4) {
-				System.out.println("You must enter a number between 2-4");
-				totalPlayers = Integer.parseInt(userInput.nextLine());
-			}
-			else {
-				moveOn = true;
-			}
-		}
-		
-		ArrayList<Player> playerList = new ArrayList<Player>();
-		
-		for(int i = 0; i < totalPlayers; i++) {
-			System.out.println("Enter name for player " + i + ":");
-			String newName = userInput.nextLine();
-			Player player = new Player(newName);
-			playerList.add(player);
-		}
-		
-		userInput.close();
+//		Scanner userInput = new Scanner(System.in);
+//		System.out.println("Enter how many players:");
+//		int totalPlayers = Integer.parseInt(userInput.nextLine());
+//		boolean moveOn = false;
+//		while(moveOn == false) {
+//			if(totalPlayers < 2 || totalPlayers > 4) {
+//				System.out.println("You must enter a number between 2-4");
+//				totalPlayers = Integer.parseInt(userInput.nextLine());
+//			}
+//			else {
+//				moveOn = true;
+//			}
+//		}
+//		
+//		ArrayList<Player> playerList = new ArrayList<Player>();
+//		
+//		for(int i = 0; i < totalPlayers; i++) {
+//			System.out.println("Enter name for player " + i + ":");
+//			String newName = userInput.nextLine();
+//			Player player = new Player(newName);
+//			playerList.add(player);
+//		}
+//		
+//		userInput.close();
 	}
 
 	public static HashMap<String, Integer> getSets() {
@@ -270,7 +270,7 @@ public class Game {
 	}
 	
 	public static void nextPlayer() {
-		if(Game.currentPlayerIndex == Game.players.size() - 1) {
+		if(Game.currentPlayerIndex >= Game.players.size() - 1) {
 			Game.nextTurn();
 			Game.currentPlayerIndex = 0;
 		} else {

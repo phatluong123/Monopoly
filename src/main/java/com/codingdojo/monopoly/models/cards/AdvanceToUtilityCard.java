@@ -5,7 +5,6 @@ import com.codingdojo.monopoly.models.Player;
 public class AdvanceToUtilityCard extends ChanceCard {
 	public AdvanceToUtilityCard(String name) {
 		super(name);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void action(Player player) {

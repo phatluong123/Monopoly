@@ -66,4 +66,6 @@ public abstract class Property extends Space {
 	public void setUnmortgage(int unmortgage) {
 		this.unmortgage = unmortgage;
 	}
+	
+	public abstract int getRentCost();
 }

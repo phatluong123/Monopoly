@@ -109,4 +109,25 @@ public class Street extends Property {
 		this.housingCost = housingCost;
 	}
 	
+	@Override
+	public int getRentCost() {
+		if (!Game.ownsFullSet(this.getOwnedBy(), this.getColor())) {
+			return rent;
+		} else if (Game.ownsFullSet(this.getOwnedBy(), this.getColor()) && this.numHouses == 0) {
+			return rentColorSet;
+		} else if (this.numHouses == 1) {
+			return h1;
+		} else if (this.numHouses == 2) {
+			return h2;
+		} else if (this.numHouses == 3) {
+			return h3;
+		} else if (this.numHouses == 4) {
+			return h4;
+		} else if (this.numHouses == 5) {
+			return hotel;
+		} else {
+			return 0;
+		}
+	}
+	
 }

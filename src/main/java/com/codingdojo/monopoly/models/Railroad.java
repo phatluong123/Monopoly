@@ -22,4 +22,10 @@ public class Railroad extends Property {
 	public void setRent(int rent) {
 		this.rent = rent;
 	}
+
+	@Override
+	public int getRentCost() {
+		int numOwned = this.getOwnedBy().getNumOfSetOwned("railroad");
+		return (int) (rent * (Math.pow(2.0, numOwned - 1)));
+	}
 }
