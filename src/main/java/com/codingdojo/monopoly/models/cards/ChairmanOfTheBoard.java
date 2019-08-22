@@ -16,6 +16,6 @@ public class ChairmanOfTheBoard extends ChanceCard {
 		for (int i=0; i<allPlayers.size();i++ ) {
 			allPlayers.get(i).earn(50);	
 		}
-		player.payOther(allPlayers.size()*50);
+		player.pay(allPlayers.size()*50);
 		}
 }

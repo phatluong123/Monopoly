@@ -133,7 +133,7 @@ public class Street extends Property {
 		if(!Game.ownsFullSet(this.getOwnedBy(), this.getSet())) return false;
 		if(this.numHouses >= 5) return false;
 		if(this.getOwnedBy().getMoney() < this.getHousingCost()) return false;
-		this.getOwnedBy().payOther(this.getHousingCost());
+		this.getOwnedBy().pay(this.getHousingCost());
 		this.numHouses++;
 		return true;
 	}

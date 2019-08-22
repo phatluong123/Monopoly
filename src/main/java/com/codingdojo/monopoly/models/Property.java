@@ -82,7 +82,7 @@ public abstract class Property extends Space {
 	}
 	
 	public void unmortgageProperty() {
-		this.getOwnedBy().payOther(this.unmortgage);
+		this.getOwnedBy().pay(this.unmortgage);
 		this.isMortgaged = false;
 	}
 	

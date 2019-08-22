@@ -15,7 +15,7 @@ public class ItIsYourBirthday extends CommunityChestCard{
 	public void action(Player player) {
 		int gift = 0;
 		for(Player p: Game.getPlayers()) {
-			p.payOther(10);
+			p.pay(10);
 			gift += 10;
 		}
 		player.earn(gift);

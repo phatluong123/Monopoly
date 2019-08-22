@@ -150,11 +150,9 @@ public class Game {
 		String spaceName = currentSpace.getName();
 		if(currentSpace instanceof Property) {
 			Property currentProperty = (Property) currentSpace;
-			if(currentProperty.getOwnedBy() != null) {
-				//Get rent cost if property is already owned
-				int rent = currentProperty.getRentCost();
+			if(currentProperty.getOwnedBy() != null && currentProperty.getOwnedBy() != p) {
 				//Call function to deduct from current player and give money to owner player, send in current player
-				p.payRent(p);
+				p.payRent();
 			}
 			else {
 				//Holder method for whatever we decide to implement to buy property if no owner
@@ -184,10 +182,10 @@ public class Game {
 		}
 		else if(currentSpace instanceof TaxSpace) {
 			if(spaceName == "Income Tax") {
-				p.payOther(200);
+				p.pay(200);
 			}
 			else {
-				p.payOther(100);
+				p.pay(100);
 			}
 		}
 		

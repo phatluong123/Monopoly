@@ -11,46 +11,74 @@ import com.codingdojo.monopoly.models.cards.GetOutOfJailFreeChance;
 public class Player {
 	private static int doubleRolls = 0;
 	private String name;
-	private int money;
+	private int money = 1500;
 	// Save the name of the street they owned
-	private ArrayList<String> ownedProperties;
+	private ArrayList<String> ownedProperties = new ArrayList<>();
 	// Keep track of number of properties owned in each set.
-	private HashMap<String, Integer> setsOwned;
+	private HashMap<String, Integer> setsOwned = new HashMap<>();
 	//keep track of current location of player
-	private int currentLocation;
+	private int currentLocation = 0;
 	//Check if they are in jail
-	private boolean inJail;
+	private boolean inJail = false;
 	// if they have a "Get out Jail card"
-	private boolean ownsChanceJailCard;
-	private boolean ownsChestJailCard;
-	private boolean isBankrupt;
+	private boolean ownsChanceJailCard = false;
+	private boolean ownsChestJailCard = false;
+	private boolean isBankrupt = false;
 	//need number of houses metric for a chance card.
-	private int numberOfHouses;
+	private int numberOfHouses = 0;
 	//need number of hotels metric for a chance card.
-	private int numberOfHotels;
+	private int numberOfHotels = 0;
 	
+	/**
+	 * Construct a new Player, taking `name` as an argument. All other fields set to defaults.
+	 * @param name - String - the name the Player should have.
+	 */
 	public Player(String name) {
 		this.name = name;
-		//Default money a player have when start a game;
-		this.money = 25000;
-		this.currentLocation=0;
-		//When start the game everyone start at the GO.
-		this.ownedProperties= new ArrayList<String>();
-		this.setsOwned = new HashMap<>();
-		this.inJail = false;
-		this.ownsChanceJailCard = true; 
-		this.numberOfHotels = 0;
-		this.numberOfHouses = 0;
 	}
-	//Method that a player can do
-	public void payOther(int amount) {
+	/* ******* PLAYER METHODS BELOW ******* */
+	
+	/**
+	 * Deducts a given amount from the Player's money and returns that value
+	 * @param amount - int - Amount to be deducted from the calling Player's money
+	 * @return the amount deducted as an int
+	 */
+	public int pay(int amount) {
 		setMoney(getMoney()-amount);
+		return amount;
 	}
 	
+	/**
+	 * Adds a given amount to the calling Player's money value
+	 * @param amount - int - amount of money to be added to this.money
+	 */
 	public void earn(int amount) {
 		setMoney(getMoney()+amount);
 	}
 	
+	/**
+	 * Sends money from the calling Player instance to the owner
+	 * of the property on which the calling Player has landed.
+	 */
+	public void payRent() {
+		Space[] board = Game.getBoard();
+		Property property = (Property) board[this.getCurrentLocation()];
+		this.sendMoney(property.getOwnedBy(), property.getRentCost());
+	}
+	
+	/**
+	 * Sends money from calling Player to recipient in the amount specified.
+	 * @param recipient - Player - Player to which the money is to be sent.
+	 * @param amount - int - Amount of money which is to be sent.
+	 */
+	public void sendMoney(Player recipient, int amount) {
+		recipient.earn(this.pay(amount));
+	}
+	
+	/**
+	 * Moves the player a given number of steps
+	 * @param step - int - the distance to move on the board
+	 */
     public void move(int step) {
     	if (getCurrentLocation() + step > 39) 
     		earn(200);
@@ -76,12 +104,19 @@ public class Player {
     	}
     }
     
+    /**
+     * Moves the player to the given location
+     * @param location - int - the location on the board to which the player is intended to move
+     */
     public void moveTo(int location) {
     	if (getCurrentLocation() > location)
     		earn(200);
     	setCurrentLocation(location);
     }
-
+    
+    /**
+     * Sends the player to the Jail square, without collecting $200 from the Go space.
+     */
     public void goToJail() {
     	setInJail(true);
     	setCurrentLocation(10);
@@ -174,7 +209,10 @@ public class Player {
 	}
 
 
-
+	/**
+	 * Directly sets the player's current location. Consider using `move` or `moveTo` instead.
+	 * @param currentLocation - int - the location to move the Player to.
+	 */
 	public void setCurrentLocation(int currentLocation) {
 		this.currentLocation = currentLocation;
 	}
@@ -191,6 +229,9 @@ public class Player {
 		this.inJail = inJail;
 	}
 
+	/**
+	 * Plays the player's Get Out Of Jail Free card to release the player from jail. If the player has both, plays the Chance card.
+	 */
 	public void playGetOutOfJailCard() {
 		if(this.ownsChanceJailCard) {
 			this.ownsChanceJailCard = false;
@@ -201,6 +242,26 @@ public class Player {
 			this.ownsChestJailCard = false;
 			this.getOutJail();
 			Game.putChestCard(new GetOutJailFreeCommunity("Get Out of Jail Free"));
+		}
+	}
+	
+	/**
+	 * Method to pay the $50 fine to get out of jail, instead of rolling or playing a Get Out Of Jail Free card.
+	 */
+	public void payFine() {
+		if(this.money >= 50) {
+			this.pay(50);
+			this.getOutJail();
+		}
+	}
+	
+	/**
+	 * Roll the dice to try to get out of jail. If player rolls a double, release them from jail.
+	 */
+	public void rollToGetOutOfJail() {
+		int[] roll = Game.rollDice();
+		if(roll[0] == roll[1]) {
+			this.getOutJail();
 		}
 	}
 	

@@ -12,6 +12,6 @@ public class MakeGeneralRepairs extends ChanceCard {
 	public void action(Player player) {
 		int houses = player.getNumberOfHouses();
 		int hotels = player.getNumberOfHotels();
-		player.payOther((25*houses)+(100*hotels));
+		player.pay((25*houses)+(100*hotels));
 	}
 }
