@@ -105,7 +105,7 @@ public class Game {
 	private static ArrayList<Player> players = new ArrayList<>();
 	private static ArrayList<Player> bankruptPlayers = new ArrayList<>();
 	private static Integer turn = 0;
-	private static Integer currentPlayerIndex = 0;
+	private static Integer currentPlayerIndex = -1;
 	private static boolean gameStarted = false;
 	private static int[] lastDiceRoll = { 1, 1 };
 
@@ -148,66 +148,18 @@ public class Game {
 
 	
 	public Game() {
-//		Scanner userInput = new Scanner(System.in);
-//		System.out.println("Enter how many players:");
-//		int totalPlayers = Integer.parseInt(userInput.nextLine());
-//		boolean moveOn = false;
-//		while(moveOn == false) {
-//			if(totalPlayers < 2 || totalPlayers > 4) {
-//				System.out.println("You must enter a number between 2-4");
-//				totalPlayers = Integer.parseInt(userInput.nextLine());
-//			}
-//			else {
-//				moveOn = true;
-//			}
-//		}
-//		
-//		ArrayList<Player> playerList = new ArrayList<Player>();
-//		
-//		for(int i = 0; i < totalPlayers; i++) {
-//			System.out.println("Enter name for player " + i + ":");
-//			String newName = userInput.nextLine();
-//			Player player = new Player(newName);
-//			playerList.add(player);
-//		}
-//		
-//		userInput.close();
-		Game game = new Game();
-		int currentPlayer = 0;
-		boolean gameStatus = true;
-		
-		//Added from my test class, some method names will need to be renamed
-		while(gameStatus == true) {
-			//Check if game boolean is false
-			gameStatus = game.isGameOver(players);
-				
-			//If player rolled a double, don't increment to next player yet
-			if(Player.getDoubleRolls() != 0) {
-				currentPlayer = currentPlayerIndex;
-			}
-			else {
-				Game.nextPlayer();
-				currentPlayer = currentPlayerIndex;
-			}
-			players.get(currentPlayer).movePlayer(players.get(currentPlayer));
-			//Purchase property etc...
-			game.doStuff(players.get(currentPlayer));
-				
-			//Check if bankrupt
-			game.isBankrupt(players, players.get(currentPlayer));
-		}
 	}
 	//Incomplete method for the general action of the game
-	public void doStuff(Player p) {
+	public static void doStuff(Player p) {
 		Space[] board = Game.getBoard();
 		Space currentSpace = board[p.getCurrentLocation()];
-		String spaceName = c.getName();
+		String spaceName = currentSpace.getName();
 		if(currentSpace instanceof Property) {
 			if(currentSpace.getOwnedBy() != null) {
 				//Get rent cost if property is already owned
 				int rent = currentSpace.getRentCost();
 				//Call function to deduct from current player and give money to owner player, send in current player
-				p.payRent(p);
+				players.get(currentPlayerIndex).payRent(players.get(currentPlayerIndex));
 			}
 			else {
 				//Holder method for whatever we decide to implement to buy property if no owner
@@ -228,7 +180,7 @@ public class Game {
 		}
 		else if(currentSpace instanceof ActionSpace) {
 			if(spaceName =="Community Chest") {
-				ActionCard = getCard("chest");
+				ActionCard card = getCard("chest");
 				//Add method to do action of the card
 			}
 			else {
@@ -247,8 +199,8 @@ public class Game {
 		
 	}
 	
-	//Method to check if game is overco
-	public boolean isGameOver(ArrayList<Player> players) {
+	//Method to check if game is over
+	public static boolean isGameOver(ArrayList<Player> players) {
 		if(players.size() == 1) {
 			return false;
 		}

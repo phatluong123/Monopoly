@@ -19,6 +19,7 @@ public class Player {
 	private boolean inJail;
 	// if they have a "Get out Jail card"
 	private boolean ownJailCard;
+	private boolean isBankrupt;
 	//need number of houses metric for a chance card.
 	private int numberOfHouses;
 	//need number of hotels metric for a chance card.
@@ -131,7 +132,7 @@ public class Player {
 		return money;
 	}
 
-
+	
 
 	public void setMoney(int money) {
 		this.money = money;
@@ -143,8 +144,15 @@ public class Player {
 		return ownedProperties;
 	}
 
-
-
+	public boolean isBankrupt() {
+		return isBankrupt;
+	}
+	public void setBankrupt(boolean isBankrupt) {
+		this.isBankrupt = isBankrupt;
+	}
+	public static void setDoubleRolls(int doubleRolls) {
+		Player.doubleRolls = doubleRolls;
+	}
 	public void setOwnedProperties(ArrayList<String> ownedProperties) {
 		this.ownedProperties = ownedProperties;
 	}
