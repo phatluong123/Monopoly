@@ -67,5 +67,29 @@ public abstract class Property extends Space {
 		this.unmortgage = unmortgage;
 	}
 	
+	/**
+	 * Mortgage a property
+	 * <p>
+	 * Sets a property to be mortgaged, and gives money to
+	 * the owner of the property based on its mortage value
+	 * </p>
+	 * 
+	 * Overridden by the Street class
+	 */
+	public void mortgageProperty() {
+		this.getOwnedBy().earn(this.mortgage);
+		this.isMortgaged = true;
+	}
+	
+	public void unmortgageProperty() {
+		this.getOwnedBy().payOther(this.unmortgage);
+		this.isMortgaged = false;
+	}
+	
+	/**
+	 * Returns the cost of rent for a given property, based upon
+	 * ownership and other conditions for each type of property.
+	 * @return Returns int of the rental cost
+	 */
 	public abstract int getRentCost();
 }

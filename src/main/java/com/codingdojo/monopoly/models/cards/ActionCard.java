@@ -1,5 +1,7 @@
 package com.codingdojo.monopoly.models.cards;
 
+import com.codingdojo.monopoly.models.Player;
+
 public abstract class ActionCard {
 	private String name;
 	
@@ -7,9 +9,9 @@ public abstract class ActionCard {
 		this.name = name;
 	}
 	
-	public void action() {
-		
-	}
+	public abstract void action();
+	
+	public abstract void action(Player player);
 	
 	public String getName() {
 		return name;
