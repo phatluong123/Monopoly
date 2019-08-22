@@ -137,7 +137,7 @@ public class Player {
 	public void setMoney(int money) {
 		this.money = money;
 	}
-
+	
 
 
 	public ArrayList<String> getOwnedProperties() {
@@ -202,6 +202,4 @@ public class Player {
 	public static int getDoubleRolls() {
 		return doubleRolls;
 	}
-	
-
 }
