@@ -36,6 +36,13 @@ import com.codingdojo.monopoly.models.cards.SaleStock;
 import com.codingdojo.monopoly.models.cards.SchoolFee;
 import com.codingdojo.monopoly.models.cards.TaxRefund;
 import com.codingdojo.monopoly.models.cards.WonBeautyContest;
+import com.example.gameTester.ActionSpace;
+import com.example.gameTester.Game;
+import com.example.gameTester.OtherSpace;
+import com.example.gameTester.Player;
+import com.example.gameTester.Property;
+import com.example.gameTester.Space;
+import com.example.gameTester.TaxSpace;
 
 @Component
 public class Game {
@@ -165,6 +172,102 @@ public class Game {
 //		}
 //		
 //		userInput.close();
+		Game game = new Game();
+		int currentPlayer = 0;
+		boolean gameStatus = true;
+		
+		//Added from my test class, some method names will need to be renamed
+		while(gameStatus == true) {
+			for(int i = 0; i < 27; i++) {
+				
+				//Check if game boolean is false
+				gameStatus = game.isGameOver(players);
+				
+				//If player rolled a double, don't increment to next player yet
+				if(Game.getDoubleRolls() != 0) {
+					currentPlayer = Game.getWhoNext();
+				}
+				else {
+					currentPlayer = game.getNextPlayer(players);
+				}
+				game.movePlayer(players.get(currentPlayer), board);
+				//Purchase property etc...
+				game.doStuff(players.get(currentPlayer));
+				
+				//Printing array to show player locations
+				for(int j = 0; j < board.length; j++) {
+					if(j == 39) {
+						System.out.print(board[j]);
+					}
+					else {
+						System.out.print(board[j]+", ");
+					}
+				}
+				System.out.println();
+				
+				//Check if bankrupt
+				game.isBankrupt(playerList, playerList.get(currentPlayer), i, board);
+			}
+		}
+	}
+	//Incomplete method for the general action of the game
+	public void doStuff(Player p) {
+		Space[] board = Game.getBoard();
+		Space currentSpace = board[p.getCurrentLocation()];
+		String spaceName = board[currentSpace].getName();
+		if(board[currentSpace] instanceof Property) {
+			if(currentSpace.getOwnedBy() != null) {
+				//Get rent cost if property is already owned
+				int rent = currentSpace.getRentCost();
+				//Call function to deduct from current player and give money to owner player, send in current player
+				p.payRent(p);
+			}
+			else {
+				//Holder method for whatever we decide to implement to buy property if no owner
+				purchaseProperty(currentSpace, p);
+			}
+		}
+		else if(board[currentSpace] instanceof OtherSpace) {
+			//Do nothing if go, free parking or jail
+			if(spaceName == "Go" || spaceName == "Free Parking" || spaceName == "Jail") {
+				return;
+			}
+			else {
+				//Set in jail to true, set currentLocation to jail
+				p.setInJail = true;
+				p.setCurrentLocation(10);
+				return;
+			}
+		}
+		else if(board[currentSpace] instanceof ActionSpace) {
+			if(spaceName =="Community Chest") {
+				ActionCard = getCard("chest");
+				//Add method to do action of the card
+			}
+			else {
+				ActionCard card = getCard("chance");
+				//Add method to do action of the card
+			}
+		}
+		else if(board[currentSpace] instanceof TaxSpace) {
+			if(spaceName == "Income Tax") {
+				//insert method to have player pay 200
+			}
+			else {
+				//Insert method to have player pay 100
+			}
+		}
+		
+	}
+	
+	//Method to check if game is overco
+	public boolean isGameOver(ArrayList<Player> players) {
+		if(players.size() == 1) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 	public static HashMap<String, Integer> getSets() {
