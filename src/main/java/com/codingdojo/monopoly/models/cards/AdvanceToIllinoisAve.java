@@ -6,8 +6,10 @@ public class AdvanceToIllinoisAve extends ChanceCard{
 	public AdvanceToIllinoisAve(String name) {
 		super(name);
 	}
-
-	private String name = "Advance to Illinois Avenue.";
+	
+	public AdvanceToIllinoisAve() {
+		super("Advance to Illinois Avenue. If you pass go, collect $200");
+	}
 	
 	public void action(Player player) {
 		player.moveTo(24);

@@ -6,6 +6,10 @@ public class SchoolFee extends CommunityChestCard{
 	public SchoolFee(String name) {
 		super(name);
 	}
+	
+	public SchoolFee() {
+		super("School fees. Pay $50");
+	}
 
 	public void action(Player player) {
 		player.payOther(50);

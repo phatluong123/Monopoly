@@ -7,10 +7,12 @@ public class BankPaysYou extends ChanceCard {
 		super(name);
 	}
 	
+	public BankPaysYou() {
+		super("Bank pays you dividend of $50.");
+	}
+	
 	public void action(Player player) {
-		int money = player.getMoney();
-		money = money + 50;
-		player.setMoney(money);
+		player.earn(50);
 		System.out.println("Bank pays you a dividend of $50");
 	}
 }

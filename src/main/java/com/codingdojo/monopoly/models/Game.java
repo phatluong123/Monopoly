@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.Scanner;
 
 import org.springframework.stereotype.Component;
 
@@ -25,6 +24,7 @@ import com.codingdojo.monopoly.models.cards.CommunityChestCard;
 import com.codingdojo.monopoly.models.cards.ConsultancyFee;
 import com.codingdojo.monopoly.models.cards.DoctorFee;
 import com.codingdojo.monopoly.models.cards.GetOutJailFreeCommunity;
+import com.codingdojo.monopoly.models.cards.GetOutOfJailFreeChance;
 import com.codingdojo.monopoly.models.cards.GoBack3Spaces;
 import com.codingdojo.monopoly.models.cards.GoToJail;
 import com.codingdojo.monopoly.models.cards.HolidayFundMatures;
@@ -105,37 +105,38 @@ public class Game {
 	// Create Community Deck Card
 	
 	private static ArrayList<CommunityChestCard> communityDeck = new ArrayList<CommunityChestCard>() {{
-		add(new HospitalFee("Paying Hospital Fees Pay $100"));
-		add(new DoctorFee("Doctor's Fees Pay $50"));
-		add(new HolidayFundMatures("Holiday Fund Matures Receive $100"));
-		add(new BankError("Bank error in your favor. Collect $200."));
-		add(new ConsultancyFee("Receive $25 consultancy fee"));
-		add(new SchoolFee("School fees. Pay $50"));
-		add(new GoToJail("Go To Jail"));
-		add(new GetOutJailFreeCommunity("Get Out of Jail Free"));
-		add(new AssessedForStreetRepair("You are assessed for street repairs: Pay $40 per house and $115 per hotel you own."));
-		add(new ItIsYourBirthday("It is your birthday. Collect $10 from every players"));
-		add(new InsuranceMatures("Life insurance matures – Collect $100"));
-		add(new WonBeautyContest("You have won second prize in a beauty contest. Collect $10."));
-		add(new SaleStock("From sale of stock you get $50."));
-		add(new AdvanceToGo("Advance to \"Go\". (Collect $200) "));
-		add(new TaxRefund("Income tax refund. Collect $20. "));
-		add(new Inherit("You inherit $100."));
+		add(new HospitalFee());
+		add(new DoctorFee());
+		add(new HolidayFundMatures());
+		add(new BankError());
+		add(new ConsultancyFee());
+		add(new SchoolFee());
+		add(new GoToJail());
+		add(new GetOutJailFreeCommunity());
+		add(new AssessedForStreetRepair());
+		add(new ItIsYourBirthday());
+		add(new InsuranceMatures());
+		add(new WonBeautyContest());
+		add(new SaleStock());
+		add(new AdvanceToGo());
+		add(new TaxRefund());
+		add(new Inherit());
 	}};
 
 
 	// Create Chance Deck Card
 	private static ArrayList<ChanceCard> chanceDeck = new ArrayList<ChanceCard>() {{
-		add(new GoBack3Spaces("Go Back Three Spaces."));
-		add(new AdvanceToReadingRailroad("Advance token to the nearest Railroad and pay owner twice the rental to which he/she {he} is otherwise entitled. If Railroad is unowned, you may buy it from the Bank."));
-		add(new AdvanceToBoardwalk("Advance To BoardWalk"));
-		add(new AdvanceToGoChance("Advance to go Collect $200"));
-		add(new AdvanceToIllinoisAve("Advance to Illinois Ave. {Avenue}. If you pass Go, collect $200. "));
-		add(new BuildingLoanMatures("Your Building Loan Matures Collect $150"));
-		add(new AdvanceToRailroad("Advance token to the nearest Railroad and pay owner twice the rental to which he/she {he} is otherwise entitled. If Railroad is unowned, you may buy it from the Bank. "));
-		add(new AdvanceToRailroad("Advance token to the nearest Railroad and pay owner twice the rental to which he/she {he} is otherwise entitled. If Railroad is unowned, you may buy it from the Bank. "));
-		add(new BankPaysYou("Bank pays you dividend of $50."));
-		add(new AdvanceToUtilityCard("Advance token to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total 10 times the amount thrown. "));
+		add(new GoBack3Spaces());
+		add(new AdvanceToReadingRailroad());
+		add(new AdvanceToBoardwalk());
+		add(new AdvanceToGoChance());
+		add(new AdvanceToIllinoisAve());
+		add(new BuildingLoanMatures());
+		add(new AdvanceToRailroad());
+		add(new AdvanceToRailroad());
+		add(new BankPaysYou());
+		add(new AdvanceToUtilityCard());
+		add(new GetOutOfJailFreeChance());
 		
 	}};
 

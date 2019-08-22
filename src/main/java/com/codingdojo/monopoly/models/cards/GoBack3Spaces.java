@@ -7,9 +7,12 @@ public class GoBack3Spaces extends ChanceCard {
 		super(name);
 	}
 	
+	public GoBack3Spaces() {
+		super("Go back three spaces.");
+	}
+	
 	public void action(Player player) {
-		int location = player.getCurrentLocation();
-		location = location - 3;
+		int location = (player.getCurrentLocation() + 37) % 40;
 		player.setCurrentLocation(location);
 	}
 }

@@ -8,6 +8,9 @@ public class GetOutOfJailFreeChance extends ChanceCard {
 
 	}
 
+	public GetOutOfJailFreeChance() {
+		super("Get out of jail free!");
+	}
 	
 	public void action(Player player) {
 		player.setOwnsChanceJailCard(true);

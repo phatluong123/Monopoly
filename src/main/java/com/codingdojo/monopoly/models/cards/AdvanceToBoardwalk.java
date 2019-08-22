@@ -5,7 +5,10 @@ import com.codingdojo.monopoly.models.Player;
 public class AdvanceToBoardwalk extends ChanceCard {
 	public AdvanceToBoardwalk(String name) {
 		super(name);
-		// TODO Auto-generated constructor stub
+	}
+	
+	public AdvanceToBoardwalk() {
+		super("Advance to Boardwalk.");
 	}
 
 	

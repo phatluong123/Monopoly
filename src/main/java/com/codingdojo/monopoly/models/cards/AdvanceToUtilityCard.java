@@ -7,13 +7,17 @@ public class AdvanceToUtilityCard extends ChanceCard {
 		super(name);
 	}
 	
+	public AdvanceToUtilityCard() {
+		super("Advance to the nearest utility.\n\nIf UNOWNED, you may buy it from the bank.\n\nIf OWNED, throw dice and pay owner ten times the amount thrown.");
+	}
+	
 	public void action(Player player) {
 		if(player.getCurrentLocation() > 12 && player.getCurrentLocation() < 28) {
-			player.setCurrentLocation(28);
+			player.moveTo(28);
 		}
 		else {
-			player.setCurrentLocation(12);
+			player.moveTo(12);
 		}
-//NEED TO ADD LOGIC FOR CHECKING WHETHER OR NOT THE UTILITY IS OWNED.
+		//TODO NEED TO ADD LOGIC FOR CHECKING WHETHER OR NOT THE UTILITY IS OWNED.
 	}
 }

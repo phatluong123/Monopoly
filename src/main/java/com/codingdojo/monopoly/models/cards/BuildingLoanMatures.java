@@ -7,6 +7,10 @@ public class BuildingLoanMatures extends ChanceCard {
 		super(name);
 	}
 	
+	public BuildingLoanMatures() {
+		super("Your building loan matures. Collect $150");
+	}
+	
 	public void action(Player player) {
 		int money = player.getMoney();
 		money = money + 150;
