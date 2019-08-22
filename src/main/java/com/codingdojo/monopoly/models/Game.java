@@ -178,44 +178,31 @@ public class Game {
 		
 		//Added from my test class, some method names will need to be renamed
 		while(gameStatus == true) {
-			for(int i = 0; i < 27; i++) {
+			//Check if game boolean is false
+			gameStatus = game.isGameOver(players);
 				
-				//Check if game boolean is false
-				gameStatus = game.isGameOver(players);
-				
-				//If player rolled a double, don't increment to next player yet
-				if(Game.getDoubleRolls() != 0) {
-					currentPlayer = Game.getWhoNext();
-				}
-				else {
-					currentPlayer = game.getNextPlayer(players);
-				}
-				game.movePlayer(players.get(currentPlayer), board);
-				//Purchase property etc...
-				game.doStuff(players.get(currentPlayer));
-				
-				//Printing array to show player locations
-				for(int j = 0; j < board.length; j++) {
-					if(j == 39) {
-						System.out.print(board[j]);
-					}
-					else {
-						System.out.print(board[j]+", ");
-					}
-				}
-				System.out.println();
-				
-				//Check if bankrupt
-				game.isBankrupt(playerList, playerList.get(currentPlayer), i, board);
+			//If player rolled a double, don't increment to next player yet
+			if(Player.getDoubleRolls() != 0) {
+				currentPlayer = currentPlayerIndex;
 			}
+			else {
+				Game.nextPlayer();
+				currentPlayer = currentPlayerIndex;
+			}
+			players.get(currentPlayer).movePlayer(players.get(currentPlayer));
+			//Purchase property etc...
+			game.doStuff(players.get(currentPlayer));
+				
+			//Check if bankrupt
+			game.isBankrupt(players, players.get(currentPlayer));
 		}
 	}
 	//Incomplete method for the general action of the game
 	public void doStuff(Player p) {
 		Space[] board = Game.getBoard();
 		Space currentSpace = board[p.getCurrentLocation()];
-		String spaceName = board[currentSpace].getName();
-		if(board[currentSpace] instanceof Property) {
+		String spaceName = c.getName();
+		if(currentSpace instanceof Property) {
 			if(currentSpace.getOwnedBy() != null) {
 				//Get rent cost if property is already owned
 				int rent = currentSpace.getRentCost();
@@ -227,19 +214,19 @@ public class Game {
 				purchaseProperty(currentSpace, p);
 			}
 		}
-		else if(board[currentSpace] instanceof OtherSpace) {
+		else if(currentSpace instanceof OtherSpace) {
 			//Do nothing if go, free parking or jail
 			if(spaceName == "Go" || spaceName == "Free Parking" || spaceName == "Jail") {
 				return;
 			}
 			else {
 				//Set in jail to true, set currentLocation to jail
-				p.setInJail = true;
+				p.setInJail(true);
 				p.setCurrentLocation(10);
 				return;
 			}
 		}
-		else if(board[currentSpace] instanceof ActionSpace) {
+		else if(currentSpace instanceof ActionSpace) {
 			if(spaceName =="Community Chest") {
 				ActionCard = getCard("chest");
 				//Add method to do action of the card
@@ -249,7 +236,7 @@ public class Game {
 				//Add method to do action of the card
 			}
 		}
-		else if(board[currentSpace] instanceof TaxSpace) {
+		else if(currentSpace instanceof TaxSpace) {
 			if(spaceName == "Income Tax") {
 				//insert method to have player pay 200
 			}

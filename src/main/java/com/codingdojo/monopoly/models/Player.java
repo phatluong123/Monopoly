@@ -6,6 +6,7 @@ import java.util.HashMap;
 //test
 
 public class Player {
+	private static int doubleRolls = 0;
 	private String name;
 	private int money;
 	// Save the name of the street they owned
@@ -49,6 +50,25 @@ public class Player {
     	if (getCurrentLocation() + step > 39) 
     		earn(200);
     	setCurrentLocation((getCurrentLocation()+step) % 40);
+    }
+    
+    public void movePlayer(Player p) {
+    	int dice1 = Game.rollDie();
+    	int dice2 = Game.rollDie();
+    	if(dice1 == dice2) {
+    		doubleRolls++;
+    	}
+    	else {
+    		doubleRolls = 0;
+    	}
+    	if(doubleRolls == 3) {
+    		p.setCurrentLocation(10);
+    		doubleRolls = 0;
+    		p.setInJail(true);
+    	}
+    	else {
+    		p.move(dice1+dice2);
+    	}
     }
     
     public void moveTo(int location) {
@@ -171,6 +191,9 @@ public class Player {
 		this.ownJailCard = ownJailCard;
 	}
 	
+	public static int getDoubleRolls() {
+		return doubleRolls;
+	}
 	
 
 }
