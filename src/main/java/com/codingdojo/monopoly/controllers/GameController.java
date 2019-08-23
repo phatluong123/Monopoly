@@ -22,8 +22,12 @@ public class GameController {
 		return "test.jsp";
 	}
 	
-	
 	@RequestMapping("")
+	public String index() {
+		return "index.jsp";
+	}
+	
+	@RequestMapping("/placeholder")
 	public String loginPage(HttpSession session, Model model) {
 		return "placeholderForLoginPage.jsp";
 	}
