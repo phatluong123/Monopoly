@@ -10,6 +10,10 @@ public abstract class Property extends Space {
 	private boolean isMortgaged = false;
 	private int mortgage;
 	private int unmortgage;
+	
+	public Property() {
+		
+	}
 
 	public Property(String name, int purchaseValue, String set) {
 		super(name);

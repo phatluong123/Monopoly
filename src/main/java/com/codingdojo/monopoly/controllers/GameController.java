@@ -17,6 +17,11 @@ public class GameController {
 	// //TODO: Intended to be the routing controller for the Monopoly game.
 	// Should send data to clients, and handle calling functions to
 	// process game actions and the like.
+	@RequestMapping("/gameboardtest")
+	public String gameBoardPage() {
+		return "test.jsp";
+	}
+	
 	
 	@RequestMapping("")
 	public String loginPage(HttpSession session, Model model) {

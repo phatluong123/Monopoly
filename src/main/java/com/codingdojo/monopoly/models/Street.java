@@ -29,6 +29,10 @@ public class Street extends Property {
 	 * @param hotel - int - Declare rent value with a hotel (numHouses == 5)
 	 * @param housingCost - int - Declare cost to build a new structure
 	 */
+	public Street() {
+		
+	}
+	
 	public Street(String name, int purchaseValue, String color, int rent, int h1, int h2, int h3, int h4, int hotel, int housingCost) {
 		super(name, purchaseValue, color);
 		this.color = color;

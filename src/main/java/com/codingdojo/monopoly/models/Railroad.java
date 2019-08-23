@@ -6,6 +6,10 @@ import org.springframework.stereotype.Component;
 public class Railroad extends Property {
 	private int rent;
 	
+	public Railroad() {
+		
+	}
+	
 	public Railroad(String name) {
 		super(name, 200, "railroad");
 		this.rent = 25;

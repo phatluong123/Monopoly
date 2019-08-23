@@ -39,9 +39,6 @@
 			<div class="street-body"></div>
 			<div class="street-body"></div>
 		</div>
-		<div class="empty-space">
-			<button onclick="myMove()">Click Me</button>
-		</div>
 		<div class="horizontal-street">
 			<div class="street-body"></div>
 			<div class="street-body"></div>
@@ -68,7 +65,6 @@
 				<div class="player1" id="player1">
 					<img src="../images/jerry.jpg">
 				</div>
-
 			</div>
 		</div>
 	</div>
