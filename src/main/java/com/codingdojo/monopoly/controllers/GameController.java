@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.codingdojo.monopoly.models.Game;
 import com.codingdojo.monopoly.models.Player;
@@ -22,10 +23,11 @@ public class GameController {
 		return "test.jsp";
 	}
 	
-	@RequestMapping("")
+	@RequestMapping("/newplayer")
 	public String index() {
-		return "index.jsp";
+		return "test.jsp";
 	}
+	
 	
 	@RequestMapping("/placeholder")
 	public String loginPage(HttpSession session, Model model) {

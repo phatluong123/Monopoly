@@ -14,7 +14,12 @@
 <script type="text/javascript" src="../js/app.js"></script>
 </head>
 <body>
-	<div class="board">
+	<div id="usernamePage">
+		<h1>New Player</h1>
+		<input id="playerName" type="text">
+		<input type="button"value="Create player" onClick="send()">
+	</div>
+	<div id="chatPage" class="hidden"  >
 		<div class="row">
 			<div class="corner"></div>
 			<div class="street"></div>
@@ -38,6 +43,13 @@
 			<div class="street-body"></div>
 			<div class="street-body"></div>
 			<div class="street-body"></div>
+		</div>
+		<div class="empty-space">
+			<textarea id="messagesTextArea" rows="10"
+				cols="60"></textarea>
+			<textarea id="usersTextArea"  rows="10" cols="8"></textarea>
+			<br>
+
 		</div>
 		<div class="horizontal-street">
 			<div class="street-body"></div>

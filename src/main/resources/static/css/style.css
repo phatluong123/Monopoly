@@ -3,7 +3,7 @@
 * {
 	margin: 0;
 	padding: 0;
-	line-height: 0px;
+
 }
 
 body {
@@ -11,14 +11,15 @@ body {
 	margin-top: 20px;
 }
 
-.board {
+.hidden {
+
 	width: 856px;
 	height: 856px;
 	background-image: url("../images/board.jpg");
 	background-size: 100%;
 	background-repeat: no-repeat;
-	background-color: green;
-	display: inline-block;
+	display:none;
+
 }
 
 .row {
