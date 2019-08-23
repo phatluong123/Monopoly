@@ -40,6 +40,11 @@ import com.codingdojo.monopoly.models.cards.WonBeautyContest;
 @Component
 public class Game {
 	private static final HashMap<String, Integer> sets = new HashMap<String, Integer>() {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 522436266570487631L;
+
 		{
 			put("railroad", 4);
 			put("utility", 2);
@@ -103,46 +108,61 @@ public class Game {
 	private static int[] lastDiceRoll = { 1, 1 };
 
 	// Create Community Deck Card
-	
-	private static ArrayList<CommunityChestCard> communityDeck = new ArrayList<CommunityChestCard>() {{
-		add(new HospitalFee());
-		add(new DoctorFee());
-		add(new HolidayFundMatures());
-		add(new BankError());
-		add(new ConsultancyFee());
-		add(new SchoolFee());
-		add(new GoToJail());
-		add(new GetOutJailFreeCommunity());
-		add(new AssessedForStreetRepair());
-		add(new ItIsYourBirthday());
-		add(new InsuranceMatures());
-		add(new WonBeautyContest());
-		add(new SaleStock());
-		add(new AdvanceToGo());
-		add(new TaxRefund());
-		add(new Inherit());
-	}};
-
-
+	private static ArrayList<CommunityChestCard> communityDeck = new ArrayList<>();
 	// Create Chance Deck Card
-	private static ArrayList<ChanceCard> chanceDeck = new ArrayList<ChanceCard>() {{
-		add(new GoBack3Spaces());
-		add(new AdvanceToReadingRailroad());
-		add(new AdvanceToBoardwalk());
-		add(new AdvanceToGoChance());
-		add(new AdvanceToIllinoisAve());
-		add(new BuildingLoanMatures());
-		add(new AdvanceToRailroad());
-		add(new AdvanceToRailroad());
-		add(new BankPaysYou());
-		add(new AdvanceToUtilityCard());
-		add(new GetOutOfJailFreeChance());
-		
-	}};
+	private static ArrayList<ChanceCard> chanceDeck = new ArrayList<>();
 
 	
 	public Game() {
 	}
+	
+	/**
+	 * Force all variables to reset to default
+	 */
+	public static void init() {
+		initDecks();
+		shuffleDecks();
+		players = new ArrayList<>();
+		bankruptPlayers = new ArrayList<>();
+		turn = 0;
+		currentPlayerIndex = -1;
+		gameStarted = false;
+		lastDiceRoll[0] = 1;
+		lastDiceRoll[1] = 1;
+	}
+	
+	private static void initDecks() {
+		communityDeck.clear();
+		chanceDeck.clear();
+		communityDeck.add(new HospitalFee());
+		communityDeck.add(new DoctorFee());
+		communityDeck.add(new HolidayFundMatures());
+		communityDeck.add(new BankError());
+		communityDeck.add(new ConsultancyFee());
+		communityDeck.add(new SchoolFee());
+		communityDeck.add(new GoToJail());
+		communityDeck.add(new GetOutJailFreeCommunity());
+		communityDeck.add(new AssessedForStreetRepair());
+		communityDeck.add(new ItIsYourBirthday());
+		communityDeck.add(new InsuranceMatures());
+		communityDeck.add(new WonBeautyContest());
+		communityDeck.add(new SaleStock());
+		communityDeck.add(new AdvanceToGo());
+		communityDeck.add(new TaxRefund());
+		communityDeck.add(new Inherit());
+		chanceDeck.add(new GoBack3Spaces());
+		chanceDeck.add(new AdvanceToReadingRailroad());
+		chanceDeck.add(new AdvanceToBoardwalk());
+		chanceDeck.add(new AdvanceToGoChance());
+		chanceDeck.add(new AdvanceToIllinoisAve());
+		chanceDeck.add(new BuildingLoanMatures());
+		chanceDeck.add(new AdvanceToRailroad());
+		chanceDeck.add(new AdvanceToRailroad());
+		chanceDeck.add(new BankPaysYou());
+		chanceDeck.add(new AdvanceToUtilityCard());
+		chanceDeck.add(new GetOutOfJailFreeChance());
+	}
+	
 	//Incomplete method for the general action of the game
 	public static void doStuff(Player p) {
 		Space[] board = Game.getBoard();
