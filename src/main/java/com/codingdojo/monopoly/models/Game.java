@@ -36,10 +36,11 @@ import com.codingdojo.monopoly.models.cards.SaleStock;
 import com.codingdojo.monopoly.models.cards.SchoolFee;
 import com.codingdojo.monopoly.models.cards.TaxRefund;
 import com.codingdojo.monopoly.models.cards.WonBeautyContest;
+import com.google.gson.annotations.Expose;
 
 @Component
 public class Game {
-	private static final HashMap<String, Integer> sets = new HashMap<String, Integer>() {
+	@Expose private static final HashMap<String, Integer> sets = new HashMap<String, Integer>() {
 		/**
 		 * 
 		 */
@@ -58,7 +59,7 @@ public class Game {
 			put("blue", 2);
 		}
 	};
-	private static final Space[] board = new Space[] {
+	@Expose private static final Space[] board = new Space[] {
 			new OtherSpace("Go"),
 			new Street("Mediterranean Avenue", 60, "brown", 2, 10, 30, 90, 160, 250, 50),
 			new ActionSpace("Community Chest", "chest"),
@@ -100,12 +101,12 @@ public class Game {
 			new TaxSpace("Luxury Tax", 100),
 			new Street("Boardwalk", 400, "blue", 50, 200, 600, 1400, 1700, 2000, 200)
 	};
-	private static ArrayList<Player> players = new ArrayList<>();
-	private static ArrayList<Player> bankruptPlayers = new ArrayList<>();
-	private static Integer turn = 0;
-	private static Integer currentPlayerIndex = -1;
-	private static boolean gameStarted = false;
-	private static int[] lastDiceRoll = { 1, 1 };
+	@Expose private static ArrayList<Player> players = new ArrayList<>();
+	@Expose private static ArrayList<Player> bankruptPlayers = new ArrayList<>();
+	@Expose private static Integer turn = 0;
+	@Expose private static Integer currentPlayerIndex = -1;
+	@Expose private static boolean gameStarted = false;
+	@Expose private static int[] lastDiceRoll = { 1, 1 };
 
 	// Create Community Deck Card
 	private static ArrayList<CommunityChestCard> communityDeck = new ArrayList<>();
@@ -113,8 +114,7 @@ public class Game {
 	private static ArrayList<ChanceCard> chanceDeck = new ArrayList<>();
 
 	
-	public Game() {
-	}
+	public Game() {}
 	
 	/**
 	 * Force all variables to reset to default
@@ -131,6 +131,9 @@ public class Game {
 		lastDiceRoll[1] = 1;
 	}
 	
+	/**
+	 * Clear and re-initialize all cards.
+	 */
 	private static void initDecks() {
 		communityDeck.clear();
 		chanceDeck.clear();
@@ -185,9 +188,7 @@ public class Game {
 			}
 			else {
 				//Set in jail to true, set currentLocation to jail
-				p.setInJail(true);
-				p.setCurrentLocation(10);
-				return;
+				p.goToJail();
 			}
 		}
 		else if(currentSpace instanceof ActionSpace) {
