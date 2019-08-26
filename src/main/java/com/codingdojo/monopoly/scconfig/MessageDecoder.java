@@ -32,7 +32,6 @@ public class MessageDecoder implements Decoder.Text<Message>{
 
 		ChatMessage chatMessage = new ChatMessage();
 		chatMessage.setMessage(jsonObject.getString("message"));
-		System.out.println(chatMessage);
 		return chatMessage;
 	}
 	

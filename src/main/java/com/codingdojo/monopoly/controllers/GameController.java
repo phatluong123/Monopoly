@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.codingdojo.monopoly.models.Game;
 import com.codingdojo.monopoly.models.Player;
+import com.codingdojo.monopoly.scmodels.DiceMessage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -32,7 +33,6 @@ public class GameController {
 	
 	@RequestMapping("/newplayer")
 	public String index() {
-	
 		return "newplayer.jsp";
 	}
 	
@@ -45,6 +45,18 @@ public class GameController {
 		System.out.println("player size = "+playerArray.size());
 		return "test.jsp";	
 	}
+	
+	
+	@RequestMapping("/roleDices")
+	public String showdice() {
+		System.out.println("hello from meeeeee");
+		int dice1 = Game.rollDie();
+		int dice2 = Game.rollDie();
+		
+		return null;
+	}
+	
+	
 	
 
 	@RequestMapping("/placeholder")

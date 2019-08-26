@@ -10,6 +10,7 @@ import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
 
 import com.codingdojo.monopoly.scmodels.ChatMessage;
+import com.codingdojo.monopoly.scmodels.DiceMessage;
 import com.codingdojo.monopoly.scmodels.Message;
 import com.codingdojo.monopoly.scmodels.UserMessage;
 
@@ -37,12 +38,22 @@ public class MessageEncoder implements Encoder.Text<Message>{
 					.add("message", chatMessage.getMessage())
 					.build().toString();
 		}
+		if (message instanceof DiceMessage) {
+			DiceMessage diceMessage = (DiceMessage) message;
+			returnString = Json.createObjectBuilder().add("messageType", diceMessage.getClass().getSimpleName())
+					.add("name", diceMessage.getName())
+					.add("dice1", diceMessage.getDice1())
+					.add("dice2", diceMessage.getDice2())
+					.build().toString();	
+		}
 		else if (message instanceof UserMessage) {
 			
 			UserMessage usersMessage = (UserMessage) message;
 			returnString = buildJsonUsersData(usersMessage.getUsers(), usersMessage.getClass().getSimpleName() );
 		}
-		System.out.println(returnString);
+
+		
+
 		return returnString;
 	}
 	
