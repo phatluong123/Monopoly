@@ -42,25 +42,7 @@ public class GameController {
 		System.out.println("player size = "+playerArray.size());
 		return "test.jsp";	
 	}
-	
-	
-	@RequestMapping("/roleDices")
-	public String showdice() {
-		System.out.println("hello from meeeeee");
-		int dice1 = Game.rollDie();
-		int dice2 = Game.rollDie();
-		
-		return null;
-	}
-	
-	
-	
 
-	@RequestMapping("/placeholder")
-	public String loginPage(HttpSession session, Model model) {
-		return "placeholderForLoginPage.jsp";
-	}
-	
 	@RequestMapping("/lobby")
 	public String lobby(HttpSession session, Model model) {
 		Player player1 = new Player("Steve");

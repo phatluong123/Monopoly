@@ -104,7 +104,7 @@ public class Game {
 	@Expose private static ArrayList<Player> players = new ArrayList<>();
 	@Expose private static ArrayList<Player> bankruptPlayers = new ArrayList<>();
 	@Expose private static Integer turn = 0;
-	@Expose private static Integer currentPlayerIndex = -1;
+	@Expose private static Integer currentPlayerIndex = 0;
 	@Expose private static boolean gameStarted = false;
 	@Expose private static int[] lastDiceRoll = { 1, 1 };
 
@@ -132,7 +132,7 @@ public class Game {
 		players = new ArrayList<>();
 		bankruptPlayers = new ArrayList<>();
 		turn = 0;
-		currentPlayerIndex = -1;
+		currentPlayerIndex = 0;
 		gameStarted = false;
 		lastDiceRoll[0] = 1;
 		lastDiceRoll[1] = 1;
@@ -283,6 +283,11 @@ public class Game {
 
 	public static void setLastDiceRoll(int[] lastDiceRoll) {
 		Game.lastDiceRoll = lastDiceRoll;
+	}
+	
+	public static void setLastDiceRoll(int dice1, int dice2) {
+		int[] dice = { dice1, dice2 };
+		Game.setLastDiceRoll(dice);
 	}
 
 	public static boolean ownsFullSet(Player player, String set) {

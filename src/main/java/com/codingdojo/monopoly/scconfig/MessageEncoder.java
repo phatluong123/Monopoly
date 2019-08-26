@@ -11,6 +11,7 @@ import javax.websocket.EndpointConfig;
 
 import com.codingdojo.monopoly.scmodels.ChatMessage;
 import com.codingdojo.monopoly.scmodels.DiceMessage;
+import com.codingdojo.monopoly.scmodels.GamestateMessage;
 import com.codingdojo.monopoly.scmodels.Message;
 import com.codingdojo.monopoly.scmodels.UserMessage;
 
@@ -45,6 +46,12 @@ public class MessageEncoder implements Encoder.Text<Message>{
 					.add("dice1", diceMessage.getDice1())
 					.add("dice2", diceMessage.getDice2())
 					.build().toString();	
+		}
+		else if(message instanceof GamestateMessage) {
+			GamestateMessage gamestateMessage = (GamestateMessage) message;
+			returnString = Json.createObjectBuilder().add("messageType", gamestateMessage.getClass().getSimpleName())
+					.add("gamestate", gamestateMessage.getGamestate())
+					.build().toString();
 		}
 		else if (message instanceof UserMessage) {
 			

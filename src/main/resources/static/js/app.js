@@ -38,8 +38,8 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 		messagesTextArea.value += jsonData.name+ ":  " + jsonData.message + '\n';		
 	}
 	
-	if(jsonData.name == "gamestate") {
-		msg = JSON.parse(jsonData.message);
+	else if(jsonData.messageType == "GamestateMessage") {
+		msg = JSON.parse(jsonData.gamestate);
 		console.log(msg);
 	}
 	

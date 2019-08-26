@@ -89,6 +89,7 @@ public class Player {
     public void movePlayer() {
     	int dice1 = Game.rollDie();
     	int dice2 = Game.rollDie();
+    	Game.setLastDiceRoll(dice1, dice2);
     	if(dice1 == dice2) {
     		doubleRolls++;
     	}
