@@ -11,10 +11,6 @@ function myMove(player, index1, index2){
 	    if (index1 == index2){
 	        clearInterval(interval);
 	    }
-	    $(`#${player}`).css({
-	        position: relative,
-	
-    	})
 	}
 }
 
