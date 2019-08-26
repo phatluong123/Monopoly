@@ -6,7 +6,7 @@ function myMove(player, index1, index2){
 	var interval = setInterval(moveObject, 250);
 	function moveObject(){
 	    index1++;
-	    index1 = (index1%39);
+	    index1 = (index1%40);
 	    $(`#${player}`).appendTo(`#div${index1}`);
 	    if (index1 == index2){
 	        clearInterval(interval);
