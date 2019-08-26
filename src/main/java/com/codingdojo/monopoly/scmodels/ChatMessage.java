@@ -2,7 +2,6 @@ package com.codingdojo.monopoly.scmodels;
 
 public class ChatMessage implements Message{
 	private String name;
-	private String location;
 	private String message;
 	
 	public String getName() {
@@ -10,12 +9,6 @@ public class ChatMessage implements Message{
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
 	}
 	public String getMessage() {
 		return message;

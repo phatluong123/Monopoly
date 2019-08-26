@@ -1,11 +1,16 @@
 package com.codingdojo.monopoly.controllers;
 
+import java.awt.List;
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.codingdojo.monopoly.models.Game;
 import com.codingdojo.monopoly.models.Player;
@@ -13,11 +18,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 @Controller
-@RequestMapping("/game")
+//@RequestMapping("/game")
 public class GameController {
 	// //TODO: Intended to be the routing controller for the Monopoly game.
 	// Should send data to clients, and handle calling functions to
 	// process game actions and the like.
+	private static ArrayList<Player> playerArray = new ArrayList<>();
+
 	@RequestMapping("/gameboardtest")
 	public String gameBoardPage() {
 		return "test.jsp";
@@ -25,10 +32,21 @@ public class GameController {
 	
 	@RequestMapping("/newplayer")
 	public String index() {
-		return "test.jsp";
+	
+		return "newplayer.jsp";
 	}
 	
+	@RequestMapping(value="/createplayer", method=RequestMethod.POST)
+	public String newplayer(@RequestParam("playername") String playername, Model model) {
+		Player newplayer = new Player(playername);
+		playerArray.add(newplayer);
+		Game.addPlayer(newplayer);
+		model.addAttribute("newplayer", newplayer);
+		System.out.println("player size = "+playerArray.size());
+		return "test.jsp";	
+	}
 	
+
 	@RequestMapping("/placeholder")
 	public String loginPage(HttpSession session, Model model) {
 		return "placeholderForLoginPage.jsp";

@@ -116,6 +116,13 @@ public class Game {
 	
 	public Game() {}
 	
+	public static void init(ArrayList<Player> players) {
+		Game.init();
+		for(Player p: players) {
+			Game.addPlayer(p);
+		}
+	}
+	
 	/**
 	 * Force all variables to reset to default
 	 */

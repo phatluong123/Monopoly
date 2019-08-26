@@ -16,6 +16,8 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.stereotype.Component;
 
+import com.codingdojo.monopoly.models.Game;
+import com.codingdojo.monopoly.models.Player;
 import com.codingdojo.monopoly.scmodels.ChatMessage;
 import com.codingdojo.monopoly.scmodels.Message;
 import com.codingdojo.monopoly.scmodels.UserMessage;
@@ -26,32 +28,31 @@ import com.codingdojo.monopoly.scmodels.UserMessage;
 @ServerEndpoint(value="/chatServerEndPoint", encoders= {MessageEncoder.class}, decoders = {MessageDecoder.class})
 public class ChatServerEndPoint {
 	
-	public static Set<Session> chatroomUsers = Collections.synchronizedSet(new HashSet<Session>());
+	public static final Set<Session> chatroomUsers = Collections.synchronizedSet(new HashSet<Session>());
 	@OnOpen
 	public void handleOpen(Session userSession) throws IOException, EncodeException {
-		chatroomUsers.add(userSession);		
-		System.out.println("entered handleOpen. next step: add userSession to chatroomUsers");
-		System.out.println("number of user = " + chatroomUsers.size());
+		System.out.println(" " +chatroomUsers);
+		chatroomUsers.add(userSession);	
+		
 	}
 	
 	@OnMessage
 	public void handleMessage(Message incomingMessage, Session userSession) throws IOException, EncodeException {
-		System.out.println("entered handleMessage");
+		System.out.println("incomingMessage =" + incomingMessage);
 		if (incomingMessage instanceof ChatMessage) {
-			System.out.println("message sent: " + incomingMessage.toString());
+
 			ChatMessage incomingChatMessage = (ChatMessage) incomingMessage;
 			ChatMessage outgoingChatMessage = new ChatMessage();
 			String username = (String) userSession.getUserProperties().get("username");
+			
 			if (username == null) {
 				userSession.getUserProperties().put("username", incomingChatMessage.getMessage());
-				outgoingChatMessage.setName("system");
-				outgoingChatMessage.setLocation("California , US");
-				outgoingChatMessage.setMessage("you are now connected as "+incomingChatMessage.getMessage());
+				outgoingChatMessage.setName(incomingChatMessage.getMessage());
+				outgoingChatMessage.setMessage(" has logged in");
 				userSession.getBasicRemote().sendObject(outgoingChatMessage);
 			}
 			else {
 				outgoingChatMessage.setName(username);
-				outgoingChatMessage.setLocation(incomingChatMessage.getLocation());
 				outgoingChatMessage.setMessage(incomingChatMessage.getMessage());
 				Iterator<Session> iterator = chatroomUsers.iterator();
 				while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(outgoingChatMessage);
@@ -70,10 +71,11 @@ public class ChatServerEndPoint {
 	}
 	
 	public static Set<String> getIds(){
+		System.out.println("generate new id "  );
 		HashSet<String> returnSet = new HashSet<String>();
 		Iterator<Session> iterator = chatroomUsers.iterator();
 		while (iterator.hasNext()) returnSet.add(iterator.next().getUserProperties().get("username").toString());
-		
+
 		
 		return returnSet;
 	}

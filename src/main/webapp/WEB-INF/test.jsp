@@ -7,6 +7,11 @@
 <meta charset="UTF-8">
 <title>Dash board</title>
 <link rel="stylesheet" type="text/css" href="../css/style.css">
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+	type="text/javascript"></script>
+
+<script type="text/javascript" src="js/script.js"></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -14,12 +19,7 @@
 <script type="text/javascript" src="../js/app.js"></script>
 </head>
 <body>
-	<div id="usernamePage">
-		<h1>New Player</h1>
-		<input id="playerName" type="text">
-		<input type="button"value="Create player" onClick="send()">
-	</div>
-	<div id="chatPage" class="hidden"  >
+	<div id="boardPage" class="boardPage">
 		<div class="row">
 			<div class="corner"></div>
 			<div class="street"></div>
@@ -45,11 +45,8 @@
 			<div class="street-body"></div>
 		</div>
 		<div class="empty-space">
-			<textarea id="messagesTextArea" rows="10"
-				cols="60"></textarea>
-			<textarea id="usersTextArea"  rows="10" cols="8"></textarea>
-			<br>
-
+			
+		
 		</div>
 		<div class="horizontal-street">
 			<div class="street-body"></div>
@@ -79,6 +76,12 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="user-message">
+		<textarea id="messagesTextArea" rows="5" cols="40"></textarea>
+		<textarea id="usersTextArea" rows="5" cols="8"><c:out value="${newplayer.name }" /></textarea><br>
+		<input id="messagetextField" type="text" size="20" /> <input
+			type="button" value="Send Message" onClick="send()"> <br>
 	</div>
 </body>
 </html>
