@@ -35,7 +35,6 @@ public class MessageEncoder implements Encoder.Text<Message>{
 			returnString = Json.createObjectBuilder().add("messageType", chatMessage.getClass().getSimpleName())
 					.add("name", chatMessage.getName())
 					.add("message", chatMessage.getMessage())
-					.add("location", chatMessage.getLocation())
 					.build().toString();
 		}
 		else if (message instanceof UserMessage) {
@@ -43,6 +42,7 @@ public class MessageEncoder implements Encoder.Text<Message>{
 			UserMessage usersMessage = (UserMessage) message;
 			returnString = buildJsonUsersData(usersMessage.getUsers(), usersMessage.getClass().getSimpleName() );
 		}
+		System.out.println(returnString);
 		return returnString;
 	}
 	

@@ -11,14 +11,17 @@ body {
 	margin-top: 20px;
 }
 
-.hidden {
+
+
+
+.boardPage {
 
 	width: 856px;
 	height: 856px;
 	background-image: url("../images/board.jpg");
 	background-size: 100%;
 	background-repeat: no-repeat;
-	display:none;
+display:inline-block;
 
 }
 
@@ -77,12 +80,15 @@ body {
 }
 
 
+.waiting-room{
+	display:none;
+}
 
 
-
-
-
-
+.user-message{
+	display:inline-block;
+	vertical-align:top;
+}
 
 
 

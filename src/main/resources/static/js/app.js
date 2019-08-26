@@ -37,34 +37,60 @@ function myMove(player, index1, index2) {
         }
 
 
-
 var webSocket = new WebSocket('ws://localhost:8080/chatServerEndPoint');
+window.onload = function() {
+	var str = document.getElementById("usersTextArea").value;
+	console.log(str);
+	webSocket.send(JSON.stringify({
+		'message' : str
+	}));
+	};
+
+
 webSocket.onmessage = function processMessage(incomingMessage) {
+
 	var jsonData = JSON.parse(incomingMessage.data);
-	console.log(jsonData);
-	console.log(jsonData.name);
-	if (jsonData.messageType == "ChatMessage")
-		messagesTextArea.value += jsonData.name + '(' + jsonData.location
-				+ '): ' + jsonData.message + '\n';
+	if (jsonData.messageType == "ChatMessage"){
+		
+		messagesTextArea.value += jsonData.name+ ":  " + jsonData.message + '\n';
+	}
 	else if (jsonData.messageType == "UserMessage") {
 		usersTextArea.value = "";
 		var i = 0;
-		while (i < jsonData.user.length)
-			usersTextArea.value += jsonData.user[i++] + "\n";
+		while (i < jsonData.user.length){
+			
+			usersTextArea.value +=  jsonData.user[i] + "\n";
+			i++;
+		}
 	}
 
 }
 
+
+function createPlayer() {
+	
+	webSocket.send(JSON.stringify({
+		'message' : playerName.value
+	}));
+	$('.usernamePage').hide();
+	$('.boardPage').show();
+	
+
+	
+}
 function send() {
 	webSocket.send(JSON.stringify({
-		'message' : playerName.value,
-		'location' : "default"
+		'message' : messagetextField.value
 	}));
-    usernamePage.classList.add('hidden');
-    chatPage.classList.remove('hidden');
+	messagetextField.value="";
 }
 
-window.onbeforeunload = function doSomething(){
+
+
+window.onbeforeunload = function (){
+	alert("Bye...");
+	
+// return 'You have unsaved changes!';
 	webSocket.onclose = function () {};
 	webSocket.close();
 };
