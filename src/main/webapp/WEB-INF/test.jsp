@@ -22,28 +22,28 @@
 <body>
 	<div id="boardPage" class="boardPage">
 		<div class="row">
-			<div class="corner"></div>
-			<div class="street"></div>
-			<div class="street"></div>
-			<div class="street"></div>
-			<div class="street"></div>
-			<div class="street"></div>
-			<div class="street"></div>
-			<div class="street"></div>
-			<div class="street"></div>
-			<div class="street"></div>
-			<div class="corner"></div>
+			<div class="corner" id="div20"></div>
+			<div class="street" id="div21"></div>
+			<div class="street" id="div22"></div>
+			<div class="street" id="div23"></div>
+			<div class="street" id="div24"></div>
+			<div class="street" id="div25"></div>
+			<div class="street" id="div26"></div>
+			<div class="street" id="div27"></div>
+			<div class="street" id="div28"></div>
+			<div class="street" id="div29"></div>
+			<div class="corner" id="div30"></div>
 		</div>
 		<div class="horizontal-street">
-			<div class="street-body"></div>
-			<div class="street-body"></div>
-			<div class="street-body"></div>
-			<div class="street-body"></div>
-			<div class="street-body"></div>
-			<div class="street-body"></div>
-			<div class="street-body"></div>
-			<div class="street-body"></div>
-			<div class="street-body"></div>
+			<div class="street-body" id="div19"></div>
+			<div class="street-body" id="div18"></div>
+			<div class="street-body" id="div17"></div>
+			<div class="street-body" id="div16"></div>
+			<div class="street-body" id="div15"></div>
+			<div class="street-body" id="div14"></div>
+			<div class="street-body" id="div13"></div>
+			<div class="street-body" id="div12"></div>
+			<div class="street-body" id="div11"></div>
 		</div>
 		<div class="empty-space">
 <%-- 			 <form action="/roleDices" method="post" id="myForm"> --%>
@@ -68,28 +68,28 @@
     
 		</div>
 		<div class="horizontal-street">
-			<div class="street-body"></div>
-			<div class="street-body"></div>
-			<div class="street-body"></div>
-			<div class="street-body"></div>
-			<div class="street-body"></div>
-			<div class="street-body"></div>
-			<div class="street-body"></div>
-			<div class="street-body"></div>
-			<div class="street-body"></div>
+			<div class="street-body" id="div31"></div>
+			<div class="street-body" id="div32"></div>
+			<div class="street-body" id="div33"></div>
+			<div class="street-body" id="div34"></div>
+			<div class="street-body" id="div35"></div>
+			<div class="street-body" id="div36"></div>
+			<div class="street-body" id="div37"></div>
+			<div class="street-body" id="div38"></div>
+			<div class="street-body" id="div39"></div>
 		</div>
 		<div class="row">
-			<div class="corner"></div>
-			<div class="street"></div>
-			<div class="street"></div>
-			<div class="street"></div>
-			<div class="street"></div>
-			<div class="street"></div>
-			<div class="street"></div>
-			<div class="street"></div>
-			<div class="street"></div>
-			<div class="street"></div>
-			<div class="corner">
+			<div class="corner" id="div10"></div>
+			<div class="street" id="div9"></div>
+			<div class="street" id="div8"></div>
+			<div class="street" id="div7"></div>
+			<div class="street" id="div6"></div>
+			<div class="street" id="div5"></div>
+			<div class="street" id="div4"></div>
+			<div class="street" id="div3"></div>
+			<div class="street" id="div2"></div>
+			<div class="street" id="div1"></div>
+			<div class="corner" id="div0">
 				<div class="player1" id="player1">
 					<img src="../images/jerry.jpg">
 				</div>
