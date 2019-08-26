@@ -1,7 +1,6 @@
 /**
  * 
  */
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 function myMove(player, index1, index2){
 	var interval = setInterval(moveObject, 250);
@@ -21,6 +20,7 @@ function myMove(player, index1, index2){
 
 
 
+var msg = "";
 var webSocket = new WebSocket('ws://localhost:8080/chatServerEndPoint');
 window.onload = function() {
 	var str = document.getElementById("usersTextArea").value;
@@ -40,6 +40,11 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 	
 	if (jsonData.messageType == "ChatMessage"){		
 		messagesTextArea.value += jsonData.name+ ":  " + jsonData.message + '\n';		
+	}
+	
+	if(jsonData.name == "gamestate") {
+		msg = JSON.parse(jsonData.message);
+		console.log(msg);
 	}
 	
 	else if (jsonData.messageType == "DiceMessage"){

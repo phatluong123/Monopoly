@@ -5,24 +5,25 @@ import java.util.HashMap;
 
 import com.codingdojo.monopoly.models.cards.GetOutJailFreeCommunity;
 import com.codingdojo.monopoly.models.cards.GetOutOfJailFreeChance;
+import com.google.gson.annotations.Expose;
 
 //test
 
 public class Player {
 	private static int doubleRolls = 0;
-	private String name;
-	private int money = 1500;
+	@Expose private String name;
+	@Expose private int money = 1500;
 	// Save the name of the street they owned
-	private ArrayList<String> ownedProperties = new ArrayList<>();
+	@Expose private ArrayList<String> ownedProperties = new ArrayList<>();
 	// Keep track of number of properties owned in each set.
 	private HashMap<String, Integer> setsOwned = new HashMap<>();
 	//keep track of current location of player
-	private int currentLocation = 0;
+	@Expose private int currentLocation = 0;
 	//Check if they are in jail
-	private boolean inJail = false;
+	@Expose private boolean inJail = false;
 	// if they have a "Get out Jail card"
-	private boolean ownsChanceJailCard = false;
-	private boolean ownsChestJailCard = false;
+	@Expose private boolean ownsChanceJailCard = false;
+	@Expose private boolean ownsChestJailCard = false;
 	private boolean isBankrupt = false;
 	//need number of houses metric for a chance card.
 	private int numberOfHouses = 0;

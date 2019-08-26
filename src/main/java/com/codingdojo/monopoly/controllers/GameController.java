@@ -1,11 +1,9 @@
 package com.codingdojo.monopoly.controllers;
 
-import java.awt.List;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.codingdojo.monopoly.models.Game;
 import com.codingdojo.monopoly.models.Player;
-import com.codingdojo.monopoly.scmodels.DiceMessage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

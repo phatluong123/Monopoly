@@ -29,6 +29,8 @@ import com.codingdojo.monopoly.scmodels.ChatMessage;
 import com.codingdojo.monopoly.scmodels.DiceMessage;
 import com.codingdojo.monopoly.scmodels.Message;
 import com.codingdojo.monopoly.scmodels.UserMessage;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 
 
@@ -65,6 +67,25 @@ public class ChatServerEndPoint {
 				Iterator<Session> iterator = chatroomUsers.iterator();
 				
 				while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(diceoutgoingMessage);
+			}
+			else if (incomingChatMessage.getMessage().equals("gamestate")) {
+				System.out.println("In gamestate request");
+				ChatMessage outgoingChatMessage = new ChatMessage();
+				Gson gson = new GsonBuilder()
+						.excludeFieldsWithModifiers(java.lang.reflect.Modifier.TRANSIENT)
+						.serializeNulls()
+						.create();
+				String myJson = gson.toJson(new Game());
+				System.out.println("Json built. Json:");
+				System.out.println(myJson);
+				userSession.getUserProperties().put("username", incomingChatMessage.getMessage());
+				outgoingChatMessage.setName(incomingChatMessage.getMessage());
+				outgoingChatMessage.setMessage(myJson);
+				System.out.println(outgoingChatMessage.getMessage());
+
+				Iterator<Session> iterator = chatroomUsers.iterator();
+				
+				while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(outgoingChatMessage);
 			}
 			else if (username == null) {
 				ChatMessage outgoingChatMessage = new ChatMessage();

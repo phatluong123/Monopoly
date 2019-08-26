@@ -2,9 +2,11 @@ package com.codingdojo.monopoly.models;
 
 import org.springframework.stereotype.Component;
 
+import com.google.gson.annotations.Expose;
+
 @Component
 public abstract class Space {
-	private String name;
+	@Expose private String name;
 	
 	public Space() {
 		

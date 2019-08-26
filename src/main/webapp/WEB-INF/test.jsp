@@ -7,9 +7,10 @@
 <meta charset="UTF-8">
 <title>Dash board</title>
 <link rel="stylesheet" type="text/css" href="../css/style.css">
-<script
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
-	type="text/javascript"></script>
+	type="text/javascript"></script> -->
 
 <script type="text/javascript" src="js/script.js"></script>
 <link rel="stylesheet"
