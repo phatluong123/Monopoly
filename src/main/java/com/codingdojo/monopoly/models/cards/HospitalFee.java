@@ -12,6 +12,9 @@ public class HospitalFee extends CommunityChestCard{
 	}
 
 	public void action(Player player) {
-		player.pay(100);
+		player.addDebt(100);
+		if (player.getMoney() >= player.getDebt()) {
+			player.pay(100);
+		}
 	}
 }

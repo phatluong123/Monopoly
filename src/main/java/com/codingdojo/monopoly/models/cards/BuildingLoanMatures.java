@@ -12,8 +12,6 @@ public class BuildingLoanMatures extends ChanceCard {
 	}
 	
 	public void action(Player player) {
-		int money = player.getMoney();
-		money = money + 150;
-		player.setMoney(money);
+		player.earn(150);
 	}
 }

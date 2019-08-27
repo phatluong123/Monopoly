@@ -12,7 +12,9 @@ public class SchoolFee extends CommunityChestCard{
 	}
 
 	public void action(Player player) {
-		player.pay(50);
-	
+		player.addDebt(50);
+		if(player.getMoney() >= player.getDebt()) {
+			player.pay(50);
+		}
 	}
 }

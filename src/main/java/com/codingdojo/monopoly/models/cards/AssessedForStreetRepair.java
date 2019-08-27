@@ -12,6 +12,9 @@ public class AssessedForStreetRepair extends CommunityChestCard {
 	}
 
 	public void action(Player player) {
-		player.pay(player.getNumberOfHouses()*40+player.getNumberOfHotels()*115);
+		player.addDebt((player.getNumberOfHouses()*40+player.getNumberOfHotels()*115));
+		if (player.getMoney() >= player.getDebt()) {
+			player.pay(player.getDebt());
+		}
 	}
 }

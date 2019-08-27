@@ -12,7 +12,10 @@ public class SpeedingFine extends ChanceCard{
 	}
 
 	public void action(Player player) {
-		player.pay(15);
+		player.addDebt(15);
+		if(player.getMoney() >= player.getDebt()) {
+			player.pay(15);
+		}
 	}
 }
 //player looses 15
