@@ -19,6 +19,10 @@ import org.springframework.stereotype.Component;
 
 import com.codingdojo.monopoly.models.Game;
 import com.codingdojo.monopoly.models.Player;
+import com.codingdojo.monopoly.models.Property;
+import com.codingdojo.monopoly.models.cards.ChanceCard;
+import com.codingdojo.monopoly.models.cards.CommunityChestCard;
+import com.codingdojo.monopoly.scmodels.ActionMessage;
 import com.codingdojo.monopoly.scmodels.ChatMessage;
 import com.codingdojo.monopoly.scmodels.DiceMessage;
 import com.codingdojo.monopoly.scmodels.GamestateMessage;
@@ -42,28 +46,17 @@ public class ChatServerEndPoint {
 	
 	@OnMessage
 	public void handleMessage(Message incomingMessage, Session userSession) throws IOException, EncodeException, NoSuchMethodException, ScriptException {
-		if (incomingMessage instanceof ChatMessage) {
-
-			ChatMessage incomingChatMessage = (ChatMessage) incomingMessage;
-			
-		
-			String username = (String) userSession.getUserProperties().get("username");
-			System.out.println(incomingChatMessage.getMessage());
-			if (username == null) {
-				ChatMessage outgoingChatMessage = new ChatMessage();
-				userSession.getUserProperties().put("username", incomingChatMessage.getMessage());
-				outgoingChatMessage.setName(incomingChatMessage.getMessage());
-				outgoingChatMessage.setMessage(" has logged in");
-				userSession.getBasicRemote().sendObject(outgoingChatMessage);
-			}
-			else if (incomingChatMessage.getMessage().equals("roll")) {
+		String username = (String) userSession.getUserProperties().get("username");
+		if (incomingMessage instanceof ActionMessage) {
+			ActionMessage incomingAction = (ActionMessage)incomingMessage;
+			String action = incomingAction.getAction();
+			Player currentPlayer = Game.getCurrentPlayer();
+			if (action.equals("roll")) {
 				DiceMessage diceoutgoingMessage = new DiceMessage();
-				Player currentPlayer = Game.getCurrentPlayer();
 				currentPlayer.movePlayer();
 				int[] dice = Game.getLastDiceRoll();
 				Integer dice1 = dice[0];
 				Integer dice2 = dice[1];
-				System.out.println("dice1= " +dice1 + "dice2 = " + dice2);
 				
 				diceoutgoingMessage.setName(username);
 				diceoutgoingMessage.setDice1(dice1);
@@ -73,23 +66,39 @@ public class ChatServerEndPoint {
 				Iterator<Session> iterator = chatroomUsers.iterator();
 				
 				while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(diceoutgoingMessage);
-			}
-			else if (incomingChatMessage.getMessage().equals("gamestate")) {
-				GamestateMessage outgoingChatMessage = new GamestateMessage();
-				Gson gson = new GsonBuilder()
-						.excludeFieldsWithModifiers(java.lang.reflect.Modifier.TRANSIENT)
-						.serializeNulls()
-						.create();
-				String myJson = gson.toJson(new Game());
-				System.out.println("Json built. Json:");
-				System.out.println(myJson);
-				userSession.getUserProperties().put("username", incomingChatMessage.getMessage());
-				outgoingChatMessage.setGamestate(myJson);
-				System.out.println(outgoingChatMessage.getGamestate());
-
-				Iterator<Session> iterator = chatroomUsers.iterator();
+			} else if (action.startsWith("buy")) {
+				if (!Game.isSpaceOwned(currentPlayer.getCurrentLocation())) {
+					Property prop = (Property)Game.getBoard()[currentPlayer.getCurrentLocation()];
+					if(prop.getPurchaseValue() <= currentPlayer.getMoney()) {
+						currentPlayer.buyProperty(prop);
+					}
+				}
 				
-				while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(outgoingChatMessage);
+				GamestateMessage gamestateMessage = generateGamestateMessage();
+				Iterator<Session> iterator = chatroomUsers.iterator();
+				while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(gamestateMessage);
+			} else if (action.startsWith("draw")) {
+				if(action.endsWith("chance")) {
+					ChanceCard card = Game.drawChanceCard();
+					card.action(currentPlayer);
+				} else if (action.endsWith("chest")) {
+					CommunityChestCard card = Game.drawCommunityChestCard();
+					card.action(currentPlayer);
+				}
+			}
+			
+		}
+		if (incomingMessage instanceof ChatMessage) {
+			
+			ChatMessage incomingChatMessage = (ChatMessage) incomingMessage;
+			System.out.println(incomingChatMessage.getMessage());
+			
+			if (username == null) {
+				ChatMessage outgoingChatMessage = new ChatMessage();
+				userSession.getUserProperties().put("username", incomingChatMessage.getMessage());
+				outgoingChatMessage.setName(incomingChatMessage.getMessage());
+				outgoingChatMessage.setMessage(" has logged in");
+				userSession.getBasicRemote().sendObject(outgoingChatMessage);
 			}
 			else {
 				ChatMessage outgoingChatMessage = new ChatMessage();
@@ -129,5 +138,15 @@ public class ChatServerEndPoint {
 		System.out.println(throwable.getMessage());
 	}
 	
+	private GamestateMessage generateGamestateMessage() {
+		GamestateMessage g = new GamestateMessage();
+		Gson gson = new GsonBuilder()
+				.excludeFieldsWithModifiers(java.lang.reflect.Modifier.TRANSIENT)
+				.serializeNulls()
+				.create();
+		g.setGamestate(gson.toJson(new Game()));
+		return g;
+		
+	}
 	
 }

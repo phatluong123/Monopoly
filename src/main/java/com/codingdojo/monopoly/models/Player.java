@@ -13,8 +13,10 @@ public class Player {
 	private static int doubleRolls = 0;
 	@Expose private String name;
 	@Expose private int money = 1500;
+	private int debt = 0;
+	private Integer debtOwedTo = null;
 	// Save the name of the street they owned
-	@Expose private ArrayList<String> ownedProperties = new ArrayList<>();
+	@Expose private ArrayList<Property> ownedProperties = new ArrayList<>();
 	// Keep track of number of properties owned in each set.
 	private HashMap<String, Integer> setsOwned = new HashMap<>();
 	//keep track of current location of player
@@ -47,6 +49,10 @@ public class Player {
 	public int pay(int amount) {
 		setMoney(getMoney()-amount);
 		return amount;
+	}
+	
+	public void addDebt(int amount) {
+		this.debt += amount;
 	}
 	
 	/**
@@ -128,23 +134,41 @@ public class Player {
     	setInJail(false);
     }
     
-    public void addProperty(String name) {
-    	getOwnedProperties().add(name);
+    public void addProperty(Property property) {
+    	ArrayList<Property> properties = getOwnedProperties();
+    	property.setOwnedBy(this);
+    	properties.add(property);
+    	setOwnedProperties(properties);
     }
     
-    public void addProperty(Property property) {
+    public Property removeProperty(Property property) {
+    	if(getOwnedProperties().contains(property)) {
+    		ArrayList<Property> properties = getOwnedProperties();
+    		properties.remove(property);
+    		property.setOwnedBy(null);
+    		setOwnedProperties(properties);
+    	}
+    	return property;
+    }
+    
+    public void tradeProperty(Property property, Player recipient) {
+    	recipient.addProperty(this.removeProperty(property));
+    }
+    
+    public void buyProperty(Property property) {
     	String set = property.getSet();
-    	String name = property.getName();
-    	ArrayList<String> properties = this.getOwnedProperties();
+    	ArrayList<Property> properties = this.getOwnedProperties();
     	HashMap<String, Integer> sets = this.getSetsOwned();
+    	this.money -= property.getPurchaseValue();
     	if(sets.containsKey(set)) {
     		sets.put(set, sets.get(set) + 1);
     	} else {
     		sets.put(set, 1);
     	}
-    	properties.add(name);
+    	properties.add(property);
     	this.setsOwned = sets;
     	this.ownedProperties = properties;
+    	property.setOwnedBy(this);
     }
     
     public Integer getNumOfSetOwned(String set) {
@@ -173,6 +197,21 @@ public class Player {
 		return money;
 	}
 
+	public int getDebt() {
+		return debt;
+	}
+
+	public Integer getDebtOwedTo() {
+		return debtOwedTo;
+	}
+
+	public void setDebt(int debt) {
+		this.debt = debt;
+	}
+
+	public void setDebtOwedTo(Integer debtOwedTo) {
+		this.debtOwedTo = debtOwedTo;
+	}
 	
 
 	public void setMoney(int money) {
@@ -181,7 +220,7 @@ public class Player {
 	
 
 
-	public ArrayList<String> getOwnedProperties() {
+	public ArrayList<Property> getOwnedProperties() {
 		return ownedProperties;
 	}
 
@@ -194,7 +233,7 @@ public class Player {
 	public static void setDoubleRolls(int doubleRolls) {
 		Player.doubleRolls = doubleRolls;
 	}
-	public void setOwnedProperties(ArrayList<String> ownedProperties) {
+	public void setOwnedProperties(ArrayList<Property> ownedProperties) {
 		this.ownedProperties = ownedProperties;
 	}
 

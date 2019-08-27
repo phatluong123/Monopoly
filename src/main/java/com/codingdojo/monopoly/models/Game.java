@@ -328,11 +328,11 @@ public class Game {
 		}
 	}
 	
-	public static ChanceCard getChanceCard() {
+	public static ChanceCard drawChanceCard() {
 		return chanceDeck.remove(chanceDeck.size()-1);
 	}
 	
-	public static CommunityChestCard getCommunityChestCard () {
+	public static CommunityChestCard drawCommunityChestCard () {
 		return communityDeck.remove(communityDeck.size()-1);
 	}
 	
@@ -388,6 +388,19 @@ public class Game {
 			sum += p.getMoney();
 		}
 		return sum;
+	}
+	
+	public static boolean isSpaceOwned(int index) {
+		if(!(Game.board[index] instanceof Property)) {
+			return true;
+		} else {
+			Property prop = (Property)Game.board[index];
+			if(prop.getOwnedBy() == null) {
+				return false;
+			} else {
+				return true;
+			}
+		}
 	}
 	
 	public static void goBankrupt(Player player) {

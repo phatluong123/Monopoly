@@ -1,8 +1,8 @@
-package snippet;
-
-public class Snippet {
-	public static void main(String[] args) {
-		DWEEBC9HRYY4
-	}
-}
-
+//package snippet;
+//
+//public class Snippet {
+//	public static void main(String[] args) {
+//		DWEEBC9HRYY4
+//	}
+//}
+//

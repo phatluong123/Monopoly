@@ -9,6 +9,7 @@ import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
 
 import com.codingdojo.monopoly.models.Player;
+import com.codingdojo.monopoly.scmodels.ActionMessage;
 import com.codingdojo.monopoly.scmodels.ChatMessage;
 import com.codingdojo.monopoly.scmodels.Message;
 
@@ -29,10 +30,18 @@ public class MessageDecoder implements Decoder.Text<Message>{
 	@Override
 	public Message decode(String jsonMessage) throws DecodeException {
 		JsonObject jsonObject = Json.createReader(new StringReader(jsonMessage)).readObject();
-
-		ChatMessage chatMessage = new ChatMessage();
-		chatMessage.setMessage(jsonObject.getString("message"));
-		return chatMessage;
+		System.out.println(jsonObject);
+		if (jsonObject.containsKey("message")) {
+			ChatMessage chatMessage = new ChatMessage();
+			chatMessage.setMessage(jsonObject.getString("message"));
+			return chatMessage;
+		} else if (jsonObject.containsKey("action")) {
+			ActionMessage actionMessage = new ActionMessage();
+			actionMessage.setAction(jsonObject.getString("action"));
+			return actionMessage;
+		} else {
+			return null;
+		}
 	}
 	
 	

@@ -114,9 +114,15 @@ function send() {
 	messagetextField.value="";
 }
 
+function buy() {
+	webSocket.send(JSON.stringify({
+		'action' : 'buy'
+	}))
+}
+
 function roll(){
 	webSocket.send(JSON.stringify({
-		'message' : 'roll'
+		'action' : 'roll'
 	}));
 }
 
