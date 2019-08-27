@@ -3,6 +3,7 @@
 * {
 	margin: 0;
 	padding: 0;
+	border:1px  solid black;
 
 }
 
@@ -35,13 +36,13 @@ display:inline-block;
 .street {
 	width: 70px;
 	display: inline-block;
-	border: 1px solid red;
+	border: red;
 	vertical-align: top;
 }
 
 .corner {
 	width: 113px;
-	border: 1px solid red;
+	border: red;
 	display: inline-block;
 	vertical-align: top;
 }
@@ -97,7 +98,11 @@ display:inline-block;
 }
 
 
-
+.user-message{
+	border-radius:10px;
+	padding:5px;
+	background-color:#8aca28;
+}
 
 
 

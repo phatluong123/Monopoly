@@ -64,8 +64,7 @@
 								<img id="dice2" src='../images/dice1.png'
 									style="height: 50px; width: 50px;">
 							</div>
-							<input value="" id="dice1Value"> <input value=""
-								id="dice2Value">
+
 						</div>
 					</div>
 
@@ -103,9 +102,10 @@
 		</div>
 	</div>
 	<div class="user-message">
-		<textarea id="messagesTextArea" rows="5" cols="40"></textarea>
-		<textarea id="usersTextArea" rows="5" cols="8"><c:out value="${newplayer.name }" /></textarea>
-		<br> <input id="messagetextField" type="text" size="20" list="emoji">
+		<h3 style="white-space : pre;">Messenger                       Players</h3>
+		<textarea id='messagesTextArea' style="height:150px;width:300px; border-radius:10px;" ></textarea>
+		<textarea id="usersTextArea" style="height:150px;width:100px; border-radius:10px;"><c:out value="${newplayer.name }" /></textarea>
+		<br> <input id="messagetextField" type="text" size="30" list="emoji" style=" border-radius:10px;">
 		<datalist id="emoji">
 			<option value=&#x1F354>
 			<option value=&#x1F600>
