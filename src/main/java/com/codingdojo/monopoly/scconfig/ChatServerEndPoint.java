@@ -58,6 +58,8 @@ public class ChatServerEndPoint {
 				Integer dice1 = dice[0];
 				Integer dice2 = dice[1];
 				
+				Game.doStuff(currentPlayer);
+				
 				diceoutgoingMessage.setName(username);
 				diceoutgoingMessage.setDice1(dice1);
 				diceoutgoingMessage.setDice2(dice2); 
@@ -73,19 +75,12 @@ public class ChatServerEndPoint {
 						currentPlayer.buyProperty(prop);
 					}
 				}
-				
-				GamestateMessage gamestateMessage = generateGamestateMessage();
-				Iterator<Session> iterator = chatroomUsers.iterator();
-				while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(gamestateMessage);
-			} else if (action.startsWith("draw")) {
-				if(action.endsWith("chance")) {
-					ChanceCard card = Game.drawChanceCard();
-					card.action(currentPlayer);
-				} else if (action.endsWith("chest")) {
-					CommunityChestCard card = Game.drawCommunityChestCard();
-					card.action(currentPlayer);
-				}
+			} else if (action.startsWith("end")) {
+				Game.nextPlayer();
 			}
+			GamestateMessage gamestateMessage = generateGamestateMessage();
+			Iterator<Session> iterator = chatroomUsers.iterator();
+			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(gamestateMessage);
 			
 		}
 		if (incomingMessage instanceof ChatMessage) {

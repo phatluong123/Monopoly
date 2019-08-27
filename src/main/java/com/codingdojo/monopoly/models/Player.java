@@ -14,7 +14,7 @@ public class Player {
 	@Expose private String name;
 	@Expose private int money = 1500;
 	private int debt = 0;
-	private Integer debtOwedTo = null;
+	private Player debtOwedTo = null;
 	// Save the name of the street they owned
 	@Expose private ArrayList<Property> ownedProperties = new ArrayList<>();
 	// Keep track of number of properties owned in each set.
@@ -68,9 +68,15 @@ public class Player {
 	 * of the property on which the calling Player has landed.
 	 */
 	public void payRent() {
-		Space[] board = Game.getBoard();
-		Property property = (Property) board[this.getCurrentLocation()];
-		this.sendMoney(property.getOwnedBy(), property.getRentCost());
+		int rent = Game.getRentAt(this.currentLocation);
+		Property property = (Property) Game.getBoard()[this.currentLocation];
+		if(rent > this.money) {
+			this.debt += rent;
+			this.debtOwedTo = property.getOwnedBy();
+		}
+		else {
+			this.sendMoney(property.getOwnedBy(), rent);
+		}
 	}
 	
 	/**
@@ -103,9 +109,8 @@ public class Player {
     		doubleRolls = 0;
     	}
     	if(doubleRolls == 3) {
-    		this.setCurrentLocation(10);
     		doubleRolls = 0;
-    		this.setInJail(true);
+    		this.goToJail();
     	}
     	else {
     		this.move(dice1+dice2);
@@ -201,7 +206,7 @@ public class Player {
 		return debt;
 	}
 
-	public Integer getDebtOwedTo() {
+	public Player getDebtOwedTo() {
 		return debtOwedTo;
 	}
 
@@ -209,7 +214,7 @@ public class Player {
 		this.debt = debt;
 	}
 
-	public void setDebtOwedTo(Integer debtOwedTo) {
+	public void setDebtOwedTo(Player debtOwedTo) {
 		this.debtOwedTo = debtOwedTo;
 	}
 	

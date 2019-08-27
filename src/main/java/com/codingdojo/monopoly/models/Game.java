@@ -180,12 +180,9 @@ public class Game {
 		String spaceName = currentSpace.getName();
 		if(currentSpace instanceof Property) {
 			Property currentProperty = (Property) currentSpace;
-			if(currentProperty.getOwnedBy() != null && currentProperty.getOwnedBy() != p) {
+			if(currentProperty.getOwnedBy() != null || currentProperty.getOwnedBy() != p) {
 				//Call function to deduct from current player and give money to owner player, send in current player
 				p.payRent();
-			}
-			else {
-				//Holder method for whatever we decide to implement to buy property if no owner
 			}
 		}
 		else if(currentSpace instanceof OtherSpace) {
@@ -200,20 +197,29 @@ public class Game {
 		}
 		else if(currentSpace instanceof ActionSpace) {
 			if(spaceName =="Community Chest") {
-				ActionCard card = getCard("chest");
-				//Add method to do action of the card
+				CommunityChestCard card = Game.drawCommunityChestCard();
+				card.action(p);
 			}
 			else {
-				ActionCard card = getCard("chance");
-				//Add method to do action of the card
+				ChanceCard card = Game.drawChanceCard();
+				card.action(p);
 			}
 		}
 		else if(currentSpace instanceof TaxSpace) {
 			if(spaceName == "Income Tax") {
-				p.pay(200);
+				if(p.getMoney() > 200)
+					p.pay(200);
+				else {
+					p.addDebt(200);
+				}
 			}
 			else {
-				p.pay(100);
+				if(p.getMoney() > 100) {
+					p.pay(100);
+				}
+				else {
+					p.addDebt(100);
+				}
 			}
 		}
 		
@@ -401,6 +407,11 @@ public class Game {
 				return true;
 			}
 		}
+	}
+	
+	public static int getRentAt(int index) {
+		Property property = (Property) Game.board[index];
+		return property.getRentCost();
 	}
 	
 	public static void goBankrupt(Player player) {
