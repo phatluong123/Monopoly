@@ -36,8 +36,18 @@ public class GameController {
 	@RequestMapping(value="/createplayer", method=RequestMethod.POST)
 	public String newplayer(@RequestParam("playername") String playername, Model model) {
 		Player newplayer = new Player(playername);
-		playerArray.add(newplayer);
-		Game.addPlayer(newplayer);
+		boolean found = false;
+		for(int i = 0; i < playerArray.size(); i++) {
+			if(playerArray.get(i).getName().equals(playername)) {
+				newplayer = playerArray.get(i);
+				playerArray.set(i, newplayer);
+				found = true;
+			}
+		}
+		if (!found) {
+			playerArray.add(newplayer);
+			Game.addPlayer(newplayer);
+		}
 		model.addAttribute("newplayer", newplayer);
 		System.out.println("player size = "+playerArray.size());
 		return "test.jsp";	
