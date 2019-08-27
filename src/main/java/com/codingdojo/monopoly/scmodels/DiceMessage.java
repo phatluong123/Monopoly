@@ -4,6 +4,13 @@ public class DiceMessage implements Message{
 	private String name;
 	private int dice2;
 	private int dice1;
+	private int finalLocation;
+	public int getFinalLocation() {
+		return finalLocation;
+	}
+	public void setFinalLocation(int finalLocation) {
+		this.finalLocation = finalLocation;
+	}
 	public String getName() {
 		return name;
 	}

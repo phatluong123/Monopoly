@@ -68,6 +68,7 @@ public class ChatServerEndPoint {
 				diceoutgoingMessage.setName(username);
 				diceoutgoingMessage.setDice1(dice1);
 				diceoutgoingMessage.setDice2(dice2); 
+				diceoutgoingMessage.setFinalLocation(currentPlayer.getCurrentLocation());
 				userSession.getBasicRemote().sendObject(diceoutgoingMessage);
 				Iterator<Session> iterator = chatroomUsers.iterator();
 				

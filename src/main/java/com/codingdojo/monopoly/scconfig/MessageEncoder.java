@@ -45,6 +45,7 @@ public class MessageEncoder implements Encoder.Text<Message>{
 					.add("name", diceMessage.getName())
 					.add("dice1", diceMessage.getDice1())
 					.add("dice2", diceMessage.getDice2())
+					.add("finalLocation", diceMessage.getFinalLocation())
 					.build().toString();	
 		}
 		else if(message instanceof GamestateMessage) {

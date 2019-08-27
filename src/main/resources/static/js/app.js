@@ -16,7 +16,7 @@ function myMove(player, index1, index2){
 
 
 
-var msg = "";
+var gamestate = "";
 var webSocket = new WebSocket('ws://localhost:8080/chatServerEndPoint');
 window.onload = function() {
 	var str = document.getElementById("usersTextArea").value;
@@ -39,14 +39,48 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 	}
 	
 	else if(jsonData.messageType == "GamestateMessage") {
-		msg = JSON.parse(jsonData.gamestate);
-		console.log(msg);
+		gamestate = JSON.parse(jsonData.gamestate);
+		console.log(gamestate);
 	}
 	
 	else if (jsonData.messageType == "DiceMessage"){
 		var dice = jsonData.dice1 + jsonData.dice2;
 		messagesTextArea.value += jsonData.name+ ":  " + dice + '\n';
 		rolldice(jsonData.dice1, jsonData.dice2);
+	    var count = 0;
+	    var id = setInterval(frame2, 1000);
+	    function frame2() {
+	    	if(count > 0) {
+	    		clearInterval(id);
+	    		let startLocation = 0;
+	    		if(jsonData.finalLocation - (jsonData.dice1 + jsonData.dice2) < 0) {
+	    			startLocation = 40 + (jsonData.finalLocation - (jsonData.dice1 + jsonData.dice2));
+	    		} 
+	    		else {
+	    			startLocation = jsonData.finalLocation - (jsonData.dice1 + jsonData.dice2);
+	    		}
+	    		currentPlayer = "";
+	    		switch(gamestate.currentPlayerIndex) {
+	    		case 1:
+	    			currentPlayer="player2";
+	    			break;
+	    		case 2:
+	    			currentPlayer="player3";
+	    			break;
+	    		case 3:
+	    			currentPlayer="player4";
+	    			break
+	    		default:
+	    			currentPlayer="player1";
+	    		}
+	    		console.log("moving " + currentPlayer + " from " + startLocation + " to " + jsonData.finalLocation );
+	    		myMove(currentPlayer, startLocation, jsonData.finalLocation);
+	    	}
+	    	else {
+	    		count++;
+	    	}
+	    }
+		
 	}
 	
 	else if (jsonData.messageType == "UserMessage") {
