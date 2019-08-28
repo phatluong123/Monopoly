@@ -49,8 +49,12 @@
 				</div>
 				<div class="mid-col">
 						<div class="row dice-bar">
+							<p class="my-auto ml-3"><button onclick="endTurn()" class='btn btn-info ' >End Turn!</button></p>
+							<p class="my-auto ml-3" style="display:hidden" ><button onclick="buy()" class='btn btn-info ' >Buy!</button></p>
 							<p class='ml-auto mr-2 mt-3 d-inline-block '>
+								
 								<button onclick="roll()" class='btn btn-info' >Roll!</button>
+								
 				
 							</p>	
 							<div class='left-die my-auto mr-2' style="height: 50px; width: 50px;">
@@ -59,6 +63,9 @@
 							<div class='right-die my-auto mr-2' style="height: 50px; width: 50px;">
 								<img id="dice2" src='../images/dice1.png'style="height: 50px; width: 50px;">
 							</div>
+						</div>
+						<div>
+						
 						</div>
 					</div>
 				<div class="right-col">
@@ -88,6 +95,12 @@
 					<div class="corner" id="space0">
 						<div id="player1"
 							style="height: 20px; width: 20px; background-color: pink;">
+						</div>
+						<div id="player2"
+							style="height: 20px; width: 20px; background-color: green;">
+						</div>
+						<div id="player3"
+							style="height: 20px; width: 20px; background-color: blue;">
 						</div>
 					</div>
 				</div>
@@ -152,6 +165,8 @@
 				<input type="button" value="Send Message" onClick="send()">
 
 			</div>
+		
+			
 		</div>
 
 

@@ -18,11 +18,15 @@ function myMove(player, index1, index2){
 
 var gamestate = "";
 var webSocket = new WebSocket('ws://localhost:8080/chatServerEndPoint');
+
 window.onload = function() {
 	var str = document.getElementById("usersTextArea").value;
 	console.log(str);
 	webSocket.send(JSON.stringify({
 		'message' : str
+	}));
+	webSocket.send(JSON.stringify({
+		'action' : 'gamestate'
 	}));
 	};
 
@@ -40,6 +44,7 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 	
 	else if(jsonData.messageType == "GamestateMessage") {
 		gamestate = JSON.parse(jsonData.gamestate);
+	
 		console.log(gamestate);
 	}
 	
@@ -172,5 +177,9 @@ function getDiceTwo(){
     return 5;
 }
 
-
+function  endTurn(){
+	webSocket.send(JSON.stringify({
+		'action' : 'end'
+	}))
+}
 
