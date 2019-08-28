@@ -51,13 +51,13 @@ public class ChatServerEndPoint {
 			ActionMessage incomingAction = (ActionMessage)incomingMessage;
 			String action = incomingAction.getAction();
 			Player currentPlayer = Game.getCurrentPlayer();
-			if (action.equals("roll") && (!Player.hasRolled() || Player.getDoubleRolls() > 0)) {
+			if (action.equals("roll")/* && (!Player.hasRolled() || Player.getDoubleRolls() > 0)*/) {
 				DiceMessage diceoutgoingMessage = new DiceMessage();
 				currentPlayer.movePlayer();
 				int[] dice = Game.getLastDiceRoll();
 				Integer dice1 = dice[0];
 				Integer dice2 = dice[1];
-				
+				System.out.println(currentPlayer.getCurrentLocation());
 				Game.doStuff(currentPlayer);
 				diceoutgoingMessage.setName(username)
 						.setDice1(dice1)
