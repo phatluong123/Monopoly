@@ -57,7 +57,15 @@ public class ChatServerEndPoint {
 				int[] dice = Game.getLastDiceRoll();
 				Integer dice1 = dice[0];
 				Integer dice2 = dice[1];
-				System.out.println(currentPlayer.getCurrentLocation());
+				String activity = currentPlayer.getName()
+						.concat(" rolled ")
+						.concat(dice1.toString())
+						.concat(" and ")
+						.concat(dice2.toString())
+						.concat("(")
+						.concat(Integer.toString(dice1 + dice2))
+						.concat(")");
+				Game.addActivityLogItem(activity);
 				Game.doStuff(currentPlayer);
 				diceoutgoingMessage.setName(username)
 						.setDice1(dice1)
@@ -74,27 +82,39 @@ public class ChatServerEndPoint {
 				if(!currentPlayer.rollToGetOutOfJail()) {
 					currentPlayer.setTurnsInJail(currentPlayer.getTurnsInJail() + 1);
 					if(currentPlayer.getTurnsInJail() > 2) {
+						String activity = currentPlayer.getName().concat(" failed to roll out of jail and paid $50!");
+						Game.addActivityLogItem(activity);
 						currentPlayer.payFine();
 					} else {
+						String activity = currentPlayer.getName().concat(" failed to roll out of jail!");
+						Game.addActivityLogItem(activity);
 						Game.nextPlayer();
 					}
+				} else {
+					String activity = currentPlayer.getName().concat(" successfully rolled out of jail!");
+					Game.addActivityLogItem(activity);
 				}
 			} else if (action.equals("jailfine")) {
+				String activity = currentPlayer.getName().concat(" paid $50 to get out of jail.");
+				Game.addActivityLogItem(activity);
 				currentPlayer.payFine();
 			} else if (action.equals("jailcard")) {
+				String activity = currentPlayer.getName().concat(" played a get out of jail free card.");
+				Game.addActivityLogItem(activity);
 				currentPlayer.playGetOutOfJailCard();
 			}
 			
 			// Buy property
 			else if (action.startsWith("buy")) {
 				if (!Game.isSpaceOwned(currentPlayer.getCurrentLocation())) {
-					System.out.println("Space is not owned.");
 					Property prop = (Property)Game.getBoard()[currentPlayer.getCurrentLocation()];
-					System.out.println("Saved space as prop.");
 					if(prop.getPurchaseValue() <= currentPlayer.getMoney()) {
-						System.out.println("In conditional: Player has enough money.");
+						String activity = currentPlayer.getName()
+								.concat(" bought ")
+								.concat(prop.getName())
+								.concat(" for $")
+								.concat(Integer.toString(prop.getPurchaseValue()));
 						currentPlayer.buyProperty(prop);
-						System.out.println("Buy function completed.");
 					}
 				}
 			} 
@@ -102,17 +122,18 @@ public class ChatServerEndPoint {
 			// End turn
 			else if (action.startsWith("end")) {
 				if(currentPlayer.getDebt() > currentPlayer.getMoney()) {
+					String activity = currentPlayer.getName().concat(" went bankrupt!");
+					Game.addActivityLogItem(activity);
 					Game.goBankrupt(currentPlayer);
 				}
+				String activity = currentPlayer.getName().concat(" ended their turn.");
+				Game.addActivityLogItem(activity);
 				Game.nextPlayer();
 			}
 			
 			//Generate gamestate json
-			System.out.println("Generating gamestate");
 			GamestateMessage gamestateMessage = generateGamestateMessage();
-			System.out.println("Generating iterator");
 			Iterator<Session> iterator = chatroomUsers.iterator();
-			System.out.println("Broadcasting gamestate");
 			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(gamestateMessage);
 			
 		}

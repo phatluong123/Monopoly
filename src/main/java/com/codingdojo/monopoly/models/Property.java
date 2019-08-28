@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 public abstract class Property extends Space {
 	private int purchaseValue;
 	private String set;
+	// ownedBy will be stored as the player's UUID (Player.playerID)
 	private String ownedBy = null;
 	private boolean isMortgaged = false;
 	private int mortgage;
@@ -71,7 +72,7 @@ public abstract class Property extends Space {
 	 * Mortgage a property
 	 * <p>
 	 * Sets a property to be mortgaged, and gives money to
-	 * the owner of the property based on its mortage value
+	 * the owner of the property based on its mortgage value
 	 * </p>
 	 * 
 	 * Overridden by the Street class

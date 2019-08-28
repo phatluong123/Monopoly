@@ -234,15 +234,17 @@ public class Player {
 	 * Sends money from the calling Player instance to the owner
 	 * of the property on which the calling Player has landed.
 	 */
-	public void payRent() {
+	public boolean payRent() {
 		int rent = Game.getRentAt(this.currentLocation);
 		Property property = (Property) Game.getBoard()[this.currentLocation];
 		if(rent > this.money) {
 			this.debt += rent;
 			this.debtOwedTo = property.getOwner();
+			return false;
 		}
 		else {
 			this.sendMoney(property.getOwner(), rent);
+			return true;
 		}
 	}
 

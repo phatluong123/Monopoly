@@ -4,7 +4,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Railroad extends Property {
-	private int rent;
+	/**
+	 * Basic rent for when a single Railroad is owned. When more railroads are owned, rent is calculated
+	 * as rent times 2 to the power of the number of railroads owned minus one.
+	 */
+	private int rent = 25;
 	
 	public Railroad() {
 		
@@ -12,7 +16,6 @@ public class Railroad extends Property {
 	
 	public Railroad(String name) {
 		super(name, 200, "railroad");
-		this.rent = 25;
 	}
 
 	public int getRent() {

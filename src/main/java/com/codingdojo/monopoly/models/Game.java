@@ -36,11 +36,10 @@ import com.codingdojo.monopoly.models.cards.SaleStock;
 import com.codingdojo.monopoly.models.cards.SchoolFee;
 import com.codingdojo.monopoly.models.cards.TaxRefund;
 import com.codingdojo.monopoly.models.cards.WonBeautyContest;
-import com.google.gson.annotations.Expose;
 
 @Component
 public class Game {
-	@Expose private static final HashMap<String, Integer> sets = new HashMap<String, Integer>() {
+	private static final HashMap<String, Integer> sets = new HashMap<String, Integer>() {
 		/**
 		 * 
 		 */
@@ -59,7 +58,7 @@ public class Game {
 			put("blue", 2);
 		}
 	};
-	@Expose private static final Space[] board = new Space[] {
+	private static final Space[] board = new Space[] {
 			new OtherSpace("Go"),
 			new Street("Mediterranean Avenue", 60, "brown", 2, 10, 30, 90, 160, 250, 50),
 			new ActionSpace("Community Chest", "chest"),
@@ -101,12 +100,13 @@ public class Game {
 			new TaxSpace("Luxury Tax", 100),
 			new Street("Boardwalk", 400, "blue", 50, 200, 600, 1400, 1700, 2000, 200)
 	};
-	@Expose private static ArrayList<Player> players = new ArrayList<>();
-	@Expose private static ArrayList<Player> bankruptPlayers = new ArrayList<>();
-	@Expose private static Integer turn = 0;
-	@Expose private static Integer currentPlayerIndex = 0;
-	@Expose private static boolean gameStarted = false;
-	@Expose private static int[] lastDiceRoll = { 1, 1 };
+	private static ArrayList<Player> players = new ArrayList<>();
+	private static ArrayList<Player> bankruptPlayers = new ArrayList<>();
+	private static Integer turn = 0;
+	private static Integer currentPlayerIndex = 0;
+	private static boolean gameStarted = false;
+	private static int[] lastDiceRoll = { 1, 1 };
+	private static ArrayList<String> activityLog = new ArrayList<>();
 
 	// Create Community Deck Card
 	private static ArrayList<CommunityChestCard> communityDeck = new ArrayList<>();
@@ -182,43 +182,94 @@ public class Game {
 			Property currentProperty = (Property) currentSpace;
 			if(currentProperty.getOwnedBy() != null && currentProperty.getOwner() != p) {
 				//Call function to deduct from current player and give money to owner player, send in current player
-				p.payRent();
+				if(p.payRent()) {
+					String activity = p.getName()
+							.concat(" landed on ")
+							.concat(spaceName)
+							.concat(" and paid ")
+							.concat(((Property) currentSpace).getOwner().getName())
+							.concat(" $")
+							.concat(Integer.toString(Game.getRentAt(p.getCurrentLocation())))
+							.concat("!");
+					Game.addActivityLogItem(activity);
+				} else {
+					String activity = p.getName()
+							.concat(" landed on ")
+							.concat(spaceName)
+							.concat(" and couldn't afford rent, and now owes ")
+							.concat(((Property) currentSpace).getOwner().getName())
+							.concat(" $")
+							.concat(Integer.toString(Game.getRentAt(p.getCurrentLocation())))
+							.concat("!");
+					Game.addActivityLogItem(activity);
+				}
 			}
 		}
 		else if(currentSpace instanceof OtherSpace) {
 			//Do nothing if go, free parking or jail
 			if(spaceName == "Go" || spaceName == "Free Parking" || spaceName == "Jail") {
-				return;
+				String activity = p.getName()
+						.concat(" landed on ")
+						.concat(spaceName).concat(".");
+				Game.addActivityLogItem(activity);
 			}
 			else {
 				//Set in jail to true, set currentLocation to jail
 				p.goToJail();
+				String activity = p.getName()
+						.concat(" landed on ")
+						.concat(spaceName)
+						.concat(" and was sent to jail!");
+				Game.addActivityLogItem(activity);
 			}
 		}
 		else if(currentSpace instanceof ActionSpace) {
 			if(spaceName =="Community Chest") {
 				CommunityChestCard card = Game.drawCommunityChestCard();
 				card.action(p);
+				String activity = p.getName()
+						.concat(" landed on the Community Chest and drew a card: ")
+						.concat(card.getName());
+				Game.putChestCard(card);
+				Game.addActivityLogItem(activity);
 			}
 			else {
 				ChanceCard card = Game.drawChanceCard();
 				card.action(p);
+				String activity = p.getName()
+						.concat(" landed on Chance and drew a card: ")
+						.concat(card.getName());
+				Game.putChanceCard(card);
+				Game.addActivityLogItem(activity);
 			}
 		}
 		else if(currentSpace instanceof TaxSpace) {
 			if(spaceName == "Income Tax") {
-				if(p.getMoney() > 200)
+				if(p.getMoney() > 200) {
 					p.pay(200);
+					String activity = p.getName()
+							.concat(" paid $200 Income Tax!");
+					Game.addActivityLogItem(activity);
+				}
 				else {
 					p.addDebt(200);
+					String activity = p.getName()
+							.concat(" couldn't afford $200 Income Tax!");
+					Game.addActivityLogItem(activity);
 				}
 			}
 			else {
 				if(p.getMoney() > 100) {
 					p.pay(100);
+					String activity = p.getName()
+							.concat(" paid $100 Luxury Tax!");
+					Game.addActivityLogItem(activity);
 				}
 				else {
 					p.addDebt(100);
+					String activity = p.getName()
+							.concat(" couldn't afford $100 Luxury Tax!");
+					Game.addActivityLogItem(activity);
 				}
 			}
 		}
@@ -427,4 +478,26 @@ public class Game {
 		Collections.shuffle(chanceDeck);
 		Collections.shuffle(communityDeck);
 	}
+
+	public static ArrayList<String> getActivityLog() {
+		return activityLog;
+	}
+
+	public static void addActivityLogItem(String activity) {
+		Game.activityLog.add(0, activity);
+	}
+	
+	public static void setActivityLog(ArrayList<String> activityLog) {
+		Game.activityLog = activityLog;
+	}
+
+	public static void setCommunityDeck(ArrayList<CommunityChestCard> communityDeck) {
+		Game.communityDeck = communityDeck;
+	}
+
+	public static void setChanceDeck(ArrayList<ChanceCard> chanceDeck) {
+		Game.chanceDeck = chanceDeck;
+	}
+	
+	
 }
