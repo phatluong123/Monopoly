@@ -114,6 +114,7 @@ public class ChatServerEndPoint {
 								.concat(prop.getName())
 								.concat(" for $")
 								.concat(Integer.toString(prop.getPurchaseValue()));
+						Game.addActivityLogItem(activity);
 						currentPlayer.buyProperty(prop);
 					}
 				}
