@@ -52,11 +52,11 @@
 				</div>
 				<div class="mid-col">
 						<div class="row dice-bar">
-							<p class="my-auto ml-3"><button onclick="endTurn()" class='btn btn-info ' >End Turn!</button></p>
-							<p class="my-auto ml-3" style="display:hidden" ><button onclick="buy()" class='btn btn-info ' >Buy!</button></p>
+							<p class="my-auto ml-3"><button onclick="endTurn()" class='btn btn-info ' style="display:none" id="end-button">End Turn!</button></p>
+							<p class="my-auto ml-3"  ><button onclick="buy()" class='btn btn-info ' id="buy-button" style="display:none">Buy!</button></p>
 							<p class='ml-auto mr-2 mt-3 d-inline-block '>
 								
-								<button onclick="roll()" class='btn btn-info' >Roll!</button>
+								<button onclick="roll()" class='btn btn-info' style="display:none;" id="roll-button">Roll!</button>
 								
 				
 							</p>	
@@ -70,7 +70,11 @@
 						<div>
 						
 						</div>
+					<div id="activity-log"  class="activity-log mx-auto" style="  padding:0; margin:0; font-size:12pt;">
+						
 					</div>
+					</div>
+
 				<div class="right-col">
 					<div class="side-space" id="space31"></div>
 					<div class="side-space" id="space32"></div>
@@ -167,11 +171,9 @@
 					<option value=&#x1F624>
 					<option value=&#x1F625>
 				</datalist>
-
 				<input type="button" value="Send Message" onClick="send()">
-
 			<div id="accordion">
-				<div id="playerbox1" class="card" style="display:none; background-color:#e9ede8;">
+				<div id="playerbox1" class="card mt-2" style="display:none; background-color:#e9ede8;">
 					<div class='card-header'>
 						<h5>
 						<p id="player1name"><p>
@@ -186,7 +188,7 @@
 						</div>
 					</div>
 				</div>
-				<div id="playerbox2" class="card" style="display:none; background-color:#e9ede8;">
+				<div id="playerbox2" class="card mt-2" style="display:none; background-color:#e9ede8;">
 					<div class='card-header'>
 						<h5>
 						<p id="player2name"><p>
@@ -199,7 +201,7 @@
 						</div>
 					</div>
 				</div>
-				<div id="playerbox3" class="card" style="display:none; background-color:#e9ede8;">
+				<div id="playerbox3" class="card mt-2" style="display:none; background-color:#e9ede8;">
 					<div class='card-header'>
 						<h5>
 						<p id="player3name"><p>
@@ -212,7 +214,7 @@
 						</div>
 					</div>
 				</div>
-				<div id="playerbox4" class="card" style="display:none; background-color:#e9ede8;">
+				<div id="playerbox4" class="card mt-2" style="display:none; background-color:#e9ede8;">
 					<div class='card-header'>
 						<h5>
 						<p id="player4name"><p>
@@ -228,6 +230,6 @@
 			</div>
 		</div>
 	</div>
-	</div>
+</div>
 </body>
 </html>

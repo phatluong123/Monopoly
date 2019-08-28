@@ -51,7 +51,7 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 			console.log("player = "+playersList[i].name + playersList[i].money);
 			$('#player'+(i+1)).show();
 			$('#playerbox'+(i+1)).show();
-			document.getElementById("player"+(i+1)+"name").innerHTML = "Name :" + playersList[i].name +" Money = " + playersList[i].money + "  Numer of Properties = " +playersList[i].ownedProperties.length; 
+			document.getElementById("player"+(i+1)+"name").innerHTML = playersList[i].name +" " + "Money: $" + playersList[i].money + "<br> Properties: " + playersList[i].ownedProperties.length; 
 			document.getElementById("listproperties").innerHTML="";
 			for ( var j=0;j< playersList[i].ownedProperties.length;j++){
 				var ul = document.getElementById("listproperties");
@@ -59,12 +59,39 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 				li.className = "list-group-item";
 				  li.appendChild(document.createTextNode(playersList[i].ownedProperties[j].name));
 				  ul.appendChild(li);
-			}
-
-		
-			
+			}	
+		}
+		document.getElementById('activity-log').innerHTML = '';
+		for (var a=0; a<gamestate.activityLog.length;a++){
+			var p = document.createElement("P");
+			p.innerHTML = gamestate.activityLog[a];
+			document.getElementById('activity-log').appendChild(p);
 			
 		}
+		for (var i=0; i<playersList.length;i++){
+			
+			if (i==gamestate.currentPlayerIndex){
+				
+				if (playersList[i].doubleRolls == 0  && playersList[i].hasRolled == false ){
+					$('#end-button').hide();
+					$('#roll-button').show();
+				}
+				
+				else if (gamestate.board[playersList[i].currentLocation].ownedBy === null  ){
+					$('#buy-button').show();
+				}
+				else if (gamestate.board[playersList[i].currentLocation].ownedBy !== null  || gamestate.board[playersList[i].currentLocation].ownedBy === undefined ){
+					$('#buy-button').hide();
+				}
+				if (playersList[i].hasRolled == true && playersList[i].doubleRolls == 0){
+					$('#end-button').show();
+					$('#roll-button').hide();
+				}
+
+			}
+
+		}
+
 		console.log(gamestate);
 	}
 	
@@ -137,6 +164,7 @@ function send() {
 	webSocket.send(JSON.stringify({
 		'message' : messagetextField.value
 	}));
+	
 	messagetextField.value="";
 }
 
@@ -144,6 +172,7 @@ function buy() {
 	webSocket.send(JSON.stringify({
 		'action' : 'buy'
 	}))
+
 }
 
 function roll(){

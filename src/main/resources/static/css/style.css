@@ -129,3 +129,26 @@ div.dice-bar{
 #messagetextField{
 	width:250px;
 }
+
+.activity-log{
+	font-size:10pt;
+	height:190px;
+	width: 80%;
+	overflow:auto;
+}
+.activity-log p{
+	margin:0px;
+	padding:0px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
