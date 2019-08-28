@@ -171,7 +171,7 @@
 				<input type="button" value="Send Message" onClick="send()">
 
 			<div id="accordion">
-				<div id="playerbox1" class="card " style="display:none; background-color:#e9ede8;">
+				<div id="playerbox1" class="card" style="display:none; background-color:#e9ede8;">
 					<div class='card-header'>
 						<h5>
 						<p id="player1name"><p>
