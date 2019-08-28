@@ -2,9 +2,9 @@
 
 * {
 
-	box-sizing:border-box;
+/* 	box-sizing:border-box;
 	margin: 0;
-	padding: 0;
+	padding: 0; */
 	outline:1px solid red;
 
 }
@@ -12,10 +12,13 @@
 
 .wrapper{
 	max-height:900px;
-	max-width:1200px;
+	max-width:1400px;
 }
 
 .board {
+	box-sizing:border-box;
+	margin: 0;
+	padding: 0;
 	font-size:0px;
 	width: 780px;
 	height: 780px;
@@ -27,7 +30,7 @@
 }
 
 .player-panel{
-	width:400px;
+	width:420px;
 	height:780px;
 	display:inline-block;
 	vertical-align: top;
@@ -90,15 +93,38 @@
 
 
 .user-message {
-	height:100px;
-	width:90%;
+	margin-left:10px;
+	height:auto;
+	width:auto;
+	background-color:#76f22e;
+	padding:10px;
+	border-radius:15px;
 }
 
 h3{
+	
 	font-size: 14pt; !important;
+	word-spacing:140px;
 }
 
 div.dice-bar{
 	width: contain;
 	margin: 0px;
+}
+
+#messagesTextArea{
+	border-radius:10px;
+	display:inline-block;
+	width:280px;
+	height:100px;
+}
+#usersTextArea{
+	border-radius:10px;
+	display:inline-block;
+	width:100px;
+	height:100px;
+}
+
+#messagetextField{
+	width:250px;
 }

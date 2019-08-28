@@ -43,14 +43,33 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 	}
 	
 	else if(jsonData.messageType == "GamestateMessage") {
-		gamestate = JSON.parse(jsonData.gamestate);
-	
+		gamestate = JSON.parse(jsonData.gamestate);	
+		var playersList = gamestate.players;
+		console.log("player list = "+ playersList);
+		
+		for (var i=0; i<playersList.length;i++){
+			console.log("player = "+playersList[i].name + playersList[i].money);
+			$('#player'+(i+1)).show();
+			$('#playerbox'+(i+1)).show();
+			document.getElementById("player"+(i+1)+"name").innerHTML = "Name :" + playersList[i].name +" Money = " + playersList[i].money + "  Numer of Properties = " +playersList[i].ownedProperties.length; 
+			document.getElementById("listproperties").innerHTML="";
+			for ( var j=0;j< playersList[i].ownedProperties.length;j++){
+				var ul = document.getElementById("listproperties");
+				var li = document.createElement("li");
+				li.className = "list-group-item";
+				  li.appendChild(document.createTextNode(playersList[i].ownedProperties[j].name));
+				  ul.appendChild(li);
+			}
+
+		
+			
+			
+		}
 		console.log(gamestate);
 	}
 	
 	else if (jsonData.messageType == "DiceMessage"){
 		var dice = jsonData.dice1 + jsonData.dice2;
-		messagesTextArea.value += jsonData.name+ ":  " + dice + '\n';
 		rolldice(jsonData.dice1, jsonData.dice2);
 	    var count = 0;
 	    var id = setInterval(frame2, 1000);
@@ -80,11 +99,13 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 	    		}
 	    		console.log("moving " + currentPlayer + " from " + startLocation + " to " + jsonData.finalLocation );
 	    		myMove(currentPlayer, startLocation, jsonData.finalLocation);
+	    		messagesTextArea.value += jsonData.name+ ":  " + dice + '\n';
 	    	}
 	    	else {
 	    		count++;
 	    	}
 	    }
+		
 		
 	}
 	
@@ -183,3 +204,6 @@ function  endTurn(){
 	}))
 }
 
+setInterval(function(){
+	document.getElementById('messagesTextArea').scrollTop = document.getElementById('messagesTextArea').scrollHeight;
+}, 1);

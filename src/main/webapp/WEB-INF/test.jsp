@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Dash board</title>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/style.css">
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
@@ -18,6 +20,7 @@
 	crossorigin="anonymous"> 
 <script type="text/javascript" src="../js/app.js"></script>
 <script type="text/javascript" src="../js/formSubmit.js"></script>
+
 </head>
 <body>
 	<div class="wrapper">
@@ -94,24 +97,27 @@
 					<div class="top-space" id="space1"></div>
 					<div class="corner" id="space0">
 						<div id="player1"
-							style="height: 20px; width: 20px; background-color: pink;">
+							style="display:none; height: 20px; width: 20px; background-color: pink;">
 						</div>
 						<div id="player2"
-							style="height: 20px; width: 20px; background-color: green;">
+							style="display:none; height: 20px; width: 20px; background-color: green;">
 						</div>
 						<div id="player3"
-							style="height: 20px; width: 20px; background-color: blue;">
+							style="display:none; height: 20px; width: 20px; background-color: blue;">
 						</div>
+						<div id="player4"
+							style="display:none; height: 20px; width: 20px; background-color: grey;">
+						</div>
+						
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="player-panel">
 			<div class="user-message">
-				<h3>Messenger Players</h3>
+				<h3>Messenger     Players</h3>
 				<textarea id='messagesTextArea'></textarea>
-				<textarea id="usersTextArea"><c:out
-						value="${newplayer.name }" /></textarea>
+				<textarea id="usersTextArea"><c:out value="${newplayer.name }" /></textarea>
 				<br> <input id="messagetextField" type="text" list="emoji">
 				<datalist id="emoji">
 					<option value=&#x1F354>
@@ -164,9 +170,63 @@
 
 				<input type="button" value="Send Message" onClick="send()">
 
-			</div>
+			<div id="accordion">
+				<div id="playerbox1" class="card" style="display:none; background-color:#e9ede8;">
+					<div class='card-header'>
+						<h5>
+						<p id="player1name"><p>
+						<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox1toggle">List of Properties</button>
+						</h5>
+					</div>	
+					<div id="playerbox1toggle" class='collapse hide' data-parent="#accordion">
+						<div class='card-body'>
+							<ul id="listproperties" class='list-group'>
+								<li ></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div id="playerbox2" class="card" style="display:none; background-color:#e9ede8;">
+					<div class='card-header'>
+						<h5>
+						<p id="player2name"><p>
+						<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox2toggle">List of Properties</button>
+						</h5>
+					</div>	
+					<div id="playerbox2toggle" class='collapse hide' data-parent="#accordion">
+						<div class='card-body'>
+							Test Properties
+						</div>
+					</div>
+				</div>
+				<div id="playerbox3" class="card" style="display:none; background-color:#e9ede8;">
+					<div class='card-header'>
+						<h5>
+						<p id="player3name"><p>
+						<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox3toggle">List of Properties</button>
+						</h5>
+					</div>	
+					<div id="playerbox3toggle" class='collapse hide' data-parent="#accordion">
+						<div class='card-body'>
+							Test Properties
+						</div>
+					</div>
+				</div>
+				<div id="playerbox4" class="card" style="display:none; background-color:#e9ede8;">
+					<div class='card-header'>
+						<h5>
+						<p id="player4name"><p>
+						<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox4toggle">List of Properties</button>
+						</h5>
+					</div>	
+					<div id="playerbox4toggle" class='collapse hide' data-parent="#accordion">
+						<div class='card-body'>
+							Test Properties
+						</div>
+					</div>
+				</div>
 		
-			
+			</div>
 		</div>
 
 
