@@ -7,7 +7,7 @@ function myMove(player, index1, index2){
 	function moveObject(){
 	    index1++;
 	    index1 = (index1%40);
-	    $(`#${player}`).appendTo(`#div${index1}`);
+	    $(`#${player}`).appendTo(`#space${index1}`);
 	    if (index1 == index2){
 	        clearInterval(interval);
 	    }
@@ -152,8 +152,6 @@ function rolldice(d1, d2 ){
             //Math.floor((Math.random() * 6));
             document.getElementById("dice1").src = diceImages[dice1];
             document.getElementById("dice2").src = diceImages[dice2];
-            dice1Value.value=dice1+1;
-            dice2Value.value=dice2+1;
             clearInterval(id);
             
         }

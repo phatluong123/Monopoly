@@ -1,110 +1,103 @@
 @charset "UTF-8";
 
 * {
+
+	box-sizing:border-box;
 	margin: 0;
 	padding: 0;
-	border:1px  solid black;
+	outline:1px solid red;
 
 }
 
-body {
-	margin-left: 50px;
-	margin-top: 20px;
+
+.wrapper{
+	max-height:900px;
+	max-width:1200px;
 }
 
-
-
-
-.boardPage {
-
-	width: 856px;
-	height: 856px;
-	background-image: url("../images/board.jpg");
+.board {
+	font-size:0px;
+	width: 780px;
+	height: 780px;
+ 	background-image: url("../images/board.jpg"); 
 	background-size: 100%;
 	background-repeat: no-repeat;
-display:inline-block;
+	display:inline-block;
 
 }
 
-.row {
-	margin: 0;
-	padding: 0;
-	height: 113px;
+.player-panel{
+	width:400px;
+	height:780px;
+	display:inline-block;
 	vertical-align: top;
 }
 
-.street {
-	width: 70px;
-	display: inline-block;
-	border: red;
-	vertical-align: top;
+.top-row{
+	height:100px;
+	width:100%;
+}
+.mid-row{
+
+	height:580px;
+	width:100%;
+}
+.bot-row{
+	height:100px;
+	width:100%;
 }
 
-.corner {
-	width: 113px;
-	border: red;
-	display: inline-block;
-	vertical-align: top;
+.left-col{
+	
+	height:100%;
+	width:100px;
+		display:inline-block;
 }
 
-.horizontal-street {
-	margin: 0;
-	padding: 0;
-	display: inline-block;
-}
-
-.street-body {
-	vertical-align: top;
-	width: 113px;
-	border: 1px solid green;
-	height: 70px;
-	vertical-align: top;
-}
-
-.empty-space {
-	width: 621px;
-	height: 630px;
-	border: 1px solid blue;
-	display: inline-block;
-	vertical-align: top;
-}
-
-.player1 img {
-	width: 30%;
-
-}
-
-.player1 {
-	position: relative;
-	top: 70px;
-	left: 70px;
-}
-
-
-.waiting-room{
-	display:none;
-}
-
-
-.user-message{
+.mid-col{
+	height:100%;
+	width:580px;
 	display:inline-block;
 	vertical-align:top;
 }
-.emoji {
-	display:inline;
-}
-.emoji option{
-	display:inline;
-}
 
-
-.user-message{
-	border-radius:10px;
-	padding:5px;
-	background-color:#8aca28;
+.right-col{
+	
+	height:100%;
+	width:100px;
+	display:inline-block;
+	vertical-align:top;
 }
 
+.corner{
+
+	display:inline-block;
+	width:100px;
+	height:100px;
+}
+.top-space{
+
+	display:inline-block;
+	height:100px;
+	width:64.4444444444px;
+}
+
+.side-space{
+	width:100px;
+	height:64.444444444px;
+}
 
 
+.user-message {
+	height:100px;
+	width:90%;
+}
 
+h3{
+	font-size: 14pt; !important;
+}
 
+div.dice-bar{
+	width: contain;
+	margin: 0px;
+}
