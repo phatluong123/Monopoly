@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public abstract class Property extends Space {
 	private int purchaseValue;
 	private String set;
-	private Integer ownedBy = null;
+	private String ownedBy = null;
 	private boolean isMortgaged = false;
 	private int mortgage;
 	private int unmortgage;
@@ -23,62 +23,50 @@ public abstract class Property extends Space {
 		this.unmortgage = mortgage + (mortgage / 10);
 	}
 
+	public int getMortgage() {
+		return mortgage;
+	}
+	
+	public String getOwnedBy() {
+		return ownedBy;
+	}
+
+	/**
+	 * Finds the owner of a given property as a Player instance.
+	 * @return Player if the owner exists in the game; else null
+	 */
+	public Player getOwner() {
+		for(Player p: Game.getPlayers()) {
+			if (p.getPlayerID().equals(this.getOwnedBy())) {
+				return p;
+			}
+		}
+		return null;
+	}
+	
 	public int getPurchaseValue() {
 		return purchaseValue;
 	}
 	
+	/**
+	 * Returns the cost of rent for a given property, based upon
+	 * ownership and other conditions for each type of property.
+	 * @return Returns int of the rental cost
+	 */
+	public abstract int getRentCost();
+
 	public String getSet() {
 		return set;
-	}
-
-	public Integer getOwnedBy() {
-		return ownedBy;
-	}
-	
-	public Player getOwner() {
-		return Game.getPlayers().get(this.getOwnedBy());
-	}
-	
-	public void setOwner(Player player) {
-		this.setOwnedBy(Game.getPlayers().indexOf(player));
-	}
-
-	public boolean isMortgaged() {
-		return isMortgaged;
-	}
-
-	public int getMortgage() {
-		return mortgage;
 	}
 
 	public int getUnmortgage() {
 		return unmortgage;
 	}
 
-	public void setPurchaseValue(int purchaseValue) {
-		this.purchaseValue = purchaseValue;
-	}
-	
-	public void setSet(String set) {
-		this.set = set;
+	public boolean isMortgaged() {
+		return isMortgaged;
 	}
 
-	public void setOwnedBy(Integer ownedBy) {
-		this.ownedBy = ownedBy;
-	}
-
-	public void setMortgaged(boolean isMortgaged) {
-		this.isMortgaged = isMortgaged;
-	}
-
-	public void setMortgage(int mortgage) {
-		this.mortgage = mortgage;
-	}
-
-	public void setUnmortgage(int unmortgage) {
-		this.unmortgage = unmortgage;
-	}
-	
 	/**
 	 * Mortgage a property
 	 * <p>
@@ -93,15 +81,36 @@ public abstract class Property extends Space {
 		this.isMortgaged = true;
 	}
 	
+	public void setMortgage(int mortgage) {
+		this.mortgage = mortgage;
+	}
+
+	public void setMortgaged(boolean isMortgaged) {
+		this.isMortgaged = isMortgaged;
+	}
+
+	public void setOwnedBy(String ownedBy) {
+		this.ownedBy = ownedBy;
+	}
+
+	public void setOwner(Player player) {
+		this.setOwnedBy(player.getPlayerID());
+	}
+
+	public void setPurchaseValue(int purchaseValue) {
+		this.purchaseValue = purchaseValue;
+	}
+	
+	public void setSet(String set) {
+		this.set = set;
+	}
+	
+	public void setUnmortgage(int unmortgage) {
+		this.unmortgage = unmortgage;
+	}
+	
 	public void unmortgageProperty() {
 		this.getOwner().pay(this.unmortgage);
 		this.isMortgaged = false;
 	}
-	
-	/**
-	 * Returns the cost of rent for a given property, based upon
-	 * ownership and other conditions for each type of property.
-	 * @return Returns int of the rental cost
-	 */
-	public abstract int getRentCost();
 }
