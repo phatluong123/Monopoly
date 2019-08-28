@@ -16,7 +16,7 @@ public class Utility extends Property {
 	@Override
 	public int getRentCost() {
 		int roll = Game.rollDie() + Game.rollDie();
-		boolean ownsAll = Game.ownsFullSet(this.getOwnedBy(), this.getSet());
+		boolean ownsAll = Game.ownsFullSet(this.getOwner(), this.getSet());
 		int multiple = 4;
 		if(ownsAll) multiple = 10;
 		return roll * multiple;

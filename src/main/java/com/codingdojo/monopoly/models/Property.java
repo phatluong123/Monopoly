@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public abstract class Property extends Space {
 	private int purchaseValue;
 	private String set;
-	private Player ownedBy = null;
+	private Integer ownedBy = null;
 	private boolean isMortgaged = false;
 	private int mortgage;
 	private int unmortgage;
@@ -31,8 +31,16 @@ public abstract class Property extends Space {
 		return set;
 	}
 
-	public Player getOwnedBy() {
+	public Integer getOwnedBy() {
 		return ownedBy;
+	}
+	
+	public Player getOwner() {
+		return Game.getPlayers().get(this.getOwnedBy());
+	}
+	
+	public void setOwner(Player player) {
+		this.setOwnedBy(Game.getPlayers().indexOf(player));
 	}
 
 	public boolean isMortgaged() {
@@ -55,7 +63,7 @@ public abstract class Property extends Space {
 		this.set = set;
 	}
 
-	public void setOwnedBy(Player ownedBy) {
+	public void setOwnedBy(Integer ownedBy) {
 		this.ownedBy = ownedBy;
 	}
 
@@ -81,12 +89,12 @@ public abstract class Property extends Space {
 	 * Overridden by the Street class
 	 */
 	public void mortgageProperty() {
-		this.getOwnedBy().earn(this.mortgage);
+		this.getOwner().earn(this.mortgage);
 		this.isMortgaged = true;
 	}
 	
 	public void unmortgageProperty() {
-		this.getOwnedBy().pay(this.unmortgage);
+		this.getOwner().pay(this.unmortgage);
 		this.isMortgaged = false;
 	}
 	

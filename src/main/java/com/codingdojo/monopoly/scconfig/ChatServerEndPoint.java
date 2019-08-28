@@ -163,7 +163,7 @@ public class ChatServerEndPoint {
 		System.out.println("Begin error log output:");
 		System.out.println("Throwable message: " + throwable.getMessage());
 		System.out.println(throwable.toString());
-		//throwable.printStackTrace();
+		throwable.printStackTrace();
 	}
 	
 	private GamestateMessage generateGamestateMessage() {

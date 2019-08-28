@@ -74,10 +74,10 @@ public class Player {
 		Property property = (Property) Game.getBoard()[this.currentLocation];
 		if(rent > this.money) {
 			this.debt += rent;
-			this.debtOwedTo = property.getOwnedBy();
+			this.debtOwedTo = property.getOwner();
 		}
 		else {
-			this.sendMoney(property.getOwnedBy(), rent);
+			this.sendMoney(property.getOwner(), rent);
 		}
 	}
 	
@@ -152,7 +152,7 @@ public class Player {
 
 	public void addProperty(Property property) {
     	ArrayList<Property> properties = getOwnedProperties();
-    	property.setOwnedBy(this);
+    	property.setOwner(this);
     	properties.add(property);
     	setOwnedProperties(properties);
     }
@@ -172,35 +172,19 @@ public class Player {
     }
     
     public void buyProperty(Property property) {
-    	System.out.println("Money at start: " + this.money);
     	String set = property.getSet();
     	ArrayList<Property> properties = this.getOwnedProperties();
-    	System.out.println(properties);
     	HashMap<String, Integer> sets = this.getSetsOwned();
-    	System.out.println(sets);
     	this.money -= property.getPurchaseValue();
     	if(sets.containsKey(set)) {
     		sets.put(set, sets.get(set) + 1);
     	} else {
     		sets.put(set, 1);
     	}
-    	property.setOwnedBy(this);
+    	property.setOwner(this);
     	properties.add(property);
     	this.setsOwned = sets;
     	this.ownedProperties = properties;
-    	System.out.println(this.setsOwned);
-    	System.out.println(this.ownedProperties);
-    	System.out.println("Owned by: " + ((Property) Game.getBoard()[this.currentLocation]).getOwnedBy().getName());
-    	System.out.println("Money at end: " + this.money);
-    	for(int i = 0; i < Game.getBoard().length; i++) {
-    		System.out.print(Game.getBoard()[i].getName());
-    		if(Game.getBoard()[i] instanceof Property) {
-    			System.out.println(" Owned by: " + ((Property) Game.getBoard()[i]).getOwnedBy());
-    		} else {
-    			System.out.println(" This is not a property.");
-    		}
-    	}
-    	System.out.println("game board size: " + Game.getBoard().length);
     }
     
     public Integer getNumOfSetOwned(String set) {

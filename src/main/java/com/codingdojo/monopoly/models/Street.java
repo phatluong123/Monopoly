@@ -134,10 +134,10 @@ public class Street extends Property {
 	 * has max numHouses value, else if player has insufficient funds
 	 */
 	public boolean buyStructure() {
-		if(!Game.ownsFullSet(this.getOwnedBy(), this.getSet())) return false;
+		if(!Game.ownsFullSet(this.getOwner(), this.getSet())) return false;
 		if(this.numHouses >= 5) return false;
-		if(this.getOwnedBy().getMoney() < this.getHousingCost()) return false;
-		this.getOwnedBy().pay(this.getHousingCost());
+		if(this.getOwner().getMoney() < this.getHousingCost()) return false;
+		this.getOwner().pay(this.getHousingCost());
 		this.numHouses++;
 		return true;
 	}
@@ -149,7 +149,7 @@ public class Street extends Property {
 	public boolean sellStructure() {
 		if(this.numHouses < 1) return false;
 		this.numHouses--;
-		this.getOwnedBy().earn(this.getHousingCost()/2);
+		this.getOwner().earn(this.getHousingCost()/2);
 		return true;
 	}
 	
@@ -169,7 +169,7 @@ public class Street extends Property {
 		case 4: return h4;
 		case 5: return hotel;
 		default: 
-			if(Game.ownsFullSet(this.getOwnedBy(), this.getSet())) return rentColorSet;
+			if(Game.ownsFullSet(this.getOwner(), this.getSet())) return rentColorSet;
 			else return rent;
 		}
 	}
@@ -177,10 +177,10 @@ public class Street extends Property {
 	@Override
 	public void mortgageProperty() {
 		if (this.numHouses > 0) {
-			this.getOwnedBy().earn(this.numHouses * (this.housingCost / 2));
+			this.getOwner().earn(this.numHouses * (this.housingCost / 2));
 			this.numHouses = 0;
 		}
-		this.getOwnedBy().earn(this.getMortgage());
+		this.getOwner().earn(this.getMortgage());
 		this.setMortgaged(true);
 	}
 }

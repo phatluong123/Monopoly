@@ -29,6 +29,6 @@ public class Railroad extends Property {
 
 	@Override
 	public int getRentCost() {
-		return (int) (rent * (Math.pow(2.0, this.getOwnedBy().getNumOfSetOwned(this.getSet()) - 1)));
+		return (int) (rent * (Math.pow(2.0, this.getOwner().getNumOfSetOwned(this.getSet()) - 1)));
 	}
 }
