@@ -154,7 +154,6 @@ public class ChatServerEndPoint {
 	@OnError
 	public void onError(Session session, Throwable throwable) {
 		System.out.println("error");
-		System.out.println(throwable.getClass().toString());
 		System.out.println(throwable.getMessage());
 		throwable.printStackTrace();
 	}

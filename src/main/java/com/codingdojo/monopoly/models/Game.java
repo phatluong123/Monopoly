@@ -180,7 +180,7 @@ public class Game {
 		String spaceName = currentSpace.getName();
 		if(currentSpace instanceof Property) {
 			Property currentProperty = (Property) currentSpace;
-			if(currentProperty.getOwnedBy() != null || currentProperty.getOwnedBy() != p) {
+			if(currentProperty.getOwnedBy() != null && currentProperty.getOwnedBy() != p) {
 				//Call function to deduct from current player and give money to owner player, send in current player
 				p.payRent();
 			}
