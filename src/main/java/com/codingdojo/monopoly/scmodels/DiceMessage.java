@@ -8,26 +8,30 @@ public class DiceMessage implements Message{
 	public int getFinalLocation() {
 		return finalLocation;
 	}
-	public void setFinalLocation(int finalLocation) {
+	public DiceMessage setFinalLocation(int finalLocation) {
 		this.finalLocation = finalLocation;
+		return this;
 	}
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public DiceMessage setName(String name) {
 		this.name = name;
+		return this;
 	}
 	public int getDice2() {
 		return dice2;
 	}
-	public void setDice2(int dice2) {
+	public DiceMessage setDice2(int dice2) {
 		this.dice2 = dice2;
+		return this;
 	}
 	public int getDice1() {
 		return dice1;
 	}
-	public void setDice1(int dice1) {
+	public DiceMessage setDice1(int dice1) {
 		this.dice1 = dice1;
+		return this;
 	}
 	
 }

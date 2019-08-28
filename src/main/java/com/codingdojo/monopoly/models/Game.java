@@ -364,6 +364,8 @@ public class Game {
 	}
 	
 	public static void nextPlayer() {
+		Player.setHasRolled(false);
+		Player.setDoubleRolls(0);
 		if(Game.currentPlayerIndex >= Game.players.size() - 1) {
 			Game.nextTurn();
 			Game.currentPlayerIndex = 0;
@@ -381,6 +383,8 @@ public class Game {
 		Random r = new Random();
 		int dice1 = r.nextInt(6) + 1;
 		int dice2 = r.nextInt(6) + 1;
+		Game.lastDiceRoll[0] = dice1;
+		Game.lastDiceRoll[1] = dice2;
 		return new int[] {dice1, dice2};
 	}
 	

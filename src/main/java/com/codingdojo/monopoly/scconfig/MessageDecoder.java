@@ -8,7 +8,6 @@ import javax.websocket.DecodeException;
 import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
 
-import com.codingdojo.monopoly.models.Player;
 import com.codingdojo.monopoly.scmodels.ActionMessage;
 import com.codingdojo.monopoly.scmodels.ChatMessage;
 import com.codingdojo.monopoly.scmodels.Message;

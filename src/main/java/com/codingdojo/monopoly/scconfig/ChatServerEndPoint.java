@@ -20,8 +20,6 @@ import org.springframework.stereotype.Component;
 import com.codingdojo.monopoly.models.Game;
 import com.codingdojo.monopoly.models.Player;
 import com.codingdojo.monopoly.models.Property;
-import com.codingdojo.monopoly.models.cards.ChanceCard;
-import com.codingdojo.monopoly.models.cards.CommunityChestCard;
 import com.codingdojo.monopoly.scmodels.ActionMessage;
 import com.codingdojo.monopoly.scmodels.ChatMessage;
 import com.codingdojo.monopoly.scmodels.DiceMessage;
@@ -47,11 +45,13 @@ public class ChatServerEndPoint {
 	@OnMessage
 	public void handleMessage(Message incomingMessage, Session userSession) throws IOException, EncodeException, NoSuchMethodException, ScriptException {
 		String username = (String) userSession.getUserProperties().get("username");
+		
+		// Dice roll for movement
 		if (incomingMessage instanceof ActionMessage) {
 			ActionMessage incomingAction = (ActionMessage)incomingMessage;
 			String action = incomingAction.getAction();
 			Player currentPlayer = Game.getCurrentPlayer();
-			if (action.equals("roll")) {
+			if (action.equals("roll") && (!Player.hasRolled() || Player.getDoubleRolls() > 0)) {
 				DiceMessage diceoutgoingMessage = new DiceMessage();
 				currentPlayer.movePlayer();
 				int[] dice = Game.getLastDiceRoll();
@@ -59,25 +59,51 @@ public class ChatServerEndPoint {
 				Integer dice2 = dice[1];
 				
 				Game.doStuff(currentPlayer);
-				
-				diceoutgoingMessage.setName(username);
-				diceoutgoingMessage.setDice1(dice1);
-				diceoutgoingMessage.setDice2(dice2); 
-				diceoutgoingMessage.setFinalLocation(currentPlayer.getCurrentLocation());
-				userSession.getBasicRemote().sendObject(diceoutgoingMessage);
+				diceoutgoingMessage.setName(username)
+						.setDice1(dice1)
+						.setDice2(dice2)
+						.setFinalLocation(currentPlayer.getCurrentLocation());
+				//userSession.getBasicRemote().sendObject(diceoutgoingMessage);
 				Iterator<Session> iterator = chatroomUsers.iterator();
 				
 				while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(diceoutgoingMessage);
-			} else if (action.startsWith("buy")) {
+			} 
+			
+			// Jail options
+			else if (action.equals("jailroll")){
+				if(!currentPlayer.rollToGetOutOfJail()) {
+					currentPlayer.setTurnsInJail(currentPlayer.getTurnsInJail() + 1);
+					if(currentPlayer.getTurnsInJail() > 2) {
+						currentPlayer.payFine();
+					} else {
+						Game.nextPlayer();
+					}
+				}
+			} else if (action.equals("jailfine")) {
+				currentPlayer.payFine();
+			} else if (action.equals("jailcard")) {
+				currentPlayer.playGetOutOfJailCard();
+			}
+			
+			// Buy property
+			else if (action.startsWith("buy")) {
 				if (!Game.isSpaceOwned(currentPlayer.getCurrentLocation())) {
 					Property prop = (Property)Game.getBoard()[currentPlayer.getCurrentLocation()];
 					if(prop.getPurchaseValue() <= currentPlayer.getMoney()) {
 						currentPlayer.buyProperty(prop);
 					}
 				}
-			} else if (action.startsWith("end")) {
+			} 
+			
+			// End turn
+			else if (action.startsWith("end")) {
+				if(currentPlayer.getDebt() > currentPlayer.getMoney()) {
+					Game.goBankrupt(currentPlayer);
+				}
 				Game.nextPlayer();
 			}
+			
+			//Generate gamestate json
 			GamestateMessage gamestateMessage = generateGamestateMessage();
 			Iterator<Session> iterator = chatroomUsers.iterator();
 			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(gamestateMessage);
@@ -129,8 +155,8 @@ public class ChatServerEndPoint {
 	public void onError(Session session, Throwable throwable) {
 		System.out.println("error");
 		System.out.println(throwable.getClass().toString());
-		System.out.println(throwable.getStackTrace().toString());
 		System.out.println(throwable.getMessage());
+		throwable.printStackTrace();
 	}
 	
 	private GamestateMessage generateGamestateMessage() {

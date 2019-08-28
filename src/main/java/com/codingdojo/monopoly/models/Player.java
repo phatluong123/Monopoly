@@ -10,7 +10,6 @@ import com.google.gson.annotations.Expose;
 //test
 
 public class Player {
-	private static int doubleRolls = 0;
 	@Expose private String name;
 	@Expose private int money = 1500;
 	private int debt = 0;
@@ -23,6 +22,7 @@ public class Player {
 	@Expose private int currentLocation = 0;
 	//Check if they are in jail
 	@Expose private boolean inJail = false;
+	private int turnsInJail = 0;
 	// if they have a "Get out Jail card"
 	@Expose private boolean ownsChanceJailCard = false;
 	@Expose private boolean ownsChestJailCard = false;
@@ -31,6 +31,8 @@ public class Player {
 	private int numberOfHouses = 0;
 	//need number of hotels metric for a chance card.
 	private int numberOfHotels = 0;
+	private static int doubleRolls = 0;
+	private static boolean hasRolled = false;
 	
 	/**
 	 * Construct a new Player, taking `name` as an argument. All other fields set to defaults.
@@ -102,6 +104,7 @@ public class Player {
     	int dice1 = Game.rollDie();
     	int dice2 = Game.rollDie();
     	Game.setLastDiceRoll(dice1, dice2);
+		Player.setHasRolled(true);
     	if(dice1 == dice2) {
     		doubleRolls++;
     	}
@@ -139,7 +142,15 @@ public class Player {
     	setInJail(false);
     }
     
-    public void addProperty(Property property) {
+    public int getTurnsInJail() {
+		return turnsInJail;
+	}
+
+	public void setTurnsInJail(int turnsInJail) {
+		this.turnsInJail = turnsInJail;
+	}
+
+	public void addProperty(Property property) {
     	ArrayList<Property> properties = getOwnedProperties();
     	property.setOwnedBy(this);
     	properties.add(property);
@@ -278,16 +289,20 @@ public class Player {
 	/**
 	 * Plays the player's Get Out Of Jail Free card to release the player from jail. If the player has both, plays the Chance card.
 	 */
-	public void playGetOutOfJailCard() {
+	public boolean playGetOutOfJailCard() {
 		if(this.ownsChanceJailCard) {
 			this.ownsChanceJailCard = false;
 			this.getOutJail();
 			Game.putChanceCard(new GetOutOfJailFreeChance("Get Out of Jail Free"));
+			return true;
 		}
 		else if (this.ownsChestJailCard) {
 			this.ownsChestJailCard = false;
 			this.getOutJail();
 			Game.putChestCard(new GetOutJailFreeCommunity("Get Out of Jail Free"));
+			return true;
+		} else {
+			return false;
 		}
 	}
 	
@@ -304,11 +319,13 @@ public class Player {
 	/**
 	 * Roll the dice to try to get out of jail. If player rolls a double, release them from jail.
 	 */
-	public void rollToGetOutOfJail() {
+	public boolean rollToGetOutOfJail() {
 		int[] roll = Game.rollDice();
 		if(roll[0] == roll[1]) {
 			this.getOutJail();
+			return true;
 		}
+		return false;
 	}
 	
 	public static int getDoubleRolls() {
@@ -325,5 +342,13 @@ public class Player {
 	}
 	public void setOwnsChestJailCard(boolean ownsChestJailCard) {
 		this.ownsChestJailCard = ownsChestJailCard;
+	}
+
+	public static boolean hasRolled() {
+		return hasRolled;
+	}
+
+	public static void setHasRolled(boolean hasRolled) {
+		Player.hasRolled = hasRolled;
 	}
 }
