@@ -88,9 +88,13 @@ public class ChatServerEndPoint {
 			// Buy property
 			else if (action.startsWith("buy")) {
 				if (!Game.isSpaceOwned(currentPlayer.getCurrentLocation())) {
+					System.out.println("Space is not owned.");
 					Property prop = (Property)Game.getBoard()[currentPlayer.getCurrentLocation()];
+					System.out.println("Saved space as prop.");
 					if(prop.getPurchaseValue() <= currentPlayer.getMoney()) {
+						System.out.println("In conditional: Player has enough money.");
 						currentPlayer.buyProperty(prop);
+						System.out.println("Buy function completed.");
 					}
 				}
 			} 
@@ -104,8 +108,11 @@ public class ChatServerEndPoint {
 			}
 			
 			//Generate gamestate json
+			System.out.println("Generating gamestate");
 			GamestateMessage gamestateMessage = generateGamestateMessage();
+			System.out.println("Generating iterator");
 			Iterator<Session> iterator = chatroomUsers.iterator();
+			System.out.println("Broadcasting gamestate");
 			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(gamestateMessage);
 			
 		}
@@ -153,18 +160,26 @@ public class ChatServerEndPoint {
 	
 	@OnError
 	public void onError(Session session, Throwable throwable) {
-		System.out.println("error");
-		System.out.println(throwable.getMessage());
-		throwable.printStackTrace();
+		System.out.println("Begin error log output:");
+		System.out.println("Throwable message: " + throwable.getMessage());
+		System.out.println(throwable.toString());
+		//throwable.printStackTrace();
 	}
 	
 	private GamestateMessage generateGamestateMessage() {
+		System.out.println("In generateGamestateMessage");
 		GamestateMessage g = new GamestateMessage();
+		System.out.println("Instantiated gamestateMessage");
 		Gson gson = new GsonBuilder()
 				.excludeFieldsWithModifiers(java.lang.reflect.Modifier.TRANSIENT)
 				.serializeNulls()
 				.create();
+		System.out.println("Gson built");
+		System.out.println(gson.toJson(new Game()));
 		g.setGamestate(gson.toJson(new Game()));
+		System.out.println("Generated json from gamestate");
+		System.out.println("Gamestate:");
+		System.out.println(g.getGamestate());
 		return g;
 		
 	}
