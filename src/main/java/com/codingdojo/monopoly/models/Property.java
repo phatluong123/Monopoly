@@ -114,4 +114,12 @@ public abstract class Property extends Space {
 		this.getOwner().pay(this.unmortgage);
 		this.isMortgaged = false;
 	}
+	
+	public boolean isOwned() {
+		if(this.getOwnedBy() == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }

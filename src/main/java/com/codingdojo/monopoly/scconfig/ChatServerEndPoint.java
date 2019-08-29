@@ -47,7 +47,11 @@ public class ChatServerEndPoint {
 	@OnMessage
 	public void handleMessage(Message incomingMessage, Session userSession) throws IOException, EncodeException, NoSuchMethodException, ScriptException {
 		String username = (String) userSession.getUserProperties().get("username");
-		
+
+		Iterator<Session> debugIterator = chatroomUsers.iterator();
+		while (debugIterator.hasNext()) {
+			System.out.println(debugIterator.next().getUserProperties().get("username"));
+		}
 		// Dice roll for movement
 		if (incomingMessage instanceof ActionMessage) {
 			ActionMessage incomingAction = (ActionMessage)incomingMessage;
@@ -110,7 +114,7 @@ public class ChatServerEndPoint {
 			else if (action.startsWith("buy")) {
 				if (!Game.isSpaceOwned(currentPlayer.getCurrentLocation())) {
 					Property prop = (Property)Game.getBoard()[currentPlayer.getCurrentLocation()];
-					if(prop.getPurchaseValue() <= currentPlayer.getMoney()) {
+					if(prop.getPurchaseValue() <= currentPlayer.getMoney() && !prop.isOwned()) {
 						String activity = currentPlayer.getName()
 								.concat(" bought ")
 								.concat(prop.getName())
@@ -193,6 +197,7 @@ public class ChatServerEndPoint {
 			} else {
 				Iterator<Session> iterator = chatroomUsers.iterator();
 				while (iterator.hasNext()) {
+					iterator.next().getUserProperties();
 				}
 			}
 		}
