@@ -51,16 +51,18 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 			console.log("player = "+playersList[i].name + playersList[i].money);
 			$('#player'+(i+1)).show();
 			$('#playerbox'+(i+1)).show();
-			document.getElementById("player"+(i+1)+"name").innerHTML = playersList[i].name +" " + "Money: $" + playersList[i].money + "<br> Properties: " + playersList[i].ownedProperties.length; 
-			document.getElementById("listproperties").innerHTML="";
+			document.getElementById("player"+(i+1)+"info").innerHTML = "<div class='col-4'>"+playersList[i].name+"</div><div class='col-4'>" + "$" + playersList[i].money +"</div>"; 
+			document.getElementById("listproperties"+(i+1)).innerHTML="";
 			for ( var j=0;j< playersList[i].ownedProperties.length;j++){
-				var ul = document.getElementById("listproperties");
+		
+				var ul = document.getElementById("listproperties"+(i+1));
 				var li = document.createElement("li");
 				li.className = "list-group-item";
 				  li.appendChild(document.createTextNode(playersList[i].ownedProperties[j].name));
 				  ul.appendChild(li);
 			}	
 		}
+
 		document.getElementById('activity-log').innerHTML = '';
 		for (var a=0; a<gamestate.activityLog.length;a++){
 			var p = document.createElement("P");
@@ -144,7 +146,6 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 			i++;
 		}
 	}
-	
 
 }
 
