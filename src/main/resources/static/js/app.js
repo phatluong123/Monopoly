@@ -17,7 +17,8 @@ function myMove(player, index1, index2){
 
 
 var gamestate = "";
-var webSocket = new WebSocket('ws://localhost:8080/chatServerEndPoint');
+var webSocket = new WebSocket('ws://192.168.0.243:8080/chatServerEndPoint');
+var myTurn = false;
 
 window.onload = function() {
 	var str = document.getElementById("usersTextArea").value;
@@ -40,16 +41,28 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 	if (jsonData.messageType == "ChatMessage"){		
 		messagesTextArea.value += jsonData.name+ ":  " + jsonData.message + '\n';		
 	}
+	else if(jsonData.messageType == "TurnMessage") {
+		myTurn = jsonData.myTurn;
+		console.log("Received turn message. Value: " + jsonData.myTurn);
+	}
 	
 	else if(jsonData.messageType == "GamestateMessage") {
 		gamestate = JSON.parse(jsonData.gamestate);	
 		var playersList = gamestate.players;
 		console.log("player list = "+ playersList);
 		
+		//Building player information boxes
 		for (var i=0; i<playersList.length;i++){
 			console.log("player = "+playersList[i].name + playersList[i].money);
 			$('#player'+(i+1)).show();
 			$('#playerbox'+(i+1)).show();
+			if(gamestate.currentPlayerIndex === i) {
+				$('#playerbox'+(i+1)).addClass('active-player');
+			}
+			else {
+				$('#playerbox'+(i+1)).removeClass('active-player');
+				
+			}
 			document.getElementById("player"+(i+1)+"info").innerHTML = "<div class='col-4'>"+playersList[i].name+"</div><div class='col-4'>" + "$" + playersList[i].money +"</div>"; 
 			document.getElementById("listproperties"+(i+1)).innerHTML="";
 			for ( var j=0;j< playersList[i].ownedProperties.length;j++){
@@ -61,6 +74,8 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 				  ul.appendChild(li);
 			}	
 		}
+		
+		// Start of trade window logic
 		var tradeWith = document.getElementById("tradeWith");
 		$("#tradeWith").empty();
 		var newOption = document.createElement("option");
@@ -71,14 +86,14 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 			if(i != gamestate.currentPlayerIndex){
 				var tradeOption = document.createElement("option");
 				tradeOption.text = playersList[i].name;
-				tradeOption.value = playersList[i].name;
+				tradeOption.value = playersList[i].playerID;
 				tradeOption.id = playersList[i].name;
 				tradeWith.add(tradeOption);
 			}
 
 		}
-		var giveProperties = document.getElementById("giveProperties");
-		$("#giveProperties").empty();
+		var giveProperties = document.getElementById("offerProperties");
+		$("#offerProperties").empty();
 		for(var i = 0; i < playersList[gamestate.currentPlayerIndex].ownedProperties.length; i++){
 			var givePropertiesOption = document.createElement("option");
 			givePropertiesOption.text = playersList[gamestate.currentPlayerIndex].ownedProperties[i].name;
@@ -87,18 +102,17 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 			giveProperties.add(givePropertiesOption);
 		}
 		
-		var wantProperties = document.getElementById("wantProperties");
-		$("#wantProperties").empty();
+		var wantProperties = document.getElementById("requestProperties");
+		$("#requestProperties").empty();
 		$(document).ready(function(){
 			$("#tradeWith").change(function(){
-				console.log("Inside Jquery");
 				var tradeWith = $(this).val();
-				$("#wantProperties").empty();
-				console.log(tradeWith);
+				$("#requestProperties").empty();
 				for(var i = 0; i <playersList.length; i++){
-					if(tradeWith.valueOf() === playersList[i].name.valueOf()){
+					if(tradeWith.valueOf() === playersList[i].playerID.valueOf()){
 						for(var j = 0; j < playersList[i].ownedProperties.length; j++){
 							var wantPropertiesOption = document.createElement("option");
+							console.log(playersList[i].ownedProperties[j].name);
 							wantPropertiesOption.text = playersList[i].ownedProperties[j].name;
 							wantPropertiesOption.value = playersList[i].ownedProperties[j].name;
 							wantPropertiesOption.id = playersList[i].name;
@@ -108,9 +122,11 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 				}
 			});
 		});
-		
 		document.getElementById("playerMoney").innerHTML = "You have $"+playersList[gamestate.currentPlayerIndex].money;
-
+		// End of trade window logic
+		
+		
+		//Building activity log
 		document.getElementById('activity-log').innerHTML = '';
 		for (var a=0; a<gamestate.activityLog.length;a++){
 			var p = document.createElement("P");
@@ -118,26 +134,30 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 			document.getElementById('activity-log').appendChild(p);
 			
 		}
-		for (var i=0; i<playersList.length;i++){
+		
+		
+		if(myTurn == false){
+			$('#end-button').hide();
+			$('#roll-button').hide();
+			$('#buy-button').hide();
+		}
+		
+		else {
+			let currentIndex = gamestate.currentPlayerIndex;
+			if (playersList[currentIndex].doubleRolls == 0  && playersList[currentIndex].hasRolled == false ){
+				$('#end-button').hide();
+				$('#roll-button').show();
+			}
 			
-			if (i==gamestate.currentPlayerIndex){
-				
-				if (playersList[i].doubleRolls == 0  && playersList[i].hasRolled == false ){
-					$('#end-button').hide();
-					$('#roll-button').show();
-				}
-				
-				else if (gamestate.board[playersList[i].currentLocation].ownedBy === null  ){
-					$('#buy-button').show();
-				}
-				else if (gamestate.board[playersList[i].currentLocation].ownedBy !== null  || gamestate.board[playersList[i].currentLocation].ownedBy === undefined ){
-					$('#buy-button').hide();
-				}
-				if (playersList[i].hasRolled == true && playersList[i].doubleRolls == 0){
-					$('#end-button').show();
-					$('#roll-button').hide();
-				}
-
+			else if (gamestate.board[playersList[currentIndex].currentLocation].ownedBy === null  ){
+				$('#buy-button').show();
+			}
+			else if (gamestate.board[playersList[currentIndex].currentLocation].ownedBy !== null  || gamestate.board[playersList[currentIndex].currentLocation].ownedBy === undefined ){
+				$('#buy-button').hide();
+			}
+			if (playersList[currentIndex].hasRolled == true && playersList[currentIndex].doubleRolls == 0){
+				$('#end-button').show();
+				$('#roll-button').hide();
 			}
 
 		}
@@ -184,6 +204,9 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 	    }
 		
 		
+	} else if (jsonData.messageType == "TradeMessage") {
+		console.log("Received trade message. Message follows: ");
+		console.log(jsonData);
 	}
 	
 	else if (jsonData.messageType == "UserMessage") {
@@ -197,6 +220,40 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 
 }
 
+function sendTradeOffer() {
+	var senderArray = $('#offerProperties').val();
+	var recipArray = $('#requestProperties').val();
+	console.log(senderArray);
+	console.log(recipArray);
+	let senderProps = "";
+	for(let i = 0; i < senderArray.length; i++) {
+		if(i != senderArray.length-1) {
+			senderProps += senderArray[i] + ",";
+		}
+		else {
+			senderProps += senderArray[i];
+		}
+	}
+	let recipProps = "";
+	for(let i = 0; i < recipArray.length; i++) {
+		if(i != recipArray.length-1) {
+			recipProps += recipArray[i] + ",";
+		}
+		else {
+			recipProps += recipArray[i];
+		}
+	}
+	
+	webSocket.send(JSON.stringify({
+		'trade' : 'trade',
+		'sender' : gamestate.players[gamestate.currentPlayerIndex].playerID,
+		'recipient' : document.getElementById("tradeWith").value,
+		'senderproperties' : senderProps,
+		'recipientproperties' : recipProps,
+		'sendermoney' : document.getElementById("moneyOffer").value,
+		'recipientmoney' : document.getElementById("moneyRequest").value
+	}))
+}
 
 function createPlayer() {
 	
@@ -283,15 +340,15 @@ function  endTurn(){
 	}))
 }
 
-//setInterval(function(){
-//	document.getElementById('messagesTextArea').scrollTop = document.getElementById('messagesTextArea').scrollHeight;
-//}, 1);
+setInterval(function(){
+	document.getElementById('messagesTextArea').scrollTop = document.getElementById('messagesTextArea').scrollHeight;
+}, 1);
 
 $(document).ready(function() {
 $(".property").hover(function(){
 	console.log("hovering");
 	const board = gamestate.board;
-	var spaceIndex = $(this).attr('id').replace( /^\D+/g, '');
+	let spaceIndex = $(this).attr('id').replace( /^\D+/g, '');
     document.getElementById("space-card").innerHTML = "<div class='space-card-top' style='background-color: "+board[spaceIndex].color+";'><p>"+board[spaceIndex].name+"</p></div><div class='row justify-content-center space-card-row'><p class='space-card-text'>RENT $"+board[spaceIndex].rent+".</p></div><div class='row justify-content-around space-card-row'><p class='space-card-text'>With 1 House</p><p class='space-card-text'>"+"$"+board[spaceIndex].h1+".</p></div><div class='row justify-content-around space-card-row'><p class='space-card-text'>With 2 Houses</p><p class='space-card-text'>"+"$"+board[spaceIndex].h2+".</p></div><div class='row justify-content-around space-card-row'><p class='space-card-text'>With 3 Houses</p><p class='space-card-text'>"+"$"+board[spaceIndex].h3+".</p></div><div class='row justify-content-around space-card-row'><p class='space-card-text'>With 4 Houses</p><p class='space-card-text'>"+"$"+board[spaceIndex].h4+".</p></div><div class='row justify-content-center space-card-row'><p class='space-card-text'>With HOTEL $"+board[spaceIndex].hotel+".</p></div><div class='row justify-content-center space-card-row'><p class='space-card-text'>Mortgage Value $"+board[spaceIndex].mortgage+"</p></div><div class='row justify-content-center space-card-row'><p class='space-card-text'>Houses costs $"+board[spaceIndex].housingCost+", each.</p></div><div class='row justify-content-center space-card-row'><p class='space-card-text'>Hotels, $"+board[spaceIndex].housingCost+", plus 4 houses.</p></div>";
     $("#space-card").show();
 },

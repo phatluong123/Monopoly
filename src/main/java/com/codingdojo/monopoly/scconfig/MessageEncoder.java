@@ -16,6 +16,7 @@ import com.codingdojo.monopoly.scmodels.DiceMessage;
 import com.codingdojo.monopoly.scmodels.GamestateMessage;
 import com.codingdojo.monopoly.scmodels.Message;
 import com.codingdojo.monopoly.scmodels.TradeMessage;
+import com.codingdojo.monopoly.scmodels.TurnMessage;
 import com.codingdojo.monopoly.scmodels.UserMessage;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
@@ -67,11 +68,19 @@ public class MessageEncoder implements Encoder.Text<Message>{
 			TradeMessage tradeMessage = (TradeMessage) message;
 			returnString = Json.createObjectBuilder().add("messageType", tradeMessage.getClass().getSimpleName())
 					.add("accepted", tradeMessage.isAccepted())
+					.add("rejected", tradeMessage.isRejected())
 					.add("sender", tradeMessage.getFirstPlayerID())
-					.add("offerMoney", tradeMessage.getP1MoneyOffer())
-					.add("requestedMoney", tradeMessage.getP2MoneyOffer())
-					.add("P1PropertyOffer", (JsonValue) tradeMessage.getP1PropertyOffer())
-					.add("P2PropertyOffer", (JsonValue) tradeMessage.getP2PropertyOffer())
+					.add("recipient", tradeMessage.getSecondPlayerID())
+					.add("sendermoney", tradeMessage.getP1MoneyOffer())
+					.add("recipientmoney", tradeMessage.getP2MoneyOffer())
+					.add("senderproperties", tradeMessage.getP1PropertyOffer().toString())
+					.add("recipientproperties", tradeMessage.getP2PropertyOffer().toString())
+					.build().toString();
+		}
+		else if (message instanceof TurnMessage) {
+			TurnMessage turnMessage = (TurnMessage) message;
+			returnString = Json.createObjectBuilder().add("messageType", turnMessage.getClass().getSimpleName())
+					.add("myTurn", turnMessage.isMyTurn())
 					.build().toString();
 		}
 		return returnString;

@@ -180,7 +180,9 @@ div.dice-bar{
 	
 }
 
-
+.active-player {
+	outline: 6px outset #2eb9ce;
+}
 
 
 

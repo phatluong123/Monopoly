@@ -10,6 +10,7 @@ import javax.websocket.DecodeException;
 import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
 
+import com.codingdojo.monopoly.models.Game;
 import com.codingdojo.monopoly.models.Property;
 import com.codingdojo.monopoly.models.Space;
 import com.codingdojo.monopoly.scmodels.ActionMessage;
@@ -45,13 +46,14 @@ public class MessageDecoder implements Decoder.Text<Message>{
 			return actionMessage;
 		} else if (jsonObject.containsKey("trade")) {
 			TradeMessage tradeMessage = new TradeMessage();
-			tradeMessage.setAccepted(jsonObject.getBoolean("accepted"));
-			tradeMessage.setFirstPlayerID(jsonObject.getString("sender"));
+			tradeMessage.setAccepted(jsonObject.getBoolean("accepted", false));
+			tradeMessage.setRejected(jsonObject.getBoolean("rejected", false));
+			tradeMessage.setFirstPlayerID(jsonObject.getString("sender", Game.getCurrentPlayer().getPlayerID()));
 			tradeMessage.setSecondPlayerID(jsonObject.getString("recipient"));
-			tradeMessage.setP1MoneyOffer(jsonObject.getInt("sendermoney", 0));
-			tradeMessage.setP2MoneyOffer(jsonObject.getInt("recipientmoney", 0));
-			ArrayList<String> senderPropertyNames = new ArrayList<String>(Arrays.asList(jsonObject.getString("giveProperties").split(",")));
-			ArrayList<String> recipientPropertyNames = new ArrayList<String>(Arrays.asList(jsonObject.getString("wantProperties").split(",")));
+			tradeMessage.setP1MoneyOffer(Integer.parseInt(jsonObject.getString("sendermoney")));
+			tradeMessage.setP2MoneyOffer(Integer.parseInt(jsonObject.getString("recipientmoney")));
+			ArrayList<String> senderPropertyNames = new ArrayList<String>(Arrays.asList(jsonObject.getString("senderproperties").split(",")));
+			ArrayList<String> recipientPropertyNames = new ArrayList<String>(Arrays.asList(jsonObject.getString("recipientproperties").split(",")));
 			ArrayList<Property> senderProperties = new ArrayList<>();
 			ArrayList<Property> recipientProperties = new ArrayList<>();
 			for(String s: senderPropertyNames) {

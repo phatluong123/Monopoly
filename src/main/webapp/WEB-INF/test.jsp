@@ -87,24 +87,24 @@
 					                <hr>
 				                    <p class='text-center'>What do you want?</p>
 				                    	<div class='row col-lg-6 mx-auto'>
-					                    	<select multiple class='form-control' name="wantProperties" id="wantProperties">
+					                    	<select multiple class='form-control' name="requestProperties" id="requestProperties">
 					                    	</select>
 				                    	</div>
 				                    	<div class='row mt-3 d-flex justify-content-center'>
 				            				<p class='my-auto'>Request </p>
-				                    		<div class='ml-2'>$<input class='col-lg-10 ml-1' type="text" class='form-control' name="moneyRequest"></div>
+				                    		<div class='ml-2'>$<input class='col-lg-10 ml-1' type="number" class='form-control' name="moneyRequest" id="moneyRequest" value="0" min="0"></div>
 				                    	</div>
 				                    	<hr>
 				                    	<p class='mt-3 text-center'>What will you give?</p>
 				                    	<div class='row col-lg-6 mx-auto'>
-					                    	<select multiple class='form-control' name="giveProperties" id="giveProperties">
+					                    	<select multiple class='form-control' name="offerProperties" id="offerProperties">
 					                    	</select>
 				                    	</div>
 				                    	<div class='row mt-3 d-flex justify-content-around'>
-				                    		<div class='mx-auto'>$<input class='col-lg-10 ml-1' type="text" class='form-control' name="moneyOffer"></div>
+				                    		<div class='mx-auto'>$<input class='col-lg-10 ml-1' type="number" class='form-control' name="moneyOffer" id="moneyOffer" value="0" min="0"></div>
 				                    	</div>
 				                    	<p class='mt-2 text-center' id="playerMoney"></p>
-				                    	<div class='row'><button class='btn btn-primary mt-3 mx-auto' type="submit">Offer</button></div>
+				                    	<div class='row'><button class='btn btn-primary mt-3 mx-auto' type="submit" onClick="sendTradeOffer()">Offer</button></div>
 				                </div>
 				            </div>
 				        </div>

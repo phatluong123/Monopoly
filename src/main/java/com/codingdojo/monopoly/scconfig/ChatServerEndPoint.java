@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import javax.script.ScriptException;
@@ -28,6 +29,7 @@ import com.codingdojo.monopoly.scmodels.DiceMessage;
 import com.codingdojo.monopoly.scmodels.GamestateMessage;
 import com.codingdojo.monopoly.scmodels.Message;
 import com.codingdojo.monopoly.scmodels.TradeMessage;
+import com.codingdojo.monopoly.scmodels.TurnMessage;
 import com.codingdojo.monopoly.scmodels.UserMessage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -50,8 +52,10 @@ public class ChatServerEndPoint {
 		String username = (String) userSession.getUserProperties().get("username");
 
 		Iterator<Session> debugIterator = chatroomUsers.iterator();
+		HashMap<String, Session> socketMap = new HashMap<>();
 		while (debugIterator.hasNext()) {
-			System.out.println(debugIterator.next().getUserProperties().get("username"));
+			Session nextSession = debugIterator.next();
+			socketMap.put((String)nextSession.getUserProperties().get("username"), nextSession);
 		}
 		// Dice roll for movement
 		if (incomingMessage instanceof ActionMessage) {
@@ -143,6 +147,19 @@ public class ChatServerEndPoint {
 			}
 			
 			//Generate gamestate json
+			TurnMessage currentPlayerTurnMessage = new TurnMessage();
+			TurnMessage otherPlayersTurnMessage = new TurnMessage();
+			currentPlayerTurnMessage.setMyTurn(true);
+			otherPlayersTurnMessage.setMyTurn(false);
+			for(Map.Entry<String, Session> entry : socketMap.entrySet()) {
+			    String name = entry.getKey();
+			    Session currentSocket = entry.getValue();
+			    if(name.equals(Game.getCurrentPlayer().getName())) {
+			    	currentSocket.getBasicRemote().sendObject(currentPlayerTurnMessage);
+			    } else {
+			    	currentSocket.getBasicRemote().sendObject(otherPlayersTurnMessage);
+			    }
+			}
 			GamestateMessage gamestateMessage = generateGamestateMessage();
 			Iterator<Session> iterator = chatroomUsers.iterator();
 			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(gamestateMessage);
@@ -187,6 +204,9 @@ public class ChatServerEndPoint {
 					offeredProperties.remove(p);
 				}
 			}
+			/**
+			 * If the trade offer is accepted, then perform the trade and log it.
+			 */
 			if(((TradeMessage) incomingMessage).isAccepted()) {
 				StringBuilder logStringBuilder = new StringBuilder(sender.getName())
 						.append(" and ")
@@ -220,22 +240,31 @@ public class ChatServerEndPoint {
 				}
 				if(offeredMoney > 0) {
 					logStringBuilder.append(sender.getName()).append(" sent $").append(offeredMoney).append(".");
+					sender.sendMoney(recipient, offeredMoney);
 				}
 				if(requestedMoney > 0) {
-					logStringBuilder.append(sender.getName()).append(" sent $").append(offeredMoney).append(".");;
+					logStringBuilder.append(sender.getName()).append(" sent $").append(offeredMoney).append(".");
+					recipient.sendMoney(sender, requestedMoney);
 				}
 				Game.addActivityLogItem(logStringBuilder.toString());
-				sender.sendMoney(recipient, offeredMoney);
-				recipient.sendMoney(sender, requestedMoney);
-			} else {
+			} 
+			/**
+			 * If trade is rejected, cease propagation of message and log the failed trade.
+			 */
+			else if (((TradeMessage) incomingMessage).isRejected()) {
+				String activity = new StringBuilder(recipient.getName())
+						.append(" rejected a trade from ")
+						.append(sender.getName())
+						.append("!")
+						.toString();
+				Game.addActivityLogItem(activity);
+			}
+			/**
+			 * If neither of the above are true, send message to recipient.
+			 */
+			else {
 				tradeoutgoingMessage = (TradeMessage) incomingMessage;
 				tradeoutgoingMessage.setAccepted(false);
-				Iterator<Session> iterator = chatroomUsers.iterator();
-				HashMap<String, Session> socketMap = new HashMap<>();
-				while (iterator.hasNext()) {
-					Session recipientSession = iterator.next();
-					socketMap.put((String)recipientSession.getUserProperties().get("username"), recipientSession);
-				}
 				socketMap.get(recipient.getName())
 					.getBasicRemote()
 					.sendObject(tradeoutgoingMessage);

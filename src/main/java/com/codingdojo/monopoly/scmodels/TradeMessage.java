@@ -6,6 +6,7 @@ import com.codingdojo.monopoly.models.Property;
 
 public class TradeMessage implements Message {
 	private boolean accepted = false;
+	private boolean rejected = false;
 	private String firstPlayerID;
 	private String secondPlayerID;
 	private int p1MoneyOffer = 0;
@@ -14,6 +15,9 @@ public class TradeMessage implements Message {
 	private ArrayList<Property> p2PropertyOffer = new ArrayList<>();
 	public boolean isAccepted() {
 		return accepted;
+	}
+	public boolean isRejected() {
+		return rejected;
 	}
 	public String getFirstPlayerID() {
 		return firstPlayerID;
@@ -35,6 +39,9 @@ public class TradeMessage implements Message {
 	}
 	public void setAccepted(boolean accepted) {
 		this.accepted = accepted;
+	}
+	public void setRejected(boolean rejected) {
+		this.rejected = rejected;
 	}
 	public void setFirstPlayerID(String firstPlayerID) {
 		this.firstPlayerID = firstPlayerID;
