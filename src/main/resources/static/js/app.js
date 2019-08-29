@@ -14,7 +14,7 @@ function myMove(player, index1, index2){
 	}
 }
 
-
+//test
 
 var gamestate = "";
 var webSocket = new WebSocket('ws://localhost:8080/chatServerEndPoint');
