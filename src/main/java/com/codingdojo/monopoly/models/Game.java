@@ -184,7 +184,7 @@ public class Game {
 	}
 	
 	//Incomplete method for the general action of the game
-	public static void doStuff(Player p) {
+	public static void spaceAction(Player p) {
 		Space[] board = Game.getBoard();
 		Space currentSpace = board[p.getCurrentLocation()];
 		String spaceName = currentSpace.getName();

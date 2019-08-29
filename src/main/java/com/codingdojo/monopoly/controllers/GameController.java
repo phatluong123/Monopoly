@@ -87,7 +87,7 @@ public class GameController {
 				//Moves current player to next spot
 				currentPlayer.movePlayer();
 				
-				Game.doStuff(currentPlayer);
+				Game.spaceAction(currentPlayer);
 				
 				//Check if player is now bankrupt after the turn, and add them to bankrupt list if they are
 				if(currentPlayer.isBankrupt()) {

@@ -107,7 +107,7 @@ public class ChatServerEndPoint {
 							.concat(Integer.toString(dice1 + dice2))
 							.concat(")");
 					Game.addActivityLogItem(activity);
-					Game.doStuff(currentPlayer);
+					Game.spaceAction(currentPlayer);
 					diceoutgoingMessage.setName(username)
 							.setDice1(dice1)
 							.setDice2(dice2)
