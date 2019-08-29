@@ -51,15 +51,12 @@
 					<div class="side-space" id="space11"></div>
 				</div>
 				<div class="mid-col">
-						<div class="row dice-bar">
-							<p class="my-auto ml-3"><button onclick="endTurn()" class='btn btn-info ' style="display:none" id="end-button">End Turn!</button></p>
-							<p class="my-auto ml-3"  ><button onclick="buy()" class='btn btn-info ' id="buy-button" style="display:none">Buy!</button></p>
-							<p class='ml-auto mr-2 mt-3 d-inline-block '>
-								
+						<div class="row dice-bar mt-2">
+							<div class="my-auto ml-3"><button onclick="endTurn()" class='btn btn-info ' style="display:none" id="end-button">End Turn!</button></div>
+							<div class="my-auto ml-3"><button onclick="buy()" class='btn btn-info ' id="buy-button" style="display:none">Buy!</button></div>
+							<div class='ml-auto mr-2 mt-3 d-inline-block my-auto'>
 								<button onclick="roll()" class='btn btn-info' style="display:none;" id="roll-button">Roll!</button>
-								
-				
-							</p>	
+							</div>	
 							<div class='left-die my-auto mr-2' style="height: 50px; width: 50px;">
 								<img id="dice1" src='../images/dice1.png' style="height: 50px; width: 50px;">
 							</div>
@@ -70,9 +67,52 @@
 						<div>
 						
 						</div>
-					<div id="activity-log"  class="activity-log mx-auto" style="  padding:0; margin:0; font-size:12pt;">
+					<div id="activity-log"  class="activity-log mx-auto mt-2" style="  padding:0; margin:0; font-size:12pt;">
 						
 					</div>
+					<div class='row'>
+						<button class='btn btn-primary mt-2 mx-auto' data-toggle='modal' data-target="#trade" type="submit">Trade</button>
+					</div>
+						    <div id="trade" class="modal fade" tabindex="-1">
+	        <div class="modal-dialog">
+	            <div class="modal-content">
+	                <div class="modal-header">
+		                    <h5 class="modal-title text-center">Trade with <c:out value="${player1.name}"/></h5>
+		                    <button type="button" class="close ml-0 pl-0" data-dismiss="modal">&times;</button>
+	                </div>
+	                <div class="modal-body">
+	                    <p>What do you want?</p>
+	                    <form>
+	                    	<div class='row col-lg-6 mx-auto'>
+		                    	<select multiple class='form-control' name="wantProperties">
+		                    		<c:forEach items="${player1Property}" var="property">
+		                    			<option value="${property.name}">${property.name}</option>
+		                    		</c:forEach>
+		                    	</select>
+	                    	</div>
+	                    	<div class='row mt-3 d-flex justify-content-center'>
+	            				<p class='my-auto'>Request </p>
+	                    		<div class='ml-2'>$<input class='col-lg-10 ml-1' type="text" class='form-control' name="moneyRequest"></div>
+	                    	</div>
+	                    	<hr>
+	                    	<p class='mt-3'>What will you give?</p>
+	                    	<div class='row col-lg-6 mx-auto'>
+		                    	<select multiple class='form-control' name="giveProperties">
+		                    		<c:forEach items="${player1Property}" var="property">
+		                    			<option value="${property.name}">${property.name}</option>
+		                    		</c:forEach>
+		                    	</select>
+	                    	</div>
+	                    	<div class='row mt-3 d-flex justify-content-around'>
+	                    		<div class='mx-auto'>$<input class='col-lg-10 ml-1' type="text" class='form-control' name="moneyOffer"></div>
+	                    	</div>
+	                    	<p class='mt-2'>You have <span class='text-success'>$<c:out value="${player1.money}"/></span></p>
+	                    	<button class='btn btn-primary mt-3' type="submit">Offer</button>
+	                    </form>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
 					</div>
 
 				<div class="right-col">
@@ -176,14 +216,15 @@
 				<div id="playerbox1" class="card mt-2" style="display:none; background-color:#e9ede8;">
 					<div class='card-header'>
 						<h5>
-						<p id="player1name"><p>
-						<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox1toggle">List of Properties</button>
+				<div id="player1info" class="row"><div>
+						
 						</h5>
+						<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox1toggle">List of Properties</button>
 					</div>	
 					<div id="playerbox1toggle" class='collapse hide' data-parent="#accordion">
 						<div class='card-body'>
-							<ul id="listproperties" class='list-group'>
-								<li ></li>
+							<ul id="listproperties1" class='list-group'>
+								
 							</ul>
 						</div>
 					</div>
@@ -191,39 +232,45 @@
 				<div id="playerbox2" class="card mt-2" style="display:none; background-color:#e9ede8;">
 					<div class='card-header'>
 						<h5>
-						<p id="player2name"><p>
-						<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox2toggle">List of Properties</button>
+						<div id="player2info" class="row"><div>
 						</h5>
+						<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox2toggle">List of Properties</button>
 					</div>	
 					<div id="playerbox2toggle" class='collapse hide' data-parent="#accordion">
 						<div class='card-body'>
-							Test Properties
+							<ul id="listproperties2" class='list-group'>
+								
+							</ul>
 						</div>
 					</div>
 				</div>
 				<div id="playerbox3" class="card mt-2" style="display:none; background-color:#e9ede8;">
 					<div class='card-header'>
 						<h5>
-						<p id="player3name"><p>
-						<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox3toggle">List of Properties</button>
+						<div id="player3info" class="row"><div>
 						</h5>
+						<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox3toggle">List of Properties</button>
 					</div>	
 					<div id="playerbox3toggle" class='collapse hide' data-parent="#accordion">
 						<div class='card-body'>
-							Test Properties
+							<ul id="listproperties3" class='list-group'>
+								
+							</ul>
 						</div>
 					</div>
 				</div>
 				<div id="playerbox4" class="card mt-2" style="display:none; background-color:#e9ede8;">
 					<div class='card-header'>
 						<h5>
-						<p id="player4name"><p>
-						<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox4toggle">List of Properties</button>
+						<div id="player4info" class="row"><div>
 						</h5>
+						<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox4toggle">List of Properties</button>
 					</div>	
 					<div id="playerbox4toggle" class='collapse hide' data-parent="#accordion">
 						<div class='card-body'>
-							Test Properties
+							<ul id="listproperties4" class='list-group'>
+								
+							</ul>
 						</div>
 					</div>
 				</div>		
