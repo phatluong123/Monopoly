@@ -67,7 +67,7 @@
 						<div>
 						
 						</div>
-					<div id="activity-log"  class="activity-log mx-auto" style="  padding:0; margin:0; font-size:12pt;">
+					<div id="activity-log"  class="activity-log mx-auto mt-2" style="  padding:0; margin:0; font-size:12pt;">
 						
 					</div>
 					</div>
@@ -173,7 +173,7 @@
 				<div id="playerbox1" class="card mt-2" style="display:none; background-color:#e9ede8;">
 					<div class='card-header'>
 						<h5>
-						<div id="player1info" class="row"><div>
+				<div id="player1info" class="row"><div>
 						
 						</h5>
 						<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox1toggle">List of Properties</button>
