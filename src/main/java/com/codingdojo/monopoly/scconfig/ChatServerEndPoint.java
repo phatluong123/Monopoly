@@ -3,6 +3,7 @@ package com.codingdojo.monopoly.scconfig;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -187,21 +188,57 @@ public class ChatServerEndPoint {
 				}
 			}
 			if(((TradeMessage) incomingMessage).isAccepted()) {
-				for(Property p: offeredProperties) {
+				StringBuilder logStringBuilder = new StringBuilder(sender.getName())
+						.append(" and ")
+						.append(recipient.getName())
+						.append(" completed a trade. ");
+				if(offeredProperties.size() > 0) {
+					logStringBuilder.append(sender.getName()).append(" traded properties: ");
+				}
+				for(int i = 0; i < offeredProperties.size(); i++) {
+					if(i == offeredProperties.size()-1 && i != 0) {
+						logStringBuilder.append(", and ");
+					} else if (i > 0){
+						logStringBuilder.append(", ");
+					}
+					Property p = offeredProperties.get(i);
 					sender.tradeProperty(p, recipient);
+					logStringBuilder.append(p.getName());
 				}
-				for(Property p: requestedProperties) {
+				if(requestedProperties.size() > 0) {
+					logStringBuilder.append(recipient.getName()).append(" traded properties: ");
+				}
+				for(int i = 0; i < requestedProperties.size(); i++) {
+					if(i == requestedProperties.size()-1 && i != 0) {
+						logStringBuilder.append(", and ");
+					} else if (i > 0){
+						logStringBuilder.append(", ");
+					}
+					Property p = requestedProperties.get(i);
 					recipient.tradeProperty(p, sender);
+					logStringBuilder.append(p.getName());
 				}
+				if(offeredMoney > 0) {
+					logStringBuilder.append(sender.getName()).append(" sent $").append(offeredMoney).append(".");
+				}
+				if(requestedMoney > 0) {
+					logStringBuilder.append(sender.getName()).append(" sent $").append(offeredMoney).append(".");;
+				}
+				Game.addActivityLogItem(logStringBuilder.toString());
 				sender.sendMoney(recipient, offeredMoney);
 				recipient.sendMoney(sender, requestedMoney);
 			} else {
 				tradeoutgoingMessage = (TradeMessage) incomingMessage;
 				tradeoutgoingMessage.setAccepted(false);
 				Iterator<Session> iterator = chatroomUsers.iterator();
+				HashMap<String, Session> socketMap = new HashMap<>();
 				while (iterator.hasNext()) {
-					iterator.next().getUserProperties();
+					Session recipientSession = iterator.next();
+					socketMap.put((String)recipientSession.getUserProperties().get("username"), recipientSession);
 				}
+				socketMap.get(recipient.getName())
+					.getBasicRemote()
+					.sendObject(tradeoutgoingMessage);
 			}
 			
 		}

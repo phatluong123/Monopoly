@@ -50,8 +50,8 @@ public class MessageDecoder implements Decoder.Text<Message>{
 			tradeMessage.setSecondPlayerID(jsonObject.getString("recipient"));
 			tradeMessage.setP1MoneyOffer(jsonObject.getInt("sendermoney", 0));
 			tradeMessage.setP2MoneyOffer(jsonObject.getInt("recipientmoney", 0));
-			ArrayList<String> senderPropertyNames = new ArrayList<String>(Arrays.asList(jsonObject.getString("senderproperties").split(",")));
-			ArrayList<String> recipientPropertyNames = new ArrayList<String>(Arrays.asList(jsonObject.getString("recipientproperties").split(",")));
+			ArrayList<String> senderPropertyNames = new ArrayList<String>(Arrays.asList(jsonObject.getString("giveProperties").split(",")));
+			ArrayList<String> recipientPropertyNames = new ArrayList<String>(Arrays.asList(jsonObject.getString("wantProperties").split(",")));
 			ArrayList<Property> senderProperties = new ArrayList<>();
 			ArrayList<Property> recipientProperties = new ArrayList<>();
 			for(String s: senderPropertyNames) {
