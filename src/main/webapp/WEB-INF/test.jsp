@@ -109,6 +109,11 @@
 				            </div>
 				        </div>
 				    </div>
+				    <div id="trade-zone"  > 
+				    	`
+				    </div>
+				    
+				    
 					</div>
 
 				<div class="right-col">

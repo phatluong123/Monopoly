@@ -183,8 +183,15 @@ div.dice-bar{
 .active-player {
 	outline: 6px outset #2eb9ce;
 }
+#trade-zone{
+	border:1px solid red;
+	width:70%;
+	height:200px;
+}
 
-
+#trade-zone p{
+	font-size:12pt;
+}
 
 
 

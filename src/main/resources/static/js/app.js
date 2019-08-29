@@ -17,9 +17,9 @@ function myMove(player, index1, index2){
 
 
 var gamestate = "";
-var webSocket = new WebSocket('ws://192.168.0.243:8080/chatServerEndPoint');
+var webSocket = new WebSocket('ws://localhost:8080/chatServerEndPoint');
 var myTurn = false;
-
+var receivedTrade = "";
 window.onload = function() {
 	var str = document.getElementById("usersTextArea").value;
 	console.log(str);
@@ -205,8 +205,15 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 		
 		
 	} else if (jsonData.messageType == "TradeMessage") {
+//
+//		var p = document.createElement("P");
+//		p.innerHTML = jsonData.messageType;
+//		document.getElementById('trade-zone').appendChild(p);
+
+		receivedTrade = JSON.parse(jsonData.trade);	
 		console.log("Received trade message. Message follows: ");
-		console.log(jsonData);
+		console.log("trade detail ====================== ");
+		console.log(receivedTrade);x
 	}
 	
 	else if (jsonData.messageType == "UserMessage") {
@@ -340,9 +347,9 @@ function  endTurn(){
 	}))
 }
 
-setInterval(function(){
-	document.getElementById('messagesTextArea').scrollTop = document.getElementById('messagesTextArea').scrollHeight;
-}, 1);
+//setInterval(function(){
+//	document.getElementById('messagesTextArea').scrollTop = document.getElementById('messagesTextArea').scrollHeight;
+//}, 1);
 
 $(document).ready(function() {
 $(".property").hover(function(){
