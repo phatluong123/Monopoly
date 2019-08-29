@@ -6,7 +6,10 @@ import com.codingdojo.monopoly.models.Game;
 import com.codingdojo.monopoly.models.Player;
 
 public class ChairmanOfTheBoard extends ChanceCard {
-
+	public ChairmanOfTheBoard() {
+		super("You have been elected chairman of the board.  Pay each player $50.");
+	}
+	
 	public ChairmanOfTheBoard(String name) {
 		super(name);
 	

@@ -14,11 +14,13 @@ import com.codingdojo.monopoly.models.cards.AdvanceToGoChance;
 import com.codingdojo.monopoly.models.cards.AdvanceToIllinoisAve;
 import com.codingdojo.monopoly.models.cards.AdvanceToRailroad;
 import com.codingdojo.monopoly.models.cards.AdvanceToReadingRailroad;
+import com.codingdojo.monopoly.models.cards.AdvanceToStCharlesPlace;
 import com.codingdojo.monopoly.models.cards.AdvanceToUtilityCard;
 import com.codingdojo.monopoly.models.cards.AssessedForStreetRepair;
 import com.codingdojo.monopoly.models.cards.BankError;
 import com.codingdojo.monopoly.models.cards.BankPaysYou;
 import com.codingdojo.monopoly.models.cards.BuildingLoanMatures;
+import com.codingdojo.monopoly.models.cards.ChairmanOfTheBoard;
 import com.codingdojo.monopoly.models.cards.ChanceCard;
 import com.codingdojo.monopoly.models.cards.CommunityChestCard;
 import com.codingdojo.monopoly.models.cards.ConsultancyFee;
@@ -27,13 +29,16 @@ import com.codingdojo.monopoly.models.cards.GetOutJailFreeCommunity;
 import com.codingdojo.monopoly.models.cards.GetOutOfJailFreeChance;
 import com.codingdojo.monopoly.models.cards.GoBack3Spaces;
 import com.codingdojo.monopoly.models.cards.GoToJail;
+import com.codingdojo.monopoly.models.cards.GoToJailChance;
 import com.codingdojo.monopoly.models.cards.HolidayFundMatures;
 import com.codingdojo.monopoly.models.cards.HospitalFee;
 import com.codingdojo.monopoly.models.cards.Inherit;
 import com.codingdojo.monopoly.models.cards.InsuranceMatures;
 import com.codingdojo.monopoly.models.cards.ItIsYourBirthday;
+import com.codingdojo.monopoly.models.cards.MakeGeneralRepairs;
 import com.codingdojo.monopoly.models.cards.SaleStock;
 import com.codingdojo.monopoly.models.cards.SchoolFee;
+import com.codingdojo.monopoly.models.cards.SpeedingFine;
 import com.codingdojo.monopoly.models.cards.TaxRefund;
 import com.codingdojo.monopoly.models.cards.WonBeautyContest;
 
@@ -171,6 +176,11 @@ public class Game {
 		chanceDeck.add(new BankPaysYou());
 		chanceDeck.add(new AdvanceToUtilityCard());
 		chanceDeck.add(new GetOutOfJailFreeChance());
+		chanceDeck.add(new MakeGeneralRepairs());
+		chanceDeck.add(new ChairmanOfTheBoard());
+		chanceDeck.add(new GoToJailChance());
+		chanceDeck.add(new AdvanceToStCharlesPlace());
+		chanceDeck.add(new SpeedingFine());
 	}
 	
 	//Incomplete method for the general action of the game
