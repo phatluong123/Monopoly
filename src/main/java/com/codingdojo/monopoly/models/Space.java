@@ -23,4 +23,13 @@ public abstract class Space {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public static Space findSpaceByName(String name) {
+		for(int i = 0; i < Game.getBoard().length; i++) {
+			if(Game.getBoard()[i].getName().equals(name)) {
+				return Game.getBoard()[i];
+			}
+		}
+		return null;
+	}
 }

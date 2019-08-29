@@ -364,4 +364,13 @@ public class Player {
 	public void tradeProperty(Property property, Player recipient) {
     	recipient.addProperty(this.removeProperty(property));
     }
+	
+	public static Player findPlayer(String playerID) {
+		for(Player p: Game.getPlayers()) {
+			if(p.getPlayerID().equals(playerID)) {
+				return p;
+			}
+		}
+		return null;
+	}
 }
