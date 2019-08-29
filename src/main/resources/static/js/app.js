@@ -213,7 +213,7 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 		receivedTrade = JSON.parse(jsonData.trade);	
 		console.log("Received trade message. Message follows: ");
 		console.log("trade detail ====================== ");
-		console.log(receivedTrade);x
+		console.log(receivedTrade);
 	}
 	
 	else if (jsonData.messageType == "UserMessage") {
