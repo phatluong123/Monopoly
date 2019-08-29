@@ -9,9 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/style.css">
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
-	type="text/javascript"></script>
+
 
 <script type="text/javascript" src="js/script.js"></script>
  <link rel="stylesheet"
@@ -20,35 +18,36 @@
 	crossorigin="anonymous"> 
 <script type="text/javascript" src="../js/app.js"></script>
 <script type="text/javascript" src="../js/formSubmit.js"></script>
-
+<script type="text/javascript" src="../js/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
 	<div class="wrapper">
 		<div class="board">
 			<div class="top-row">
 				<div class="corner" id="space20"></div>
-				<div class="top-space" id="space21"></div>
+				<div class="top-space property" id="space21"></div>
 				<div class="top-space" id="space22"></div>
-				<div class="top-space" id="space23"></div>
-				<div class="top-space" id="space24"></div>
+				<div class="top-space property" id="space23"></div>
+				<div class="top-space property" id="space24"></div>
 				<div class="top-space" id="space25"></div>
-				<div class="top-space" id="space26"></div>
-				<div class="top-space" id="space27"></div>
+				<div class="top-space property" id="space26"></div>
+				<div class="top-space property" id="space27"></div>
 				<div class="top-space" id="space28"></div>
-				<div class="top-space" id="space29"></div>
+				<div class="top-space property" id="space29"></div>
 				<div class="corner" id="space30"></div>
 			</div>
 			<div class="mid-row">
 				<div class="left-col">
-					<div class="side-space" id="space19"></div>
-					<div class="side-space" id="space18"></div>
+					<div class="side-space property" id="space19"></div>
+					<div class="side-space property" id="space18"></div>
 					<div class="side-space" id="space17"></div>
-					<div class="side-space" id="space16"></div>
+					<div class="side-space property" id="space16"></div>
 					<div class="side-space" id="space15"></div>
-					<div class="side-space" id="space14"></div>
-					<div class="side-space" id="space13"></div>
+					<div class="side-space property" id="space14"></div>
+					<div class="side-space property" id="space13"></div>
 					<div class="side-space" id="space12"></div>
-					<div class="side-space" id="space11"></div>
+					<div class="side-space property" id="space11"></div>
 				</div>
 				<div class="mid-col">
 						<div class="row dice-bar mt-2">
@@ -67,13 +66,13 @@
 						<div>
 						
 						</div>
-					<div id="activity-log"  class="activity-log mx-auto mt-2" style="  padding:0; margin:0; font-size:12pt;">
-						
-					</div>
+					<div id="activity-log"  class="activity-log mx-auto mt-2" style="  padding:0; margin:0; font-size:12pt;"></div>
 					<div class='row'>
 						<button class='btn btn-primary mt-2 mx-auto' data-toggle='modal' data-target="#trade" type="submit">Trade</button>
 					</div>
-						    <div id="trade" class="modal fade" tabindex="-1">
+					<div id="space-card">
+					</div>
+		<div id="trade" class="modal fade" tabindex="-1">
 	        <div class="modal-dialog">
 	            <div class="modal-content">
 	                <div class="modal-header">
@@ -116,29 +115,29 @@
 					</div>
 
 				<div class="right-col">
-					<div class="side-space" id="space31"></div>
-					<div class="side-space" id="space32"></div>
+					<div class="side-space property" id="space31"></div>
+					<div class="side-space property" id="space32"></div>
 					<div class="side-space" id="space33"></div>
-					<div class="side-space" id="space34"></div>
+					<div class="side-space property" id="space34"></div>
 					<div class="side-space" id="space35"></div>
 					<div class="side-space" id="space36"></div>
-					<div class="side-space" id="space37"></div>
+					<div class="side-space property" id="space37"></div>
 					<div class="side-space" id="space38"></div>
-					<div class="side-space" id="space39"></div>
+					<div class="side-space property" id="space39"></div>
 				</div>
 			</div>
 			<div class="bot-row">
 				<div class="top-row">
 					<div class="corner" id="space10"></div>
-					<div class="top-space" id="space9"></div>
-					<div class="top-space" id="space8"></div>
+					<div class="top-space property" id="space9"></div>
+					<div class="top-space property" id="space8"></div>
 					<div class="top-space" id="space7"></div>
-					<div class="top-space" id="space6"></div>
+					<div class="top-space property" id="space6"></div>
 					<div class="top-space" id="space5"></div>
 					<div class="top-space" id="space4"></div>
-					<div class="top-space" id="space3"></div>
+					<div class="top-space property" id="space3"></div>
 					<div class="top-space" id="space2"></div>
-					<div class="top-space" id="space1"></div>
+					<div class="top-space property" id="space1"></div>
 					<div class="corner" id="space0">
 						<div id="player1"
 							style="display:none; height: 20px; width: 20px; background-color: pink;">
