@@ -278,6 +278,7 @@ function getDiceTwo(){
 }
 
 function  endTurn(){
+	$('#buy-button').hide();
 	webSocket.send(JSON.stringify({
 		'action' : 'end'
 	}))
