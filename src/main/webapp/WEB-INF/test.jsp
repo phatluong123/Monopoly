@@ -52,10 +52,10 @@
 				</div>
 				<div class="mid-col">
 						<div class="row dice-bar mt-2">
-							<div class="my-auto ml-3"><button onclick="endTurn()" class='btn btn-info ' style="display:none" id="end-button">End Turn!</button></div>
-							<div class="my-auto ml-3"><button onclick="buy()" class='btn btn-info ' id="buy-button" style="display:none">Buy!</button></div>
+							<div class="my-auto ml-3"><button onclick="endTurn()" class='btn btn-primary ' style="display:none" id="end-button">End Turn!</button></div>
+							<div class="my-auto ml-3"><button onclick="buy()" class='btn btn-primary ' id="buy-button" style="display:none">Buy!</button></div>
 							<div class='ml-auto mr-2 mt-3 d-inline-block my-auto'>
-								<button onclick="roll()" class='btn btn-info' style="display:none;" id="roll-button">Roll!</button>
+								<button onclick="roll()" class='btn btn-primary' style="display:none;" id="roll-button">Roll!</button>
 							</div>	
 							<div class='left-die my-auto mr-2' style="height: 50px; width: 50px;">
 								<img id="dice1" src='../images/dice1.png' style="height: 50px; width: 50px;">
@@ -71,49 +71,46 @@
 						
 					</div>
 					<div class='row'>
-						<button class='btn btn-primary mt-2 mx-auto' data-toggle='modal' data-target="#trade" type="submit">Trade</button>
+						<button class='btn btn-primary mt-3 mx-auto' data-toggle='modal' data-target="#trade" type="submit">Trade</button>
 					</div>
-						    <div id="trade" class="modal fade" tabindex="-1">
-	        <div class="modal-dialog">
-	            <div class="modal-content">
-	                <div class="modal-header">
-		                    <h5 class="modal-title text-center">Trade with <c:out value="${player1.name}"/></h5>
-		                    <button type="button" class="close ml-0 pl-0" data-dismiss="modal">&times;</button>
-	                </div>
-	                <div class="modal-body">
-	                    <p>What do you want?</p>
-	                    
-	                    	<div class='row col-lg-6 mx-auto'>
-		                    	<select multiple class='form-control' name="wantProperties">
-		                    		<c:forEach items="${player1Property}" var="property">
-		                    			<option value="${property.name}">${property.name}</option>
-		                    		</c:forEach>
-		                    	</select>
-	                    	</div>
-	                    	<div class='row mt-3 d-flex justify-content-center'>
-	            				<p class='my-auto'>Request </p>
-	                    		<div class='ml-2'>$<input class='col-lg-10 ml-1' type="text" class='form-control' name="moneyRequest"></div>
-	                    	</div>
-	                    	<hr>
-	                    	<p class='mt-3'>What will you give?</p>
-	                    	<div class='row col-lg-6 mx-auto'>
-		                    	<select multiple class='form-control' name="giveProperties">
-		                    		<c:forEach items="${player1Property}" var="property">
-		                    			<option value="${property.name}">${property.name}</option>
-		                    		</c:forEach>
-		                    	</select>
-	                    	</div>
-	                    	<div class='row mt-3 d-flex justify-content-around'>
-	                    		<div class='mx-auto'>$<input class='col-lg-10 ml-1' type="text" class='form-control' name="moneyOffer"></div>
-	                    	</div>
-	                    	<p class='mt-2'>You have <span class='text-success'>$<c:out value="${player1.money}"/></span></p>
-	                    	<button class='btn btn-primary mt-3' type="submit" onclick="offer()">Offer</button>
-	                    
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-					</div>
+					<div id="trade" class="modal fade" tabindex="-1">
+				        <div class="modal-dialog">
+				            <div class="modal-content">
+				                <div class="modal-header text-center">
+					            	<h5 class="modal-title mx-auto pl-3">Trade Window </h5>
+					            	<button type="button" class="close ml-0 pl-0" data-dismiss="modal">&times;</button>
+				                </div>
+				                <div class="modal-body">
+				                	<p class='text-center'>Who do you want to trade with?</p>
+				                		<select class='form-control col-lg-6 mx-auto' name='tradeWith' id='tradeWith'>
+				                			<option value="">--Select--</option>
+					                    </select>
+					                <hr>
+				                    <p class='text-center'>What do you want?</p>
+				                    	<div class='row col-lg-6 mx-auto'>
+					                    	<select multiple class='form-control' name="wantProperties" id="wantProperties">
+					                    	</select>
+				                    	</div>
+				                    	<div class='row mt-3 d-flex justify-content-center'>
+				            				<p class='my-auto'>Request </p>
+				                    		<div class='ml-2'>$<input class='col-lg-10 ml-1' type="text" class='form-control' name="moneyRequest"></div>
+				                    	</div>
+				                    	<hr>
+				                    	<p class='mt-3 text-center'>What will you give?</p>
+				                    	<div class='row col-lg-6 mx-auto'>
+					                    	<select multiple class='form-control' name="giveProperties" id="giveProperties">
+					                    	</select>
+				                    	</div>
+				                    	<div class='row mt-3 d-flex justify-content-around'>
+				                    		<div class='mx-auto'>$<input class='col-lg-10 ml-1' type="text" class='form-control' name="moneyOffer"></div>
+				                    	</div>
+				                    	<p class='mt-2 text-center' id="playerMoney"></p>
+				                    	<div class='row'><button class='btn btn-primary mt-3 mx-auto' type="submit">Offer</button></div>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
 
 				<div class="right-col">
 					<div class="side-space" id="space31"></div>
