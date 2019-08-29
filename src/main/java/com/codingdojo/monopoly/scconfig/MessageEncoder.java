@@ -73,7 +73,12 @@ public class MessageEncoder implements Encoder.Text<Message>{
 					.excludeFieldsWithModifiers(java.lang.reflect.Modifier.TRANSIENT)
 					.serializeNulls()
 					.create();
-			returnString = gson.toJson(tradeMessage);
+			returnString = Json.createObjectBuilder().add("messageType", tradeMessage.getClass().getSimpleName())
+				.add("trade", gson.toJson(tradeMessage))
+				.build().toString();
+			
+			
+			
 //			returnString = Json.createObjectBuilder().add("messageType", tradeMessage.getClass().getSimpleName())
 //					.add("accepted", tradeMessage.isAccepted())
 //					.add("rejected", tradeMessage.isRejected())

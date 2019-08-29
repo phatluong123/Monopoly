@@ -51,10 +51,10 @@ public class ChatServerEndPoint {
 	public void handleMessage(Message incomingMessage, Session userSession) throws IOException, EncodeException, NoSuchMethodException, ScriptException {
 		String username = (String) userSession.getUserProperties().get("username");
 
-		Iterator<Session> debugIterator = chatroomUsers.iterator();
+		Iterator<Session> mapBuilderIterator = chatroomUsers.iterator();
 		HashMap<String, Session> socketMap = new HashMap<>();
-		while (debugIterator.hasNext()) {
-			Session nextSession = debugIterator.next();
+		while (mapBuilderIterator.hasNext()) {
+			Session nextSession = mapBuilderIterator.next();
 			socketMap.put((String)nextSession.getUserProperties().get("username"), nextSession);
 		}
 		// Dice roll for movement
@@ -62,90 +62,94 @@ public class ChatServerEndPoint {
 			ActionMessage incomingAction = (ActionMessage)incomingMessage;
 			String action = incomingAction.getAction();
 			Player currentPlayer = Game.getCurrentPlayer();
-			if (action.equals("roll")/* && (!Player.hasRolled() || Player.getDoubleRolls() > 0)*/) {
-				DiceMessage diceoutgoingMessage = new DiceMessage();
-				currentPlayer.movePlayer();
-				int[] dice = Game.getLastDiceRoll();
-				Integer dice1 = dice[0];
-				Integer dice2 = dice[1];
-				String activity = currentPlayer.getName()
-						.concat(" rolled ")
-						.concat(dice1.toString())
-						.concat(" and ")
-						.concat(dice2.toString())
-						.concat("(")
-						.concat(Integer.toString(dice1 + dice2))
-						.concat(")");
-				Game.addActivityLogItem(activity);
-				Game.doStuff(currentPlayer);
-				diceoutgoingMessage.setName(username)
-						.setDice1(dice1)
-						.setDice2(dice2)
-						.setFinalLocation(currentPlayer.getCurrentLocation());
-				//userSession.getBasicRemote().sendObject(diceoutgoingMessage);
-				Iterator<Session> iterator = chatroomUsers.iterator();
-				
-				while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(diceoutgoingMessage);
-			} 
-			
-			// Jail options
-			else if (action.equals("jailroll")){
-				if(!currentPlayer.rollToGetOutOfJail()) {
-					currentPlayer.setTurnsInJail(currentPlayer.getTurnsInJail() + 1);
-					if(currentPlayer.getTurnsInJail() > 2) {
-						String activity = currentPlayer.getName().concat(" failed to roll out of jail and paid $50!");
-						Game.addActivityLogItem(activity);
-						currentPlayer.payFine();
+			if(currentPlayer.isInJail()) {
+				// Jail options
+				if (action.equals("roll")){
+					if(!currentPlayer.rollToGetOutOfJail()) {
+						currentPlayer.setTurnsInJail(currentPlayer.getTurnsInJail() + 1);
+						if(currentPlayer.getTurnsInJail() > 2) {
+							String activity = currentPlayer.getName().concat(" failed to roll out of jail and paid $50!");
+							Game.addActivityLogItem(activity);
+							currentPlayer.payFine();
+						} else {
+							String activity = currentPlayer.getName().concat(" failed to roll out of jail!");
+							Game.addActivityLogItem(activity);
+							Game.nextPlayer();
+						}
 					} else {
-						String activity = currentPlayer.getName().concat(" failed to roll out of jail!");
+						String activity = currentPlayer.getName().concat(" successfully rolled out of jail!");
 						Game.addActivityLogItem(activity);
-						Game.nextPlayer();
 					}
-				} else {
-					String activity = currentPlayer.getName().concat(" successfully rolled out of jail!");
+				} else if (action.equals("fine")) {
+					String activity = currentPlayer.getName().concat(" paid $50 to get out of jail.");
 					Game.addActivityLogItem(activity);
+					currentPlayer.payFine();
+				} else if (action.equals("card")) {
+					String activity = currentPlayer.getName().concat(" played a get out of jail free card.");
+					Game.addActivityLogItem(activity);
+					currentPlayer.playGetOutOfJailCard();
 				}
-			} else if (action.equals("jailfine")) {
-				String activity = currentPlayer.getName().concat(" paid $50 to get out of jail.");
-				Game.addActivityLogItem(activity);
-				currentPlayer.payFine();
-			} else if (action.equals("jailcard")) {
-				String activity = currentPlayer.getName().concat(" played a get out of jail free card.");
-				Game.addActivityLogItem(activity);
-				currentPlayer.playGetOutOfJailCard();
+				
 			}
-			
-			// Buy property
-			else if (action.startsWith("buy")) {
-				if (!Game.isSpaceOwned(currentPlayer.getCurrentLocation())) {
-					Property prop = (Property)Game.getBoard()[currentPlayer.getCurrentLocation()];
-					if(prop.getPurchaseValue() <= currentPlayer.getMoney() && !prop.isOwned()) {
-						String activity = currentPlayer.getName()
-								.concat(" bought ")
-								.concat(prop.getName())
-								.concat(" for $")
-								.concat(Integer.toString(prop.getPurchaseValue()));
+			else {
+				if (action.equals("roll") && (!Player.hasRolled() || Player.getDoubleRolls() > 0)) {
+					DiceMessage diceoutgoingMessage = new DiceMessage();
+					currentPlayer.movePlayer();
+					int[] dice = Game.getLastDiceRoll();
+					Integer dice1 = dice[0];
+					Integer dice2 = dice[1];
+					String activity = currentPlayer.getName()
+							.concat(" rolled ")
+							.concat(dice1.toString())
+							.concat(" and ")
+							.concat(dice2.toString())
+							.concat("(")
+							.concat(Integer.toString(dice1 + dice2))
+							.concat(")");
+					Game.addActivityLogItem(activity);
+					Game.doStuff(currentPlayer);
+					diceoutgoingMessage.setName(username)
+							.setDice1(dice1)
+							.setDice2(dice2)
+							.setFinalLocation(currentPlayer.getCurrentLocation());
+					//userSession.getBasicRemote().sendObject(diceoutgoingMessage);
+					Iterator<Session> iterator = chatroomUsers.iterator();
+					
+					while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(diceoutgoingMessage);
+				} 
+				
+				
+				
+				// Buy property
+				else if (action.startsWith("buy")) {
+					if (!Game.isSpaceOwned(currentPlayer.getCurrentLocation())) {
+						Property prop = (Property)Game.getBoard()[currentPlayer.getCurrentLocation()];
+						if(prop.getPurchaseValue() <= currentPlayer.getMoney() && !prop.isOwned()) {
+							String activity = currentPlayer.getName()
+									.concat(" bought ")
+									.concat(prop.getName())
+									.concat(" for $")
+									.concat(Integer.toString(prop.getPurchaseValue()));
+							Game.addActivityLogItem(activity);
+							currentPlayer.buyProperty(prop);
+						}
+					}
+				}
+				// End turn
+				else if (action.startsWith("end")) {
+					currentPlayer.pay(currentPlayer.getDebt());
+					currentPlayer.setDebt(0);
+					if(currentPlayer.getDebt() > currentPlayer.getMoney()) {
+						String activity = currentPlayer.getName().concat(" went bankrupt!");
 						Game.addActivityLogItem(activity);
-						currentPlayer.buyProperty(prop);
+						Game.goBankrupt(currentPlayer);
 					}
-				}
-			} 
-			
-			// End turn
-			else if (action.startsWith("end")) {
-				currentPlayer.pay(currentPlayer.getDebt());
-				currentPlayer.setDebt(0);
-				if(currentPlayer.getDebt() > currentPlayer.getMoney()) {
-					String activity = currentPlayer.getName().concat(" went bankrupt!");
+					currentPlayer.setDebtOwedTo(null);
+					String activity = currentPlayer.getName().concat(" ended their turn.");
 					Game.addActivityLogItem(activity);
-					Game.goBankrupt(currentPlayer);
+					Game.nextPlayer();
 				}
-				currentPlayer.setDebtOwedTo(null);
-				String activity = currentPlayer.getName().concat(" ended their turn.");
-				Game.addActivityLogItem(activity);
-				Game.nextPlayer();
 			}
-			
 			//Generate gamestate json
 			TurnMessage currentPlayerTurnMessage = new TurnMessage();
 			TurnMessage otherPlayersTurnMessage = new TurnMessage();
