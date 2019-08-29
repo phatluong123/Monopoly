@@ -230,7 +230,9 @@ public class Game {
 				String activity = p.getName()
 						.concat(" landed on the Community Chest and drew a card: ")
 						.concat(card.getName());
-				Game.putChestCard(card);
+				if(!card.getName().equals("Get out of jail free!")) {
+					Game.putChestCard(card);
+				}
 				Game.addActivityLogItem(activity);
 			}
 			else {
@@ -239,7 +241,9 @@ public class Game {
 				String activity = p.getName()
 						.concat(" landed on Chance and drew a card: ")
 						.concat(card.getName());
-				Game.putChanceCard(card);
+				if(!card.getName().equals("Get out of jail free!")) {
+					Game.putChanceCard(card);
+				}
 				Game.addActivityLogItem(activity);
 			}
 		}
