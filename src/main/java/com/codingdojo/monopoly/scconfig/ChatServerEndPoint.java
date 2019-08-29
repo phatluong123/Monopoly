@@ -188,12 +188,12 @@ public class ChatServerEndPoint {
 			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(new UserMessage(getIds()));
 		} else if (incomingMessage instanceof TradeMessage) {
 			TradeMessage tradeoutgoingMessage = new TradeMessage();
-			Player sender = Player.findPlayer(((TradeMessage) incomingMessage).getFirstPlayerID());
-			Player recipient = Player.findPlayer(((TradeMessage) incomingMessage).getSecondPlayerID());
-			ArrayList<Property> offeredProperties = ((TradeMessage) incomingMessage).getP1PropertyOffer();
-			ArrayList<Property> requestedProperties = ((TradeMessage) incomingMessage).getP2PropertyOffer();
-			Integer offeredMoney = Math.min(sender.getMoney(), ((TradeMessage) incomingMessage).getP1MoneyOffer());
-			Integer requestedMoney = Math.min(recipient.getMoney(), ((TradeMessage) incomingMessage).getP2MoneyOffer());
+			Player sender = Player.findPlayer(((TradeMessage) incomingMessage).getSender());
+			Player recipient = Player.findPlayer(((TradeMessage) incomingMessage).getRecipient());
+			ArrayList<Property> offeredProperties = ((TradeMessage) incomingMessage).getSenderProperties();
+			ArrayList<Property> requestedProperties = ((TradeMessage) incomingMessage).getRecipientProperties();
+			Integer offeredMoney = Math.min(sender.getMoney(), ((TradeMessage) incomingMessage).getSenderMoney());
+			Integer requestedMoney = Math.min(recipient.getMoney(), ((TradeMessage) incomingMessage).getRecipientMoney());
 			for(Property p: offeredProperties) {
 				if(!sender.getOwnedProperties().contains(p)) {
 					offeredProperties.remove(p);

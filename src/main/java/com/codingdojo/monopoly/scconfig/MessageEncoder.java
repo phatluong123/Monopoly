@@ -19,6 +19,8 @@ import com.codingdojo.monopoly.scmodels.TradeMessage;
 import com.codingdojo.monopoly.scmodels.TurnMessage;
 import com.codingdojo.monopoly.scmodels.UserMessage;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class MessageEncoder implements Encoder.Text<Message>{
 
@@ -66,16 +68,22 @@ public class MessageEncoder implements Encoder.Text<Message>{
 		}
 		else if (message instanceof TradeMessage) {
 			TradeMessage tradeMessage = (TradeMessage) message;
-			returnString = Json.createObjectBuilder().add("messageType", tradeMessage.getClass().getSimpleName())
-					.add("accepted", tradeMessage.isAccepted())
-					.add("rejected", tradeMessage.isRejected())
-					.add("sender", tradeMessage.getFirstPlayerID())
-					.add("recipient", tradeMessage.getSecondPlayerID())
-					.add("sendermoney", tradeMessage.getP1MoneyOffer())
-					.add("recipientmoney", tradeMessage.getP2MoneyOffer())
-					.add("senderproperties", tradeMessage.getP1PropertyOffer().toString())
-					.add("recipientproperties", tradeMessage.getP2PropertyOffer().toString())
-					.build().toString();
+
+			Gson gson = new GsonBuilder()
+					.excludeFieldsWithModifiers(java.lang.reflect.Modifier.TRANSIENT)
+					.serializeNulls()
+					.create();
+			returnString = gson.toJson(tradeMessage);
+//			returnString = Json.createObjectBuilder().add("messageType", tradeMessage.getClass().getSimpleName())
+//					.add("accepted", tradeMessage.isAccepted())
+//					.add("rejected", tradeMessage.isRejected())
+//					.add("sender", tradeMessage.getFirstPlayerID())
+//					.add("recipient", tradeMessage.getSecondPlayerID())
+//					.add("sendermoney", tradeMessage.getP1MoneyOffer())
+//					.add("recipientmoney", tradeMessage.getP2MoneyOffer())
+//					.add("senderproperties", tradeMessage.getP1PropertyOffer().toString())
+//					.add("recipientproperties", tradeMessage.getP2PropertyOffer().toString())
+//					.build().toString();
 		}
 		else if (message instanceof TurnMessage) {
 			TurnMessage turnMessage = (TurnMessage) message;

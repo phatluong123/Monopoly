@@ -7,35 +7,35 @@ import com.codingdojo.monopoly.models.Property;
 public class TradeMessage implements Message {
 	private boolean accepted = false;
 	private boolean rejected = false;
-	private String firstPlayerID;
-	private String secondPlayerID;
-	private int p1MoneyOffer = 0;
-	private int p2MoneyOffer = 0;
-	private ArrayList<Property> p1PropertyOffer = new ArrayList<>();
-	private ArrayList<Property> p2PropertyOffer = new ArrayList<>();
+	private String sender;
+	private String recipient;
+	private int senderMoney = 0;
+	private int recipientMoney = 0;
+	private ArrayList<Property> senderProperties = new ArrayList<>();
+	private ArrayList<Property> recipientProperties = new ArrayList<>();
 	public boolean isAccepted() {
 		return accepted;
 	}
 	public boolean isRejected() {
 		return rejected;
 	}
-	public String getFirstPlayerID() {
-		return firstPlayerID;
+	public String getSender() {
+		return sender;
 	}
-	public String getSecondPlayerID() {
-		return secondPlayerID;
+	public String getRecipient() {
+		return recipient;
 	}
-	public int getP1MoneyOffer() {
-		return p1MoneyOffer;
+	public int getSenderMoney() {
+		return senderMoney;
 	}
-	public int getP2MoneyOffer() {
-		return p2MoneyOffer;
+	public int getRecipientMoney() {
+		return recipientMoney;
 	}
-	public ArrayList<Property> getP1PropertyOffer() {
-		return p1PropertyOffer;
+	public ArrayList<Property> getSenderProperties() {
+		return senderProperties;
 	}
-	public ArrayList<Property> getP2PropertyOffer() {
-		return p2PropertyOffer;
+	public ArrayList<Property> getRecipientProperties() {
+		return recipientProperties;
 	}
 	public void setAccepted(boolean accepted) {
 		this.accepted = accepted;
@@ -43,22 +43,22 @@ public class TradeMessage implements Message {
 	public void setRejected(boolean rejected) {
 		this.rejected = rejected;
 	}
-	public void setFirstPlayerID(String firstPlayerID) {
-		this.firstPlayerID = firstPlayerID;
+	public void setSender(String firstPlayerID) {
+		this.sender = firstPlayerID;
 	}
-	public void setSecondPlayerID(String secondPlayerID) {
-		this.secondPlayerID = secondPlayerID;
+	public void setRecipient(String secondPlayerID) {
+		this.recipient = secondPlayerID;
 	}
-	public void setP1MoneyOffer(int p1MoneyOffer) {
-		this.p1MoneyOffer = p1MoneyOffer;
+	public void setSenderMoney(int p1MoneyOffer) {
+		this.senderMoney = p1MoneyOffer;
 	}
-	public void setP2MoneyOffer(int p2MoneyOffer) {
-		this.p2MoneyOffer = p2MoneyOffer;
+	public void setRecipientMoney(int p2MoneyOffer) {
+		this.recipientMoney = p2MoneyOffer;
 	}
-	public void setP1PropertyOffer(ArrayList<Property> p1PropertyOffer) {
-		this.p1PropertyOffer = p1PropertyOffer;
+	public void setSenderProperties(ArrayList<Property> p1PropertyOffer) {
+		this.senderProperties = p1PropertyOffer;
 	}
-	public void setP2PropertyOffer(ArrayList<Property> p2PropertyOffer) {
-		this.p2PropertyOffer = p2PropertyOffer;
+	public void setRecipientProperties(ArrayList<Property> p2PropertyOffer) {
+		this.recipientProperties = p2PropertyOffer;
 	}
 }

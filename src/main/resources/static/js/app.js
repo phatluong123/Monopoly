@@ -248,10 +248,10 @@ function sendTradeOffer() {
 		'trade' : 'trade',
 		'sender' : gamestate.players[gamestate.currentPlayerIndex].playerID,
 		'recipient' : document.getElementById("tradeWith").value,
-		'senderproperties' : senderProps,
-		'recipientproperties' : recipProps,
-		'sendermoney' : document.getElementById("moneyOffer").value,
-		'recipientmoney' : document.getElementById("moneyRequest").value
+		'senderProperties' : senderProps,
+		'recipientProperties' : recipProps,
+		'senderMoney' : document.getElementById("moneyOffer").value,
+		'recipientMoney' : document.getElementById("moneyRequest").value
 	}))
 }
 

@@ -48,12 +48,12 @@ public class MessageDecoder implements Decoder.Text<Message>{
 			TradeMessage tradeMessage = new TradeMessage();
 			tradeMessage.setAccepted(jsonObject.getBoolean("accepted", false));
 			tradeMessage.setRejected(jsonObject.getBoolean("rejected", false));
-			tradeMessage.setFirstPlayerID(jsonObject.getString("sender", Game.getCurrentPlayer().getPlayerID()));
-			tradeMessage.setSecondPlayerID(jsonObject.getString("recipient"));
-			tradeMessage.setP1MoneyOffer(Integer.parseInt(jsonObject.getString("sendermoney")));
-			tradeMessage.setP2MoneyOffer(Integer.parseInt(jsonObject.getString("recipientmoney")));
-			ArrayList<String> senderPropertyNames = new ArrayList<String>(Arrays.asList(jsonObject.getString("senderproperties").split(",")));
-			ArrayList<String> recipientPropertyNames = new ArrayList<String>(Arrays.asList(jsonObject.getString("recipientproperties").split(",")));
+			tradeMessage.setSender(jsonObject.getString("sender", Game.getCurrentPlayer().getPlayerID()));
+			tradeMessage.setRecipient(jsonObject.getString("recipient"));
+			tradeMessage.setSenderMoney(Integer.parseInt(jsonObject.getString("senderMoney")));
+			tradeMessage.setRecipientMoney(Integer.parseInt(jsonObject.getString("recipientMoney")));
+			ArrayList<String> senderPropertyNames = new ArrayList<String>(Arrays.asList(jsonObject.getString("senderProperties").split(",")));
+			ArrayList<String> recipientPropertyNames = new ArrayList<String>(Arrays.asList(jsonObject.getString("recipientProperties").split(",")));
 			ArrayList<Property> senderProperties = new ArrayList<>();
 			ArrayList<Property> recipientProperties = new ArrayList<>();
 			for(String s: senderPropertyNames) {
@@ -62,8 +62,8 @@ public class MessageDecoder implements Decoder.Text<Message>{
 			for(String s: recipientPropertyNames) {
 				recipientProperties.add((Property) Space.findSpaceByName(s));
 			}
-			tradeMessage.setP1PropertyOffer(senderProperties);
-			tradeMessage.setP2PropertyOffer(recipientProperties);
+			tradeMessage.setSenderProperties(senderProperties);
+			tradeMessage.setRecipientProperties(recipientProperties);
 			return tradeMessage;
 		} else {
 			return null;
