@@ -70,6 +70,49 @@
 					<div id="activity-log"  class="activity-log mx-auto mt-2" style="  padding:0; margin:0; font-size:12pt;">
 						
 					</div>
+					<div class='row'>
+						<button class='btn btn-primary mt-2 mx-auto' data-toggle='modal' data-target="#trade" type="submit">Trade</button>
+					</div>
+						    <div id="trade" class="modal fade" tabindex="-1">
+	        <div class="modal-dialog">
+	            <div class="modal-content">
+	                <div class="modal-header">
+		                    <h5 class="modal-title text-center">Trade with <c:out value="${player1.name}"/></h5>
+		                    <button type="button" class="close ml-0 pl-0" data-dismiss="modal">&times;</button>
+	                </div>
+	                <div class="modal-body">
+	                    <p>What do you want?</p>
+	                    <form>
+	                    	<div class='row col-lg-6 mx-auto'>
+		                    	<select multiple class='form-control' name="wantProperties">
+		                    		<c:forEach items="${player1Property}" var="property">
+		                    			<option value="${property.name}">${property.name}</option>
+		                    		</c:forEach>
+		                    	</select>
+	                    	</div>
+	                    	<div class='row mt-3 d-flex justify-content-center'>
+	            				<p class='my-auto'>Request </p>
+	                    		<div class='ml-2'>$<input class='col-lg-10 ml-1' type="text" class='form-control' name="moneyRequest"></div>
+	                    	</div>
+	                    	<hr>
+	                    	<p class='mt-3'>What will you give?</p>
+	                    	<div class='row col-lg-6 mx-auto'>
+		                    	<select multiple class='form-control' name="giveProperties">
+		                    		<c:forEach items="${player1Property}" var="property">
+		                    			<option value="${property.name}">${property.name}</option>
+		                    		</c:forEach>
+		                    	</select>
+	                    	</div>
+	                    	<div class='row mt-3 d-flex justify-content-around'>
+	                    		<div class='mx-auto'>$<input class='col-lg-10 ml-1' type="text" class='form-control' name="moneyOffer"></div>
+	                    	</div>
+	                    	<p class='mt-2'>You have <span class='text-success'>$<c:out value="${player1.money}"/></span></p>
+	                    	<button class='btn btn-primary mt-3' type="submit">Offer</button>
+	                    </form>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
 					</div>
 
 				<div class="right-col">
