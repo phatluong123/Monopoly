@@ -1,6 +1,7 @@
 package com.codingdojo.monopoly.scconfig;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -25,6 +26,7 @@ import com.codingdojo.monopoly.scmodels.ChatMessage;
 import com.codingdojo.monopoly.scmodels.DiceMessage;
 import com.codingdojo.monopoly.scmodels.GamestateMessage;
 import com.codingdojo.monopoly.scmodels.Message;
+import com.codingdojo.monopoly.scmodels.TradeMessage;
 import com.codingdojo.monopoly.scmodels.UserMessage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -122,11 +124,14 @@ public class ChatServerEndPoint {
 			
 			// End turn
 			else if (action.startsWith("end")) {
+				currentPlayer.pay(currentPlayer.getDebt());
+				currentPlayer.setDebt(0);
 				if(currentPlayer.getDebt() > currentPlayer.getMoney()) {
 					String activity = currentPlayer.getName().concat(" went bankrupt!");
 					Game.addActivityLogItem(activity);
 					Game.goBankrupt(currentPlayer);
 				}
+				currentPlayer.setDebtOwedTo(null);
 				String activity = currentPlayer.getName().concat(" ended their turn.");
 				Game.addActivityLogItem(activity);
 				Game.nextPlayer();
@@ -137,8 +142,7 @@ public class ChatServerEndPoint {
 			Iterator<Session> iterator = chatroomUsers.iterator();
 			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(gamestateMessage);
 			
-		}
-		if (incomingMessage instanceof ChatMessage) {
+		} else if (incomingMessage instanceof ChatMessage) {
 			
 			ChatMessage incomingChatMessage = (ChatMessage) incomingMessage;
 			System.out.println(incomingChatMessage.getMessage());
@@ -160,6 +164,37 @@ public class ChatServerEndPoint {
 			}
 			Iterator<Session> iterator = chatroomUsers.iterator();
 			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(new UserMessage(getIds()));
+		} else if (incomingMessage instanceof TradeMessage) {
+			Player sender = Player.findPlayer(((TradeMessage) incomingMessage).getFirstPlayerID());
+			Player recipient = Player.findPlayer(((TradeMessage) incomingMessage).getSecondPlayerID());
+			ArrayList<Property> offeredProperties = ((TradeMessage) incomingMessage).getP1PropertyOffer();
+			ArrayList<Property> requestedProperties = ((TradeMessage) incomingMessage).getP2PropertyOffer();
+			Integer offeredMoney = Math.min(sender.getMoney(), ((TradeMessage) incomingMessage).getP1MoneyOffer());
+			Integer requestedMoney = Math.min(recipient.getMoney(), ((TradeMessage) incomingMessage).getP2MoneyOffer());
+			for(Property p: offeredProperties) {
+				if(!sender.getOwnedProperties().contains(p)) {
+					offeredProperties.remove(p);
+				}
+			}
+			for(Property p: requestedProperties) {
+				if(!recipient.getOwnedProperties().contains(p)) {
+					offeredProperties.remove(p);
+				}
+			}
+			if(((TradeMessage) incomingMessage).isAccepted()) {
+				for(Property p: offeredProperties) {
+					sender.tradeProperty(p, recipient);
+				}
+				for(Property p: requestedProperties) {
+					recipient.tradeProperty(p, sender);
+				}
+				sender.sendMoney(recipient, offeredMoney);
+				recipient.sendMoney(sender, requestedMoney);
+			} else {
+				Iterator<Session> iterator = chatroomUsers.iterator();
+				while (iterator.hasNext()) {
+				}
+			}
 		}
 	}
 	
@@ -189,19 +224,12 @@ public class ChatServerEndPoint {
 	}
 	
 	private GamestateMessage generateGamestateMessage() {
-		System.out.println("In generateGamestateMessage");
 		GamestateMessage g = new GamestateMessage();
-		System.out.println("Instantiated gamestateMessage");
 		Gson gson = new GsonBuilder()
 				.excludeFieldsWithModifiers(java.lang.reflect.Modifier.TRANSIENT)
 				.serializeNulls()
 				.create();
-		System.out.println("Gson built");
-		System.out.println(gson.toJson(new Game()));
 		g.setGamestate(gson.toJson(new Game()));
-		System.out.println("Generated json from gamestate");
-		System.out.println("Gamestate:");
-		System.out.println(g.getGamestate());
 		return g;
 		
 	}
