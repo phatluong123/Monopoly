@@ -169,6 +169,7 @@ public class ChatServerEndPoint {
 			Iterator<Session> iterator = chatroomUsers.iterator();
 			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(new UserMessage(getIds()));
 		} else if (incomingMessage instanceof TradeMessage) {
+			TradeMessage tradeoutgoingMessage = new TradeMessage();
 			Player sender = Player.findPlayer(((TradeMessage) incomingMessage).getFirstPlayerID());
 			Player recipient = Player.findPlayer(((TradeMessage) incomingMessage).getSecondPlayerID());
 			ArrayList<Property> offeredProperties = ((TradeMessage) incomingMessage).getP1PropertyOffer();
@@ -195,11 +196,14 @@ public class ChatServerEndPoint {
 				sender.sendMoney(recipient, offeredMoney);
 				recipient.sendMoney(sender, requestedMoney);
 			} else {
+				tradeoutgoingMessage = (TradeMessage) incomingMessage;
+				tradeoutgoingMessage.setAccepted(false);
 				Iterator<Session> iterator = chatroomUsers.iterator();
 				while (iterator.hasNext()) {
 					iterator.next().getUserProperties();
 				}
 			}
+			
 		}
 	}
 	
@@ -238,5 +242,6 @@ public class ChatServerEndPoint {
 		return g;
 		
 	}
+
 	
 }

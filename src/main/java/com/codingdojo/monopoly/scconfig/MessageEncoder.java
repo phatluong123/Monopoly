@@ -5,15 +5,19 @@ import java.util.Set;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonValue;
 import javax.websocket.EncodeException;
 import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
 
+import com.codingdojo.monopoly.models.Property;
 import com.codingdojo.monopoly.scmodels.ChatMessage;
 import com.codingdojo.monopoly.scmodels.DiceMessage;
 import com.codingdojo.monopoly.scmodels.GamestateMessage;
 import com.codingdojo.monopoly.scmodels.Message;
+import com.codingdojo.monopoly.scmodels.TradeMessage;
 import com.codingdojo.monopoly.scmodels.UserMessage;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 public class MessageEncoder implements Encoder.Text<Message>{
 
@@ -59,9 +63,17 @@ public class MessageEncoder implements Encoder.Text<Message>{
 			UserMessage usersMessage = (UserMessage) message;
 			returnString = buildJsonUsersData(usersMessage.getUsers(), usersMessage.getClass().getSimpleName() );
 		}
-
-		
-
+		else if (message instanceof TradeMessage) {
+			TradeMessage tradeMessage = (TradeMessage) message;
+			returnString = Json.createObjectBuilder().add("messageType", tradeMessage.getClass().getSimpleName())
+					.add("accepted", tradeMessage.isAccepted())
+					.add("sender", tradeMessage.getFirstPlayerID())
+					.add("offerMoney", tradeMessage.getP1MoneyOffer())
+					.add("requestedMoney", tradeMessage.getP2MoneyOffer())
+					.add("P1PropertyOffer", (JsonValue) tradeMessage.getP1PropertyOffer())
+					.add("P2PropertyOffer", (JsonValue) tradeMessage.getP2PropertyOffer())
+					.build().toString();
+		}
 		return returnString;
 	}
 	

@@ -128,7 +128,7 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 	    		}
 	    		console.log("moving " + currentPlayer + " from " + startLocation + " to " + jsonData.finalLocation );
 	    		myMove(currentPlayer, startLocation, jsonData.finalLocation);
-	    		messagesTextArea.value += jsonData.name+ ":  " + dice + '\n';
+	    		messagesTextArea.value += jsonData.name+ ": rolled " + dice + '\n';
 	    	}
 	    	else {
 	    		count++;
@@ -173,7 +173,13 @@ function buy() {
 	webSocket.send(JSON.stringify({
 		'action' : 'buy'
 	}))
+}
 
+function  endTurn(){
+	$('#buy-button').hide();
+	webSocket.send(JSON.stringify({
+		'action' : 'end'
+	}))
 }
 
 function roll(){
@@ -181,7 +187,38 @@ function roll(){
 		'action' : 'roll'
 	}));
 }
+//======================
+//function offer(){
+//	webSocket.send(JSON.stringify({
+//		'accepted':'false',
+//		'firstPlayerID' : sender.playerID,
+//		'secondPlayerID':recipient.playerID,
+//		'p1MoneyOffer' : sender.money,
+//		'p2MoneyOffer' : recipent.money,
+//		'p1PropertyOffer':players1.properties,
+//		'p2PropertyOffer':players2.properties
+//		
+//	}));
+//}
 
+function offer(){
+
+	console.log("form offer");
+	webSocket.send(JSON.stringify({
+	'trade' : 'trade',
+	'accepted':'false',
+	'sender' : 'sender.playerID',
+	'recipient':'recipient.playerID',
+	'sendermoney' : '4',
+	'recipientmoney' : '5',
+	'p1PropertyOffer':'[1, 2]',
+	'p2PropertyOffer':'[]'
+	
+}));
+}	
+	
+	
+//////////////////////////////=========
 window.onbeforeunload = function (){
 //	alert("Bye...");
 	
@@ -226,12 +263,6 @@ function getDiceOne(){
 }
 function getDiceTwo(){
     return 5;
-}
-
-function  endTurn(){
-	webSocket.send(JSON.stringify({
-		'action' : 'end'
-	}))
 }
 
 setInterval(function(){

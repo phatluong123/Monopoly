@@ -82,7 +82,7 @@
 	                </div>
 	                <div class="modal-body">
 	                    <p>What do you want?</p>
-	                    <form>
+	                    
 	                    	<div class='row col-lg-6 mx-auto'>
 		                    	<select multiple class='form-control' name="wantProperties">
 		                    		<c:forEach items="${player1Property}" var="property">
@@ -107,8 +107,8 @@
 	                    		<div class='mx-auto'>$<input class='col-lg-10 ml-1' type="text" class='form-control' name="moneyOffer"></div>
 	                    	</div>
 	                    	<p class='mt-2'>You have <span class='text-success'>$<c:out value="${player1.money}"/></span></p>
-	                    	<button class='btn btn-primary mt-3' type="submit">Offer</button>
-	                    </form>
+	                    	<button class='btn btn-primary mt-3' type="submit" onclick="offer()">Offer</button>
+	                    
 	                </div>
 	            </div>
 	        </div>
