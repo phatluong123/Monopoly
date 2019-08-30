@@ -37,10 +37,10 @@
 				<div class="top-space" id="space22"></div>
 				<div class="top-space property" id="space23"></div>
 				<div class="top-space property" id="space24"></div>
-				<div class="top-space" id="space25"></div>
+				<div class="top-space railroad" id="space25"></div>
 				<div class="top-space property" id="space26"></div>
 				<div class="top-space property" id="space27"></div>
-				<div class="top-space" id="space28"></div>
+				<div class="top-space utility" id="space28"></div>
 				<div class="top-space property" id="space29"></div>
 				<div class="corner" id="space30"></div>
 			</div>
@@ -50,10 +50,10 @@
 					<div class="side-space property" id="space18"></div>
 					<div class="side-space" id="space17"></div>
 					<div class="side-space property" id="space16"></div>
-					<div class="side-space" id="space15"></div>
+					<div class="side-space railroad" id="space15"></div>
 					<div class="side-space property" id="space14"></div>
 					<div class="side-space property" id="space13"></div>
-					<div class="side-space" id="space12"></div>
+					<div class="side-space utility" id="space12"></div>
 					<div class="side-space property" id="space11"></div>
 				</div>
 				<div class="mid-col">
@@ -190,7 +190,7 @@
 					<div class="side-space property" id="space32"></div>
 					<div class="side-space" id="space33"></div>
 					<div class="side-space property" id="space34"></div>
-					<div class="side-space" id="space35"></div>
+					<div class="side-space railroad" id="space35"></div>
 					<div class="side-space" id="space36"></div>
 					<div class="side-space property" id="space37"></div>
 					<div class="side-space" id="space38"></div>
@@ -204,7 +204,7 @@
 					<div class="top-space property" id="space8"></div>
 					<div class="top-space" id="space7"></div>
 					<div class="top-space property" id="space6"></div>
-					<div class="top-space" id="space5"></div>
+					<div class="top-space railroad" id="space5"></div>
 					<div class="top-space" id="space4"></div>
 					<div class="top-space property" id="space3"></div>
 					<div class="top-space" id="space2"></div>

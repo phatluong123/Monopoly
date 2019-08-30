@@ -1,3 +1,11 @@
 .railroad-card-top{
+	height: 30%;
+	width: 100%;
+	text-align: center;
+	align-content: center;
+}
+
+.railraod-name{
+	width: 80%;
 	
 }
