@@ -113,6 +113,7 @@
 				            </div>
 				        </div>
 				    </div>
+				    
 					<div id="housing" class="modal fade" tabindex="-1">
 				        <div class="modal-dialog">
 				            <div class="modal-content">
