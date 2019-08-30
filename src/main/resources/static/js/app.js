@@ -214,7 +214,7 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 			}
 		}
 		var newp= document.createElement("P")
-		newp.innerHTML += sendername + " wants to trade : " + "<br/>" ;
+		newp.innerHTML += sendername + " wants to trade : " + "<br />" ;
 		for (var i=0; i<receivedTrade.senderProperties.length;i++){
 			newp.innerHTML +=receivedTrade.senderProperties[i].name;
 		}

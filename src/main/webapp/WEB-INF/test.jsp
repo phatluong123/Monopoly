@@ -299,12 +299,12 @@
 						</div>
 					</div>
 				</div>
-				<div id="playerbox2" class="card mt-2" style="display:none; background-color:#e9ede8;">
+				<div id="playerbox2" class="card mt-2" data-toggle="collapse" data-target="#playerbox2toggle" style="display:none; background-color:#e9ede8;">
 					<div class='card-header'>
 						<h5>
 						<div id="player2info" class="row"><div>
 						</h5>
-						<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox2toggle">List of Properties</button>
+						<!--<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox2toggle">List of Properties</button> -->
 					</div>	
 					<div id="playerbox2toggle" class='collapse hide' data-parent="#accordion">
 						<div class='card-body'>
@@ -314,12 +314,12 @@
 						</div>
 					</div>
 				</div>
-				<div id="playerbox3" class="card mt-2" style="display:none; background-color:#e9ede8;">
+				<div id="playerbox3" class="card mt-2" data-toggle="collapse" data-target="#playerbox3toggle" style="display:none; background-color:#e9ede8;">
 					<div class='card-header'>
 						<h5>
 						<div id="player3info" class="row"><div>
 						</h5>
-						<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox3toggle">List of Properties</button>
+						<!--<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox3toggle">List of Properties</button>  -->
 					</div>	
 					<div id="playerbox3toggle" class='collapse hide' data-parent="#accordion">
 						<div class='card-body'>
@@ -329,12 +329,12 @@
 						</div>
 					</div>
 				</div>
-				<div id="playerbox4" class="card mt-2" style="display:none; background-color:#e9ede8;">
+				<div id="playerbox4" class="card mt-2" data-toggle="collapse" data-target="#playerbox4toggle" style="display:none; background-color:#e9ede8;">
 					<div class='card-header'>
 						<h5>
 						<div id="player4info" class="row"><div>
 						</h5>
-						<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox4toggle">List of Properties</button>
+						<!--<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox4toggle">List of Properties</button>-->
 					</div>	
 					<div id="playerbox4toggle" class='collapse hide' data-parent="#accordion">
 						<div class='card-body'>
