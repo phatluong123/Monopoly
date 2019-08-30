@@ -125,6 +125,71 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 		document.getElementById("playerMoney").innerHTML = "You have $"+playersList[gamestate.currentPlayerIndex].money;
 		// End of trade window logic
 		
+		//House building logic, functioning but needs to change to server variables
+		var buildSet = document.getElementById("buildSet");
+		$("#buildSet").empty();
+		$('#buildingBody').hide();
+		$("#building tr").remove();
+		var newOption = document.createElement("option");
+		newOption.text="--Select--";
+		newOption.value="";
+		buildSet.add(newOption);
+		var properties = playersList[gamestate.currentPlayerIndex].setsOwned;
+		var fullSets = gamestate.sets;
+		for(var [key, value] of properties.keys()){
+			if(key != "railroad" && key != "utility"){
+				for(var [key1, value1] of fullSets.keys()){
+					if(key.valueOf() == key1.valueOf()){
+						if(value == value1){
+							var newOption = document.createElement("option");
+							newOption.text=key1;
+							newOption.value="tomato";
+							buildSet.add(newOption);
+						}
+					}
+				}
+			}
+		}
+		//"Test" House building logic, need to change for loop to setsOwned , but used server variables
+		$(document).ready(function(){
+			$("#buildSet").change(function(){
+				var buildSet = $(this).val();
+				var properties = playersList[gamestate.currentPlayerIndex].setsOwned;
+				var fullSets = gamestate.sets;
+					$('#buildingBody').show();
+					$("#building tr").remove();
+					if(buildSet == ""){
+						$('#buildingBody').hide();
+					}
+					else{
+						for(var [key, value] of properties.keys()){
+							if(key != "railroad" && key != "utility"){
+								for(var [key1, value1] of fullSets.keys()){
+									if(key.valueOf() == key1.valueOf()){
+										if(value == value1){
+											var table= document.getElementById("building");
+											var row = table.insertRow(0);
+											var cell1 = row.insertCell(0);
+											var cell2 = row.insertCell(1);
+											var cell3 = row.insertCell(2);
+											cell1.innerHTML = properties[i].name;
+											cell1.style.backgroundColor = properties[i].color;
+											cell2.innerHTML = properties[i].numHouses;
+											var btn = document.createElement('input');
+											btn.type = "button";
+											btn.className = "btn btn-primary btn-sm";
+											btn.value = "Build";
+											cell3.appendChild(btn);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			})
+		})
+		//End of house building "test" logic
 		
 		//Building activity log
 		document.getElementById('activity-log').innerHTML = '';
