@@ -171,9 +171,16 @@ public class ChatServerEndPoint {
 			
 		} else if (incomingMessage instanceof BuildMessage) {
 			BuildMessage buildMessage = (BuildMessage) incomingMessage;
-			if(buildMessage.getStreet().buyStructure()) {
+			if(buildMessage.getAction().equals("build") && buildMessage.getStreet().buyStructure()) {
 				String activity = new StringBuilder(Game.getCurrentPlayer().getName())
 						.append(" bought a new structure at ")
+						.append(buildMessage.getStreet().getName())
+						.toString();
+				Game.addActivityLogItem(activity);
+			}
+			else if (buildMessage.getAction().equals("sell") && buildMessage.getStreet().sellStructure()) {
+				String activity = new StringBuilder(Game.getCurrentPlayer().getName())
+						.append(" sold a structure at ")
 						.append(buildMessage.getStreet().getName())
 						.toString();
 				Game.addActivityLogItem(activity);
