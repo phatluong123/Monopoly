@@ -260,7 +260,7 @@
 			<div id="accordion">
 				<div id="playerbox1" class="card mt-2" data-toggle="collapse" data-target="#playerbox1toggle" style="display:none; background-color:#e9ede8;">
 					<div class="playerInfo">
-						<div id="player1info" class="row text-success justify-content-center font-14"></div>
+						<div id="player1info" class="row justify-content-center font-14"></div>
 					</div>	
 					<div id="playerbox1toggle" class='collapse hide' data-parent="#accordion">
 						<div class='card-body'>
