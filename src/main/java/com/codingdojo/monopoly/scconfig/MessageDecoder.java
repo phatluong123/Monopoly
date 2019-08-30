@@ -46,8 +46,8 @@ public class MessageDecoder implements Decoder.Text<Message>{
 			return actionMessage;
 		} else if (jsonObject.containsKey("trade")) {
 			TradeMessage tradeMessage = new TradeMessage();
-			tradeMessage.setAccepted(jsonObject.getBoolean("accepted", false));
-			tradeMessage.setRejected(jsonObject.getBoolean("rejected", false));
+			tradeMessage.setAccepted(Boolean.valueOf(jsonObject.getBoolean("accepted")));
+			tradeMessage.setRejected(Boolean.valueOf(jsonObject.getBoolean("rejected")));
 			tradeMessage.setSender(jsonObject.getString("sender", Game.getCurrentPlayer().getPlayerID()));
 			tradeMessage.setRecipient(jsonObject.getString("recipient"));
 			tradeMessage.setSenderMoney(Integer.parseInt(jsonObject.getString("senderMoney")));

@@ -205,22 +205,39 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 		
 		
 	} else if (jsonData.messageType == "TradeMessage") {
-//
-//		var p = document.createElement("P");
-//		p.innerHTML = jsonData.messageType;
-//		document.getElementById('trade-zone').appendChild(p);
-
+		$('#trade-zone').show();
 		receivedTrade = JSON.parse(jsonData.trade);	
-		console.log("Received trade message. Message follows: ");
-		console.log("trade detail ====================== ");
-		console.log(receivedTrade);
+		for (var i=0; i< gamestate.players.length;i++){
+			if (gamestate.players[i].playerID == receivedTrade.sender){
+				var sendername  = gamestate.players[i].name;
+			}
+		}
+		var newp= document.createElement("P")
+		newp.innerHTML += sendername + " wants to trade : " + "<br/>" ;
+		for (var i=0; i<receivedTrade.senderProperties.length;i++){
+			newp.innerHTML +=receivedTrade.senderProperties[i].name;
+		}
+		newp.innerHTML += "<br />" +" $ " + receivedTrade.recipientMoney + "<br/>";
+		newp.innerHTML += " For your : " + "<br/>";
+		for (var i=0; i<receivedTrade.recipientProperties.length;i++){
+			newp.innerHTML +=receivedTrade.recipientProperties[i].name;
+		}
+		newp.innerHTML += "<br />" + " $ " + receivedTrade.senderMoney + "<br/>";
+		document.getElementById('trade-zone').appendChild(newp);
+		var span1 = document.createElement('span1');
+		var span2 = document.createElement('span2');
+		span1.innerHTML = "<button id='accept ' class='btn btn-primary btn-sm'  onclick='acceptedOffer()' >Accepted</button>";
+		span2.innerHTML = "<button id='reject ' class='btn btn-danger btn-sm'  onclick='rejectedOffer()' >Reject</button>";
+		document.getElementById('trade-zone').appendChild(span1);
+		document.getElementById('trade-zone').appendChild(span2);
+		
 	}
 	
 	else if (jsonData.messageType == "UserMessage") {
 		usersTextArea.value = "";
 		var i = 0;
 		while (i < jsonData.user.length){			
-			usersTextArea.value +=  jsonData.user[i] + "\n";
+			usersTextArea.value += "<br />" + jsonData.user[i] ;
 			i++;
 		}
 	}
@@ -253,6 +270,8 @@ function sendTradeOffer() {
 	
 	webSocket.send(JSON.stringify({
 		'trade' : 'trade',
+		'accepted' :'false',
+		'rejected' :'false',
 		'sender' : gamestate.players[gamestate.currentPlayerIndex].playerID,
 		'recipient' : document.getElementById("tradeWith").value,
 		'senderProperties' : senderProps,
@@ -260,6 +279,55 @@ function sendTradeOffer() {
 		'senderMoney' : document.getElementById("moneyOffer").value,
 		'recipientMoney' : document.getElementById("moneyRequest").value
 	}))
+}
+
+
+function acceptedOffer(){
+	$('#trade-zone').hide();
+	var acceptedOffer = receivedTrade;
+	acceptedOffer.accepted = true;
+	var senderArray = acceptedOffer.senderProperties;
+	var recipArray = acceptedOffer.recipientProperties;
+	console.log(senderArray);
+	console.log(recipArray);
+	let senderProps = "";
+	for(let i = 0; i < senderArray.length; i++) {
+		if(i != senderArray.length-1) {
+			senderProps += senderArray[i] + ",";
+		}
+		else {
+			senderProps += senderArray[i];
+		}
+	}
+	let recipProps = "";
+	for(let i = 0; i < recipArray.length; i++) {
+		if(i != recipArray.length-1) {
+			recipProps += recipArray[i] + ",";
+		}
+		else {
+			recipProps += recipArray[i];
+		}
+	}
+	webSocket.send(JSON.stringify({
+		'trade': 'trade',
+		'accepted' : 'true',
+		'rejected' :'false',
+		'sender' : acceptedOffer.sender,
+		'recipient' : acceptedOffer.recipient,
+		'senderProperties' : acceptedOffer.senderProperties,
+		'recipientProperties' : receivedTrade.recipientProperties,
+		'senderMoney' : receivedTrade.senderMoney,
+		'recipientMoney' : receivedTrade.recipientMoney
+	}))
+}
+
+function rejectedOffer(){
+	$('#trade-zone').hide();
+	webSocket.send(JSON.stringify({
+	'trade': 'trade',
+	'accepted' : 'true',
+	'rejected' :'true'
+	}))	
 }
 
 function createPlayer() {

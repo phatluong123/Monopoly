@@ -110,7 +110,7 @@
 				        </div>
 				    </div>
 				    <div id="trade-zone"  > 
-				    	`
+
 				    </div>
 				    
 				    
