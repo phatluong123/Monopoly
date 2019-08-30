@@ -69,7 +69,7 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 		
 				var ul = document.getElementById("listproperties"+(i+1));
 				var li = document.createElement("li");
-				li.className = "list-group-item";
+				li.className = "list-group-item p-0 font-weight-bold text-center my-1";
 				li.style.backgroundColor = playersList[i].ownedProperties[j].color;
 				  li.appendChild(document.createTextNode(playersList[i].ownedProperties[j].name));
 				  ul.appendChild(li);

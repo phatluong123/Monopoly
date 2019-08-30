@@ -193,18 +193,10 @@
 					<div class="top-space" id="space2"></div>
 					<div class="top-space property" id="space1"></div>
 					<div class="corner" id="space0">
-						<div id="player1"
-							style="display:none; height: 30px; width: 30px;background-size:contain; background-image: url('../images/dog.png');">
-						</div>
-						<div id="player2"
-							style="display:none; height: 30px; width: 30px; background-size:contain; background-image: url('../images/ship.png');">
-						</div>
-						<div id="player3"
-							style="display:none; height: 30px; width: 30px; background-size:contain; background-image: url('../images/thimble.png');">
-						</div>
-						<div id="player4"
-							style="display:none; height: 30px; width: 30px; background-size:contain; background-image: url('../images/boot.png');">
-						</div>
+						<div id="player1"></div>
+						<div id="player2"></div>
+						<div id="player3"></div>
+						<div id="player4"></div>
 						
 					</div>
 				</div>
@@ -266,13 +258,9 @@
 				</datalist>
 				<input type="button" value="Send Message" onClick="send()">
 			<div id="accordion">
-				<div id="playerbox1" class="btn mt-2 w-100" data-toggle="collapse" data-target="#playerbox1toggle" style="display:none; background-color:#e9ede8;">
-					<div class='card-header'>
-						<h5>
-				<div id="player1info" class="row"><div>
-						
-						</h5>
-						<!--  <button class='btn btn-primary btn-sm w-100' data-target="#playerbox1toggle">List of Properties</button>-->
+				<div id="playerbox1" class="card mt-2" data-toggle="collapse" data-target="#playerbox1toggle" style="display:none; background-color:#e9ede8;">
+					<div class="playerInfo">
+						<div id="player1info" class="row text-success justify-content-center font-14"></div>
 					</div>	
 					<div id="playerbox1toggle" class='collapse hide' data-parent="#accordion">
 						<div class='card-body'>
@@ -283,11 +271,8 @@
 					</div>
 				</div>
 				<div id="playerbox2" class="card mt-2" data-toggle="collapse" data-target="#playerbox2toggle" style="display:none; background-color:#e9ede8;">
-					<div class='card-header'>
-						<h5>
-						<div id="player2info" class="row"><div>
-						</h5>
-						<!--<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox2toggle">List of Properties</button> -->
+					<div class="playerInfo">
+							<div id="player2info" class="row justify-content-center font-14"></div>
 					</div>	
 					<div id="playerbox2toggle" class='collapse hide' data-parent="#accordion">
 						<div class='card-body'>
@@ -298,11 +283,8 @@
 					</div>
 				</div>
 				<div id="playerbox3" class="card mt-2" data-toggle="collapse" data-target="#playerbox3toggle" style="display:none; background-color:#e9ede8;">
-					<div class='card-header'>
-						<h5>
-						<div id="player3info" class="row"><div>
-						</h5>
-						<!--<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox3toggle">List of Properties</button>  -->
+					<div class="playerInfo">
+						<div id="player3info" class="row justify-content-center font-14"></div>
 					</div>	
 					<div id="playerbox3toggle" class='collapse hide' data-parent="#accordion">
 						<div class='card-body'>
@@ -313,11 +295,8 @@
 					</div>
 				</div>
 				<div id="playerbox4" class="card mt-2" data-toggle="collapse" data-target="#playerbox4toggle" style="display:none; background-color:#e9ede8;">
-					<div class='card-header'>
-						<h5>
-						<div id="player4info" class="row"><div>
-						</h5>
-						<!--<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox4toggle">List of Properties</button>-->
+					<div class="playerInfo">
+						<div id="player4info" class="row justify-content-center font-14"></div>
 					</div>	
 					<div id="playerbox4toggle" class='collapse hide' data-parent="#accordion">
 						<div class='card-body'>
