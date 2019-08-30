@@ -5,7 +5,32 @@
 	align-content: center;
 }
 
-.railraod-name{
+.railroad-name{
 	width: 80%;
 	
+}
+
+.railroad-card-top img{
+	height: 50px;
+	width: 50px;
+}
+.train-name{
+	width: 100%;
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+	font-size: 8pt;
+	font-weight: bold;
+}
+
+.utility-or-railroad{
+	padding-top: 5px;
+	padding-left: 5px
+}
+
+#inner-space-card{
+	height: 145px;
+	width: 125px;
+	border: 2px solid black;
+	padding-left: 10px;
+	padding-right: 10px;
 }
