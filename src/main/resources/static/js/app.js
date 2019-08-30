@@ -205,6 +205,7 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 		
 		
 	} else if (jsonData.messageType == "TradeMessage") {
+		document.getElementById('trade-zone').innerHTML = '';
 		$('#trade-zone').show();
 		receivedTrade = JSON.parse(jsonData.trade);	
 		for (var i=0; i< gamestate.players.length;i++){
@@ -245,6 +246,7 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 }
 
 function sendTradeOffer() {
+	
 	var senderArray = $('#offerProperties').val();
 	var recipArray = $('#requestProperties').val();
 	console.log(senderArray);
@@ -280,6 +282,7 @@ function sendTradeOffer() {
 		'senderMoney' : senderMoney,
 		'recipientMoney' : recipientMoney
 	}))
+	$('#trade').modal('hide');
 }
 
 

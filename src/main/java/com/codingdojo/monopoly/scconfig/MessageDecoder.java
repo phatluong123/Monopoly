@@ -73,13 +73,22 @@ public class MessageDecoder implements Decoder.Text<Message>{
 			System.out.println(jsonObject.getString("senderProperties"));
 			ArrayList<String> senderPropertyNames = new ArrayList<String>(Arrays.asList(jsonObject.getString("senderProperties").split(",")));
 			ArrayList<String> recipientPropertyNames = new ArrayList<String>(Arrays.asList(jsonObject.getString("recipientProperties").split(",")));
+			System.out.println(senderPropertyNames);
+			System.out.println(senderPropertyNames.get(0).length());
+			System.out.println(senderPropertyNames.size());
+			System.out.println(recipientPropertyNames);
+			System.out.println(recipientPropertyNames.size());
 			ArrayList<Property> senderProperties = new ArrayList<>();
 			ArrayList<Property> recipientProperties = new ArrayList<>();
-			for(String s: senderPropertyNames) {
-				senderProperties.add((Property) Space.findSpaceByName(s));
+			if(senderPropertyNames.get(0).length() > 0) {
+				for(String s: senderPropertyNames) {
+					senderProperties.add((Property) Space.findSpaceByName(s));
+				}
 			}
-			for(String s: recipientPropertyNames) {
-				recipientProperties.add((Property) Space.findSpaceByName(s));
+			if(recipientPropertyNames.get(0).length() > 0) {
+				for(String s: recipientPropertyNames) {
+					recipientProperties.add((Property) Space.findSpaceByName(s));
+				}
 			}
 			tradeMessage.setSenderProperties(senderProperties);
 			tradeMessage.setRecipientProperties(recipientProperties);

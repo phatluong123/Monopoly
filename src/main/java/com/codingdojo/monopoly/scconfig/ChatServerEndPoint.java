@@ -203,14 +203,18 @@ public class ChatServerEndPoint {
 			ArrayList<Property> requestedProperties = ((TradeMessage) incomingMessage).getRecipientProperties();
 			Integer offeredMoney = Math.min(sender.getMoney(), ((TradeMessage) incomingMessage).getSenderMoney());
 			Integer requestedMoney = Math.min(recipient.getMoney(), ((TradeMessage) incomingMessage).getRecipientMoney());
-			for(Property p: offeredProperties) {
-				if(!sender.getOwnedProperties().contains(p)) {
-					offeredProperties.remove(p);
+			if(offeredProperties.size() > 0) {
+				for(Property p: offeredProperties) {
+					if(!sender.getOwnedProperties().contains(p)) {
+						offeredProperties.remove(p);
+					}
 				}
 			}
-			for(Property p: requestedProperties) {
-				if(!recipient.getOwnedProperties().contains(p)) {
-					offeredProperties.remove(p);
+			if(requestedProperties.size() > 0) {
+				for(Property p: requestedProperties) {
+					if(!recipient.getOwnedProperties().contains(p)) {
+						offeredProperties.remove(p);
+					}
 				}
 			}
 			/**
