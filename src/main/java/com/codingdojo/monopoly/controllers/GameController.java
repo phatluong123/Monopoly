@@ -50,7 +50,7 @@ public class GameController {
 		}
 		model.addAttribute("newplayer", newplayer);
 		System.out.println("player size = "+playerArray.size());
-		return "test.jsp";	
+		return "phat.jsp";	
 	}
 
 	@RequestMapping("/lobby")

@@ -144,20 +144,30 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 		
 		else {
 			let currentIndex = gamestate.currentPlayerIndex;
-			if (playersList[currentIndex].doubleRolls == 0  && playersList[currentIndex].hasRolled == false ){
-				$('#end-button').hide();
-				$('#roll-button').show();
+			console.log(playersList[currentIndex].inJail);
+			if (playersList[currentIndex].inJail == false ){
+				if (playersList[currentIndex].doubleRolls == 0  && playersList[currentIndex].hasRolled == false ){
+					
+					$('#end-button').hide();
+					$('#roll-button').show();
+				}
+				
+				else if (gamestate.board[playersList[currentIndex].currentLocation].ownedBy === null  ){
+					$('#buy-button').show();
+				}
+				else if (gamestate.board[playersList[currentIndex].currentLocation].ownedBy !== null  || gamestate.board[playersList[currentIndex].currentLocation].ownedBy === undefined ){
+					$('#buy-button').hide();
+				}
+				if (playersList[currentIndex].hasRolled == true && playersList[currentIndex].doubleRolls == 0){
+					$('#end-button').show();
+					$('#roll-button').hide();
+				}
 			}
-			
-			else if (gamestate.board[playersList[currentIndex].currentLocation].ownedBy === null  ){
-				$('#buy-button').show();
-			}
-			else if (gamestate.board[playersList[currentIndex].currentLocation].ownedBy !== null  || gamestate.board[playersList[currentIndex].currentLocation].ownedBy === undefined ){
-				$('#buy-button').hide();
-			}
-			if (playersList[currentIndex].hasRolled == true && playersList[currentIndex].doubleRolls == 0){
-				$('#end-button').show();
-				$('#roll-button').hide();
+			else {
+				$('#Pay-button').show();
+				if (playersList[currentIndex].ownsChanceJailCard=== true ||playersList[currentIndex].ownsChestJailCard=== true  ){
+					$('#useJailCard-button').show();
+				}
 			}
 
 		}
@@ -398,6 +408,23 @@ function roll(){
 	}));
 }
 
+
+function useCard(){
+	$('#Pay$50-button').hide();
+	$('#useJailCard-button').hide();
+	webSocket.send(JSON.stringify({
+		'action' : 'jail-card'
+	}));
+}
+
+function Pay(){
+	$('#useJailCard-button').hide();
+	$('#Pay-button').hide();
+	webSocket.send(JSON.stringify({
+		'action' : 'jail-fine'
+	}));
+}
+
 window.onbeforeunload = function (){
 //	alert("Bye...");
 	
@@ -451,11 +478,10 @@ function  endTurn(){
 	}))
 }
 
-//setInterval(function(){
-//	document.getElementById('messagesTextArea').scrollTop = document.getElementById('messagesTextArea').scrollHeight;
-//}, 1);
-
 $(document).ready(function() {
+	setInterval(function(){
+		document.getElementById('messagesTextArea').scrollTop = document.getElementById('messagesTextArea').scrollHeight;
+	}, 1);	
 $(".property").hover(function(){
 	console.log("hovering");
 	const board = gamestate.board;
