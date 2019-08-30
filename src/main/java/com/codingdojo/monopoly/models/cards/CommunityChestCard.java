@@ -14,7 +14,4 @@ public class CommunityChestCard extends ActionCard {
 	}
 	
 	
-	
-	
 }
-//test

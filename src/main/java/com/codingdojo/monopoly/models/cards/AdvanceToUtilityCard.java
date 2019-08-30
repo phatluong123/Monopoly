@@ -2,6 +2,8 @@ package com.codingdojo.monopoly.models.cards;
 
 import com.codingdojo.monopoly.models.Game;
 import com.codingdojo.monopoly.models.Player;
+import com.codingdojo.monopoly.models.Property;
+import com.codingdojo.monopoly.models.Utility;
 
 public class AdvanceToUtilityCard extends ChanceCard {
 	public AdvanceToUtilityCard(String name) {
@@ -19,8 +21,19 @@ public class AdvanceToUtilityCard extends ChanceCard {
 		else {
 			player.moveTo(12);
 		}
-		if (Game.isSpaceOwned(12)) {
-			
+		if (Game.isSpaceOwned(player.getCurrentLocation())) {
+			Property property = (Property) Game.getBoard()[player.getCurrentLocation()];
+			Player owner = property.getOwner();
+			Utility utility = new Utility();
+			int cost = utility.chanceRentCost();
+			player.addDebt(cost);
+			if (player.getMoney() >= player.getDebt()) {
+				player.pay(cost);
+				owner.earn(cost);
+			}
+			else {
+				player.setDebtOwedTo(owner);
+			}
 		}
 	}
 }

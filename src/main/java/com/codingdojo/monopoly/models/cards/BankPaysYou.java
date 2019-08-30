@@ -13,6 +13,5 @@ public class BankPaysYou extends ChanceCard {
 	
 	public void action(Player player) {
 		player.earn(50);
-		System.out.println("Bank pays you a dividend of $50");
 	}
 }

@@ -12,8 +12,6 @@ public class ChanceCard extends ActionCard {
 	}
 
 	public void action(Player player) {
-		// TODO Auto-generated method stub
 		
 	}
 }
-//test

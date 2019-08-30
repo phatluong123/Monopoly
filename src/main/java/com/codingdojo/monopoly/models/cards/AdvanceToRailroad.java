@@ -1,6 +1,9 @@
 package com.codingdojo.monopoly.models.cards;
 
+import com.codingdojo.monopoly.models.Game;
 import com.codingdojo.monopoly.models.Player;
+import com.codingdojo.monopoly.models.Property;
+import com.codingdojo.monopoly.models.Railroad;
 
 public class AdvanceToRailroad extends ChanceCard {
 	public AdvanceToRailroad(String name) {
@@ -24,7 +27,19 @@ public class AdvanceToRailroad extends ChanceCard {
 		if(player.getCurrentLocation()>25 && player.getCurrentLocation()<35) {
 			player.moveTo(35);
 		}
-		//TODO NEED TO ADD LOGIC FOR WHETHER OR NOT THE SPACE IS OWNED BY SOMEONE.
+		if (Game.isSpaceOwned(player.getCurrentLocation())) {
+			Property property = (Property) Game.getBoard()[player.getCurrentLocation()];
+			Player owner = property.getOwner();
+			Railroad railroad = new Railroad();
+			int cost = railroad.chanceRentCost();
+			player.addDebt(cost);
+			if (player.getMoney() >= player.getDebt()) {
+				player.pay(cost);
+				owner.earn(cost);
+			}
+			else {
+				player.setDebtOwedTo(owner);
+			}
+		}
 	}
 }
-//TODO NOT FINISHED!!!!!!!!!!!!!!!!!

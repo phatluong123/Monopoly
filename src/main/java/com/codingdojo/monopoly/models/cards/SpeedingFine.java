@@ -18,4 +18,3 @@ public class SpeedingFine extends ChanceCard{
 		}
 	}
 }
-//player looses 15
