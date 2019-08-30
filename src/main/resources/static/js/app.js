@@ -139,15 +139,24 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 		buildSet.add(newOption);
 		var properties = playersList[gamestate.currentPlayerIndex].setsOwned;
 		var fullSets = gamestate.sets;
-		for(var [key, value] of properties.keys()){
+	 
+		for(const [key, value] of Object.entries(properties)){
+			console.log("Key: ", key);
+			console.log("Value: ", value);
 			if(key != "railroad" && key != "utility"){
-				for(var [key1, value1] of fullSets.keys()){
+				for(const [key1, value1] of Object.entries(fullSets)){
+					console.log("Key1: ", key1);
+					console.log("Value1: ", value1);
 					if(key.valueOf() == key1.valueOf()){
-						if(value == value1){
-							var newOption = document.createElement("option");
-							newOption.text=key1;
-							newOption.value="tomato";
-							buildSet.add(newOption);
+						console.log(key, " == ", key1);
+						console.log("The keys are equal!!!");
+						if(value.valueOf() == value1.valueOf()){
+							console.log(value, " == ",value1);
+							console.log("The values are equal!!!");
+							var newSet = document.createElement("option");
+							newSet.text=key1;
+							newSet.value=key1;
+							buildSet.add(newSet);
 						}
 					}
 				}
@@ -155,6 +164,15 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 		}
 		//"Test" House building logic, need to change for loop to setsOwned , but used server variables
 		$(document).ready(function(){
+			var build = function (){
+				console.log("hello============="+this.name);
+				webSocket.send(JSON.stringify({
+				
+				'build' : 'build',
+				'perform' : 'build',
+				'spaceName' : this.name
+			}))
+			}
 			$("#buildSet").change(function(){
 				var buildSet = $(this).val();
 				let setOwnedProperties = [];
@@ -164,9 +182,9 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 						setOwnedProperties.push(properties[i]);
 					}
 				}
-				let minHouses = setOwnedProperties[0].numHouses;
-				let maxHouses = setOwnedProperties[0].numHouses;
-				for(let i = 0; i < setOwnedProperties; i++) {
+				var minHouses = setOwnedProperties[0].numHouses;
+				var maxHouses = setOwnedProperties[0].numHouses;
+				for(let i = 0; i < setOwnedProperties.length; i++) {
 					minHouses = Math.min(minHouses, setOwnedProperties[i].numHouses);
 					maxHouses = Math.max(maxHouses, setOwnedProperties[i].numHouses);
 				}
@@ -176,6 +194,7 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 					$('#buildingBody').hide();
 				}
 				else {
+					$('#buildingBody').show();
 					for(let i = 0; i < setOwnedProperties.length; i++) {
 						var table= document.getElementById("building");
 						var row = table.insertRow(0);
@@ -187,16 +206,21 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 						cell2.innerHTML = setOwnedProperties[i].numHouses;
 						if(setOwnedProperties[i].numHouses <= minHouses && setOwnedProperties[i].numHouses < 5) {
 							var buildBtn = document.createElement('input');
-							buildBtn.type = "button";
-							buildBtn.className = "btn btn-primary btn-sm mx-1";
+							
+							buildBtn.name = setOwnedProperties[i].name;
+							buildBtn.className = "build-button btn btn-primary btn-sm mx-1";
 							buildBtn.value = "Build";
+							buildBtn.type = "button";
 							cell3.appendChild(buildBtn);
+							buildBtn.onclick = build
+						
 						}
 						if(setOwnedProperties[i].numHouses > 0 && setOwnedProperties[i].numHouses == maxHouses) {
 							let sellBtn = document.createElement('input');
 							sellBtn.type = "button";
 							sellBtn.className = "btn btn-danger btn-sm mx-1";
 							sellBtn.value = "Sell";
+							
 							cell3.appendChild(sellBtn);
 						}
 					}
@@ -461,11 +485,17 @@ function createPlayer() {
 		'message' : playerName.value
 	}));
 	$('.usernamePage').hide();
-	$('.boardPage').show();
-	
-
-	
+	$('.boardPage').show();	
 }
+
+
+function sell(){
+	webSocketsend(JSON.stringify({
+		'build' : propertyName.value,
+		'perform' : 'sell'
+	}))
+}
+
 function send() {
 	webSocket.send(JSON.stringify({
 		'message' : messagetextField.value
@@ -565,7 +595,16 @@ $(".property").hover(function(){
 	console.log("hovering");
 	const board = gamestate.board;
 	let spaceIndex = $(this).attr('id').replace( /^\D+/g, '');
-    document.getElementById("space-card").innerHTML = "<div class='space-card-top' style='background-color: "+board[spaceIndex].color+";'><p>"+board[spaceIndex].name+"</p></div><div class='row justify-content-center space-card-row'><p class='space-card-text'>RENT $"+board[spaceIndex].rent+".</p></div><div class='row justify-content-around space-card-row'><p class='space-card-text'>With 1 House</p><p class='space-card-text'>"+"$"+board[spaceIndex].h1+".</p></div><div class='row justify-content-around space-card-row'><p class='space-card-text'>With 2 Houses</p><p class='space-card-text'>"+"$"+board[spaceIndex].h2+".</p></div><div class='row justify-content-around space-card-row'><p class='space-card-text'>With 3 Houses</p><p class='space-card-text'>"+"$"+board[spaceIndex].h3+".</p></div><div class='row justify-content-around space-card-row'><p class='space-card-text'>With 4 Houses</p><p class='space-card-text'>"+"$"+board[spaceIndex].h4+".</p></div><div class='row justify-content-center space-card-row'><p class='space-card-text'>With HOTEL $"+board[spaceIndex].hotel+".</p></div><div class='row justify-content-center space-card-row'><p class='space-card-text'>Mortgage Value $"+board[spaceIndex].mortgage+"</p></div><div class='row justify-content-center space-card-row'><p class='space-card-text'>Houses costs $"+board[spaceIndex].structureCost+", each.</p></div><div class='row justify-content-center space-card-row'><p class='space-card-text'>Hotels, $"+board[spaceIndex].structureCost+", plus 4 houses.</p></div>";
+    document.getElementById("space-card").innerHTML = "<div class='space-card-top' style='background-color: "+board[spaceIndex].color+
+    ";'><p>"+board[spaceIndex].name+"</p></div><div class='row justify-content-center space-card-row'><p class='space-card-text'>RENT $"+board[spaceIndex].rent+
+    ".</p></div><div class='row justify-content-around space-card-row'><p class='space-card-text'>With 1 House</p><p class='space-card-text'>"+"$"+board[spaceIndex].h1+
+    ".</p></div><div class='row justify-content-around space-card-row'><p class='space-card-text'>With 2 Houses</p><p class='space-card-text'>"+"$"+board[spaceIndex].h2+
+    ".</p></div><div class='row justify-content-around space-card-row'><p class='space-card-text'>With 3 Houses</p><p class='space-card-text'>"+"$"+board[spaceIndex].h3+
+    ".</p></div><div class='row justify-content-around space-card-row'><p class='space-card-text'>With 4 Houses</p><p class='space-card-text'>"+"$"+board[spaceIndex].h4+
+    ".</p></div><div class='row justify-content-center space-card-row'><p class='space-card-text'>With HOTEL $"+board[spaceIndex].hotel+
+    ".</p></div><div class='row justify-content-center space-card-row'><p class='space-card-text'>Mortgage Value $"+board[spaceIndex].mortgage+
+    "</p></div><div class='row justify-content-center space-card-row'><p class='space-card-text'>Houses costs $"+board[spaceIndex].structureCost+
+    ", each.</p></div><div class='row justify-content-center space-card-row'><p class='space-card-text'>Hotels, $"+board[spaceIndex].structureCost+", plus 4 houses.</p></div>";
     $("#space-card").show();
 },
 function(){
