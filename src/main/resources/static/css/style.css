@@ -30,6 +30,7 @@
 
 }
 
+
 .player-panel{
 	width:420px;
 	height:780px;
@@ -146,6 +147,13 @@ div.dice-bar{
 
 #trade{
 	font-size: 12pt;
+}
+
+#housing{
+	font-size: 12pt;
+}
+#headers{
+	font-size: 14pt;
 }
 #space-card{
 	height: 160px;
