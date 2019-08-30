@@ -81,11 +81,11 @@ public class ChatServerEndPoint {
 						String activity = currentPlayer.getName().concat(" successfully rolled out of jail!");
 						Game.addActivityLogItem(activity);
 					}
-				} else if (action.equals("fine")) {
+				} else if (action.equals("jail-fine")) {
 					String activity = currentPlayer.getName().concat(" paid $50 to get out of jail.");
 					Game.addActivityLogItem(activity);
 					currentPlayer.payFine();
-				} else if (action.equals("card")) {
+				} else if (action.equals("jail-card")) {
 					String activity = currentPlayer.getName().concat(" played a get out of jail free card.");
 					Game.addActivityLogItem(activity);
 					currentPlayer.playGetOutOfJailCard();
