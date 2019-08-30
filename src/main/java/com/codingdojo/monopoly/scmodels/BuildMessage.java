@@ -5,17 +5,17 @@ import com.codingdojo.monopoly.models.Street;
 
 public class BuildMessage implements Message {
 	private Street street;
-	private String action;
+	private String perform;
 	public Street getStreet() {
 		return street;
 	}
-	public String getAction() {
-		return action;
+	public String getPerform() {
+		return perform;
 	}
 	public void setStreet(Space space) {
 		this.street = (Street)space;
 	}
-	public void setAction(String action) {
-		this.action = action;
+	public void setPerform(String perform) {
+		this.perform = perform;
 	}
 }

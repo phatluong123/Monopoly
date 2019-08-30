@@ -49,7 +49,7 @@ public class MessageDecoder implements Decoder.Text<Message>{
 		} else if (jsonObject.containsKey("build")) {
 			BuildMessage buildMessage = new BuildMessage();
 			buildMessage.setStreet(Space.findSpaceByName(jsonObject.getString("spaceName")));
-			buildMessage.setAction(jsonObject.getString("action"));
+			buildMessage.setPerform(jsonObject.getString("perform"));
 			return buildMessage;
 		} else if (jsonObject.containsKey("trade")) {
 			TradeMessage tradeMessage = new TradeMessage();
