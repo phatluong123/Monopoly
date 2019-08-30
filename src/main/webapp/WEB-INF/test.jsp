@@ -20,11 +20,12 @@
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous"> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript" src="../js/app.js"></script>
+<script type="text/javascript" src="../js/EricApp.js"></script>
 <script type="text/javascript" src="../js/formSubmit.js"></script>
 <script type="text/javascript" src="../js/jquery-ui.js"></script>
 <!--  <script type="text/javascript" src="../js/WadeApp.js"></script>
 <script type="text/javascript" src="../js/EricApp.js"></script>
+<script type="text/javascript" src="../js/app.js"></script>
 <script type="text/javascript" src="../js/MichaelApp.js"></script>
 <script type="text/javascript" src="../js/PhatApp.js"></script> -->
 </head>
@@ -136,44 +137,24 @@
 				                			<option value="tomato">Tomato</option>
 				                			<option value="royal blue">Royal Blue</option>
 					                    </select>
-					                <hr>
-					                <div class='row'>
-				                    <p id="headers" class='ml-5 border-bottom border-dark font-weight-bold'>Properties</p>
-				                    <p id="headers" class='ml-auto mr-5 border-bottom border-dark font-weight-bold'>Houses</p>
+					            	<div id="buildingBody" style="display:none">
+										<table class='table table-borderless text-center mt-3'>
+											<thead>
+												<tr>
+													<th class='border-bottom border-dark'>Properties</th>
+													<th class='border-bottom border-dark'>#</th>
+													<th class='border-bottom border-dark'>Buy More</th>
+												</tr>
+											</thead>
+											<tbody id='building'>
+												<tr>
+													<td>Kentucky Ave.</td>
+													<td>2</td>
+													<td><button class='btn btn-primary btn-sm' type="submit">Build</button>
+												</tr>	
+											</tbody>
+										</table>
 				                    </div>
-				                    	<div class='row mt-2'>
-				                    		<p id="property1" class='ml-5 bg-danger p-2'>Kentucky Ave.</p>
-					                    	<select class='form-control col-lg-2 ml-auto mr-5' name="property1houses" id="property1houses">
-					                    		<option value='1'>1</option>
-					                    		<option value='2'>2</option>
-					                    		<option value='3'>3</option>
-					                    		<option value='4'>4</option>
-					                    		<option value='5'>Hotel</option>
-					                    	</select>
-				                    	</div>
-				                    	<div class='row mt-2'>
-				                    		<p id="property2" class='ml-5 bg-danger p-2'>Indiana Ave.</p>
-					                    	<select class='form-control col-lg-2 ml-auto mr-5' name="property2houses" id="property2houses">
-					                    		<option value='1'>1</option>
-					                    		<option value='2'>2</option>
-					                    		<option value='3'>3</option>
-					                    		<option value='4'>4</option>
-					                    		<option value='5'>Hotel</option>
-					                    	</select>
-				                    	</div>
-				                    	<div class='row mt-2'>
-				                    		<p id="property3" class='ml-5 bg-danger p-2'>Illinois Ave.</p>
-					                    	<select class='form-control col-lg-2 ml-auto mr-5' name="property3houses" id="property3houses">
-					                    		<option value='1'>1</option>
-					                    		<option value='2'>2</option>
-					                    		<option value='3'>3</option>
-					                    		<option value='4'>4</option>
-					                    		<option value='5'>Hotel</option>
-					                    	</select>
-				                    	</div>
-				                    	<div class='row mt-3'>
-				                    		<button class='btn btn-primary mx-auto' type="submit" data-dismiss="modal" onClick="">Build</button>
-				                    	</div>
 				                </div>
 				            </div>
 				        </div>
