@@ -159,36 +159,47 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 		$(document).ready(function(){
 			$("#buildSet").change(function(){
 				var buildSet = $(this).val();
-				var properties = playersList[gamestate.currentPlayerIndex].setsOwned;
-				var fullSets = gamestate.sets;
-					$('#buildingBody').show();
-					$("#building tr").remove();
-					if(buildSet == ""){
-						$('#buildingBody').hide();
+				let setOwnedProperties = [];
+				var properties = playersList[gamestate.currentPlayerIndex].ownedProperties;
+				for(let i = 0; i < properties.length; i++) {
+					if(properties[i].color == buildSet) {
+						setOwnedProperties.push(properties[i]);
 					}
-					else{
-						for(var [key, value] of properties.keys()){
-							if(key != "railroad" && key != "utility"){
-								for(var [key1, value1] of fullSets.keys()){
-									if(key.valueOf() == key1.valueOf()){
-										if(value == value1){
-											var table= document.getElementById("building");
-											var row = table.insertRow(0);
-											var cell1 = row.insertCell(0);
-											var cell2 = row.insertCell(1);
-											var cell3 = row.insertCell(2);
-											cell1.innerHTML = properties[i].name;
-											cell1.style.backgroundColor = properties[i].color;
-											cell2.innerHTML = properties[i].numHouses;
-											var btn = document.createElement('input');
-											btn.type = "button";
-											btn.className = "btn btn-primary btn-sm";
-											btn.value = "Build";
-											cell3.appendChild(btn);
-										}
-									}
-								}
-							}
+				}
+				let minHouses = setOwnedProperties[0].numHouses;
+				let maxHouses = setOwnedProperties[0].numHouses;
+				for(let i = 0; i < setOwnedProperties; i++) {
+					minHouses = Math.min(minHouses, setOwnedProperties[i].numHouses);
+					maxHouses = Math.max(maxHouses, setOwnedProperties[i].numHouses);
+				}
+				$('#buildingBody').show();
+				$("#building tr").remove();
+				if(buildSet.valueOf() == "" || buildSet.valueOf() == "railroad" || buildSet.valueOf() == "utility"){
+					$('#buildingBody').hide();
+				}
+				else {
+					for(let i = 0; i < setOwnedProperties.length; i++) {
+						var table= document.getElementById("building");
+						var row = table.insertRow(0);
+						var cell1 = row.insertCell(0);
+						var cell2 = row.insertCell(1);
+						var cell3 = row.insertCell(2);
+						cell1.innerHTML = setOwnedProperties[i].name;
+						cell1.style.backgroundColor = setOwnedProperties[i].color;
+						cell2.innerHTML = setOwnedProperties[i].numHouses;
+						if(setOwnedProperties[i].numHouses <= minHouses && setOwnedProperties[i].numHouses < 5) {
+							var buildBtn = document.createElement('input');
+							buildBtn.type = "button";
+							buildBtn.className = "btn btn-primary btn-sm mx-1";
+							buildBtn.value = "Build";
+							cell3.appendChild(buildBtn);
+						}
+						if(setOwnedProperties[i].numHouses > 0 && setOwnedProperties[i].numHouses == maxHouses) {
+							let sellBtn = document.createElement('input');
+							sellBtn.type = "button";
+							sellBtn.className = "btn btn-danger btn-sm mx-1";
+							sellBtn.value = "Sell";
+							cell3.appendChild(sellBtn);
 						}
 					}
 				}
