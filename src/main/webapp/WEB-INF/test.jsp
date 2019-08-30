@@ -10,7 +10,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/style.css">
 
-
 <!-- <script type="text/javascript" src="js/script.js"></script> -->
  <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -67,8 +66,9 @@
 						
 						</div>
 					<div id="activity-log"  class="activity-log mx-auto mt-2" style="  padding:0; margin:0; font-size:12pt;"></div>
-					<div class='row'>
-						<button class='btn btn-primary mt-2 mx-auto' data-toggle='modal' data-target="#trade" type="submit">Trade</button>
+					<div class='row justify-content-center'>
+						<button class='btn btn-primary mt-2' data-toggle='modal' data-target="#trade" type="submit">Trade</button>
+						<button class='btn btn-primary mt-2 ml-5' data-toggle='modal' data-target="#housing" type="submit">Build</button>
 					</div>
 					<div id="space-card">
 					</div>
@@ -101,10 +101,71 @@
 					                    	</select>
 				                    	</div>
 				                    	<div class='row mt-3 d-flex justify-content-around'>
-				                    		<div class='mx-auto'>$<input class='col-lg-10 ml-1' type="number" class='form-control' name="moneyOffer" id="moneyOffer" value="0" min="0"></div>
+				                    		<div class='mx-auto'>
+				                    			$<input class='col-lg-10 ml-1' type="number" class='form-control' name="moneyOffer" id="moneyOffer" value="0" min="0">
+				                    		</div>
 				                    	</div>
 				                    	<p class='mt-2 text-center' id="playerMoney"></p>
-				                    	<div class='row'><button class='btn btn-primary mt-3 mx-auto' type="submit" onClick="sendTradeOffer()">Offer</button></div>
+				                    	<div class='row'>
+				                    		<button class='btn btn-primary mt-3 mx-auto' type="submit" onClick="sendTradeOffer()">Offer</button>
+				                    	</div>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				    
+					<div id="housing" class="modal fade" tabindex="-1">
+				        <div class="modal-dialog">
+				            <div class="modal-content">
+				                <div class="modal-header text-center">
+					            	<h5 class="modal-title mx-auto pl-3">Housing</h5>
+					            	<button type="button" class="close ml-0 pl-0" data-dismiss="modal">&times;</button>
+				                </div>
+				                <div class="modal-body">
+				                	<p class='text-center'>Which set to build on?</p>
+				                		<select class='form-control col-lg-4 mx-auto' name='buildSet' id='buildSet'>
+				                			<option value="">---Select---</option>
+				                			<option value="tomato">Tomato</option>
+				                			<option value="royal blue">Royal Blue</option>
+					                    </select>
+					                <hr>
+					                <div class='row'>
+				                    <p id="headers" class='ml-5 border-bottom border-dark font-weight-bold'>Properties</p>
+				                    <p id="headers" class='ml-auto mr-5 border-bottom border-dark font-weight-bold'>Houses</p>
+				                    </div>
+				                    	<div class='row mt-2'>
+				                    		<p id="property1" class='ml-5 bg-danger p-2'>Kentucky Ave.</p>
+					                    	<select class='form-control col-lg-2 ml-auto mr-5' name="property1houses" id="property1houses">
+					                    		<option value='1'>1</option>
+					                    		<option value='2'>2</option>
+					                    		<option value='3'>3</option>
+					                    		<option value='4'>4</option>
+					                    		<option value='5'>Hotel</option>
+					                    	</select>
+				                    	</div>
+				                    	<div class='row mt-2'>
+				                    		<p id="property2" class='ml-5 bg-danger p-2'>Indiana Ave.</p>
+					                    	<select class='form-control col-lg-2 ml-auto mr-5' name="property2houses" id="property2houses">
+					                    		<option value='1'>1</option>
+					                    		<option value='2'>2</option>
+					                    		<option value='3'>3</option>
+					                    		<option value='4'>4</option>
+					                    		<option value='5'>Hotel</option>
+					                    	</select>
+				                    	</div>
+				                    	<div class='row mt-2'>
+				                    		<p id="property3" class='ml-5 bg-danger p-2'>Illinois Ave.</p>
+					                    	<select class='form-control col-lg-2 ml-auto mr-5' name="property3houses" id="property3houses">
+					                    		<option value='1'>1</option>
+					                    		<option value='2'>2</option>
+					                    		<option value='3'>3</option>
+					                    		<option value='4'>4</option>
+					                    		<option value='5'>Hotel</option>
+					                    	</select>
+				                    	</div>
+				                    	<div class='row mt-3'>
+				                    		<button class='btn btn-primary mx-auto' type="submit" onClick="">Build</button>
+				                    	</div>
 				                </div>
 				            </div>
 				        </div>
