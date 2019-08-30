@@ -484,10 +484,44 @@ $(".railroad").hover(function(){
     document.getElementById("space-card").innerHTML = 
     	"<div id='inner-space-card'><div class='railroad-card-top mb-1'><img src='../images/train.gif' class=' train-icon'></div>"+
     	"<div class='text-center'><p class='train-name mb-0'>"+board[spaceIndex].name+"</p></div><div class='row justify-content-around space-card-row'><p class='space-card-text'>Rent</p><p class='space-card-text'>"+"$"+25+
-    	".</p></div><div class='row justify-content-around'><p class='space-card-text'>If 2 Railroads are Owned: $50"+
-    	".</p></div><div class='row justify-content-around'><p class='space-card-text'>If 3 Railroads are Owned: $100"+
-    	".</p></div><div class='row justify-content-around'><p class='space-card-text'>If 4 Railroads are Owned: $200"+
-    	".</p></div><div class='row justify-content-center mt-2'><p class='space-card-text'>MORTGAGE VALUE $100.</p></div></div>";
+    	".</p></div><div class='row justify-content-around'><p class='space-card-text'>If 2 Railroads are Owned: $"+50+
+    	".</p></div><div class='row justify-content-around'><p class='space-card-text'>If 3 Railroads are Owned: $"+100+
+    	".</p></div><div class='row justify-content-around'><p class='space-card-text'>If 4 Railroads are Owned: $"+200+
+    	".</p></div><div class='row justify-content-center mt-2'><p class='space-card-text'>MORTGAGE VALUE $"+100+".</p></div></div>";
+    $("#space-card").show();
+},
+function(){
+    $("#space-card").hide();
+    $("#space-card").removeClass("utility-or-railroad");
+})
+
+$("#space12").hover(function(){
+	$("#space-card").addClass("utility-or-railroad");
+	const board = gamestate.board;
+	var spaceIndex = $(this).attr('id').replace( /^\D+/g, '');
+    document.getElementById("space-card").innerHTML = 
+    	"<div id='inner-space-card'><div class='railroad-card-top mb-1'><img src='../images/light-bulb.gif' class=' train-icon'></div>"+
+    	"<div class='text-center'><p class='train-name mb-1'>"+board[spaceIndex].name+
+    	"</p></div><p class='utility-card-text'>If one 'Utility' is owned rent is 4 times amount shown on dice.</p>"+
+    	"<p class='utility-card-text'>If both 'Utilities' are owned rent is 10 times amount shown on dice.</p>"+
+    	"<div class='row justify-content-center mt-2'><p class='space-card-text'>MORTGAGE VALUE $"+75+".</p></div></div>";
+    $("#space-card").show();
+},
+function(){
+    $("#space-card").hide();
+    $("#space-card").removeClass("utility-or-railroad");
+})
+
+$("#space28").hover(function(){
+	$("#space-card").addClass("utility-or-railroad");
+	const board = gamestate.board;
+	var spaceIndex = $(this).attr('id').replace( /^\D+/g, '');
+    document.getElementById("space-card").innerHTML = 
+    	"<div id='inner-space-card'><div class='railroad-card-top mb-1'><img src='../images/spout.gif' class=' train-icon'></div>"+
+    	"<div class='text-center'><p class='train-name mb-1'>"+board[spaceIndex].name+
+    	"</p></div><p class='utility-card-text'>If one 'Utility' is owned rent is 4 times amount shown on dice.</p>"+
+    	"<p class='utility-card-text'>If both 'Utilities' are owned rent is 10 times amount shown on dice.</p>"+
+    	"<div class='row justify-content-center mt-2'><p class='space-card-text'>MORTGAGE VALUE $"+75+".</p></div></div>";
     $("#space-card").show();
 },
 function(){
