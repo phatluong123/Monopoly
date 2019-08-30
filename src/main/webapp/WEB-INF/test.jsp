@@ -78,8 +78,8 @@
 						</div>
 					<div id="activity-log"  class="activity-log mx-auto mt-2" style="  padding:0; margin:0; font-size:12pt;"></div>
 					<div class='row justify-content-center'>
-						<button class='btn btn-primary mt-2' data-toggle='modal' data-target="#trade" type="submit">Trade</button>
-						<button class='btn btn-primary mt-2 ml-5' data-toggle='modal' data-target="#housing" type="submit">Build</button>
+						<button class='btn btn-primary mt-2' data-toggle='modal' data-target="#trade" type="submit" id="trade-button">Trade</button>
+						<button class='btn btn-primary mt-2 ml-5' data-toggle='modal' data-target="#housing" type="submit" id="build-button">Build</button>
 					</div>
 					<div id="space-card">
 					</div>
@@ -194,16 +194,16 @@
 					<div class="top-space property" id="space1"></div>
 					<div class="corner" id="space0">
 						<div id="player1"
-							style="display:none; height: 20px; width: 20px; background-color: pink;">
+							style="display:none; height: 30px; width: 30px;background-size:contain; background-image: url('../images/dog.png');">
 						</div>
 						<div id="player2"
-							style="display:none; height: 20px; width: 20px; background-color: green;">
+							style="display:none; height: 30px; width: 30px; background-size:contain; background-image: url('../images/ship.png');">
 						</div>
 						<div id="player3"
-							style="display:none; height: 20px; width: 20px; background-color: blue;">
+							style="display:none; height: 30px; width: 30px; background-size:contain; background-image: url('../images/thimble.png');">
 						</div>
 						<div id="player4"
-							style="display:none; height: 20px; width: 20px; background-color: grey;">
+							style="display:none; height: 30px; width: 30px; background-size:contain; background-image: url('../images/boot.png');">
 						</div>
 						
 					</div>

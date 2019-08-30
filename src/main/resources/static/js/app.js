@@ -165,13 +165,19 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 		//"Test" House building logic, need to change for loop to setsOwned , but used server variables
 		$(document).ready(function(){
 			var build = function (){
-				console.log("hello============="+this.name);
 				webSocket.send(JSON.stringify({
 				
 				'build' : 'build',
 				'perform' : 'build',
 				'spaceName' : this.name
 			}))
+			}
+			var sell = function(){
+				webSocket.send(JSON.stringify({
+					'build' : 'build',
+					'perform' : 'sell',
+					'spaceName' : this.name
+				}))
 			}
 			$("#buildSet").change(function(){
 				var buildSet = $(this).val();
@@ -206,7 +212,6 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 						cell2.innerHTML = setOwnedProperties[i].numHouses;
 						if(setOwnedProperties[i].numHouses <= minHouses && setOwnedProperties[i].numHouses < 5) {
 							var buildBtn = document.createElement('input');
-							
 							buildBtn.name = setOwnedProperties[i].name;
 							buildBtn.className = "build-button btn btn-primary btn-sm mx-1";
 							buildBtn.value = "Build";
@@ -217,11 +222,12 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 						}
 						if(setOwnedProperties[i].numHouses > 0 && setOwnedProperties[i].numHouses == maxHouses) {
 							let sellBtn = document.createElement('input');
+							sellBtn.name = setOwnedProperties[i].name;
 							sellBtn.type = "button";
 							sellBtn.className = "btn btn-danger btn-sm mx-1";
 							sellBtn.value = "Sell";
-							
 							cell3.appendChild(sellBtn);
+							sellBtn.onclick = sell
 						}
 					}
 				}
@@ -243,16 +249,20 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 			$('#end-button').hide();
 			$('#roll-button').hide();
 			$('#buy-button').hide();
+			$('#trade-button').hide();
+			$('#build-button').hide();
 		}
 		
 		else {
+			$('#trade-button').show();
+			$('#build-button').show();
 			let currentIndex = gamestate.currentPlayerIndex;
-			console.log(playersList[currentIndex].inJail);
 			if (playersList[currentIndex].inJail == false ){
 				if (playersList[currentIndex].doubleRolls == 0  && playersList[currentIndex].hasRolled == false ){
 					
 					$('#end-button').hide();
 					$('#roll-button').show();
+				
 				}
 				
 				else if (gamestate.board[playersList[currentIndex].currentLocation].ownedBy === null  ){
@@ -351,7 +361,7 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 		usersTextArea.value = "";
 		var i = 0;
 		while (i < jsonData.user.length){			
-			usersTextArea.value += "<br />" + jsonData.user[i] ;
+			usersTextArea.value += jsonData.user[i] +"\n" ;
 			i++;
 		}
 	}
@@ -486,14 +496,6 @@ function createPlayer() {
 	}));
 	$('.usernamePage').hide();
 	$('.boardPage').show();	
-}
-
-
-function sell(){
-	webSocketsend(JSON.stringify({
-		'build' : propertyName.value,
-		'perform' : 'sell'
-	}))
 }
 
 function send() {
