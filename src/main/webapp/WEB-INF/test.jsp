@@ -19,6 +19,10 @@
 <script type="text/javascript" src="../js/app.js"></script>
 <script type="text/javascript" src="../js/formSubmit.js"></script>
 <script type="text/javascript" src="../js/jquery-ui.js"></script>
+<script type="text/javascript" src="../js/WadeApp.js"></script>
+<script type="text/javascript" src="../js/EricApp.js"></script>
+<script type="text/javascript" src="../js/MichaelApp.js"></script>
+<script type="text/javascript" src="../js/PhatApp.js"></script>
 </head>
 <body>
 	<div class="wrapper">
