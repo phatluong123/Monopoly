@@ -107,7 +107,7 @@
 				                    	</div>
 				                    	<p class='mt-2 text-center' id="playerMoney"></p>
 				                    	<div class='row'>
-				                    		<button class='btn btn-primary mt-3 mx-auto' type="submit" onClick="sendTradeOffer()">Offer</button>
+				                    		<button class='btn btn-primary mt-3 mx-auto' type="submit" data-dismiss="modal" onClick="sendTradeOffer()">Offer</button>
 				                    	</div>
 				                </div>
 				            </div>
@@ -164,7 +164,7 @@
 					                    	</select>
 				                    	</div>
 				                    	<div class='row mt-3'>
-				                    		<button class='btn btn-primary mx-auto' type="submit" onClick="">Build</button>
+				                    		<button class='btn btn-primary mx-auto' type="submit" data-dismiss="modal" onClick="">Build</button>
 				                    	</div>
 				                </div>
 				            </div>
