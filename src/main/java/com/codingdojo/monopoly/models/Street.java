@@ -13,7 +13,7 @@ public class Street extends Property {
 	private int h3;
 	private int h4;
 	private int hotel;
-	private int housingCost;
+	private int structureCost;
 
 	
 	/**
@@ -27,13 +27,13 @@ public class Street extends Property {
 	 * @param h3 - int - Declare rent value with three houses (numHouses == 3)
 	 * @param h4 - int - Declare rent value with four houses (numHouses == 4)
 	 * @param hotel - int - Declare rent value with a hotel (numHouses == 5)
-	 * @param housingCost - int - Declare cost to build a new structure
+	 * @param structureCost - int - Declare cost to build a new structure
 	 */
 	public Street() {
 		
 	}
 	
-	public Street(String name, int purchaseValue, String color, int rent, int h1, int h2, int h3, int h4, int hotel, int housingCost) {
+	public Street(String name, int purchaseValue, String color, int rent, int h1, int h2, int h3, int h4, int hotel, int structureCost) {
 		super(name, purchaseValue, color);
 		this.color = color;
 		this.rent = rent;
@@ -44,7 +44,7 @@ public class Street extends Property {
 		this.h3 = h3;
 		this.h4 = h4;
 		this.hotel = hotel;
-		this.housingCost = housingCost;
+		this.structureCost = structureCost;
 	}
 
 	public String getColor() {
@@ -83,8 +83,8 @@ public class Street extends Property {
 		return hotel;
 	}
 
-	public int getHousingCost() {
-		return housingCost;
+	public int getStructureCost() {
+		return structureCost;
 	}
 
 	public void setColor(String color) {
@@ -123,8 +123,8 @@ public class Street extends Property {
 		this.hotel = hotel;
 	}
 
-	public void setHousingCost(int housingCost) {
-		this.housingCost = housingCost;
+	public void setStructureCost(int structureCost) {
+		this.structureCost = structureCost;
 	}
 	
 	/**
@@ -136,8 +136,8 @@ public class Street extends Property {
 	public boolean buyStructure() {
 		if(!Game.ownsFullSet(this.getOwner(), this.getSet())) return false;
 		if(this.numHouses >= 5) return false;
-		if(this.getOwner().getMoney() < this.getHousingCost()) return false;
-		this.getOwner().pay(this.getHousingCost());
+		if(this.getOwner().getMoney() < this.getStructureCost()) return false;
+		this.getOwner().pay(this.getStructureCost());
 		this.numHouses++;
 		return true;
 	}
@@ -149,7 +149,7 @@ public class Street extends Property {
 	public boolean sellStructure() {
 		if(this.numHouses < 1) return false;
 		this.numHouses--;
-		this.getOwner().earn(this.getHousingCost()/2);
+		this.getOwner().earn(this.getStructureCost()/2);
 		return true;
 	}
 	
@@ -177,7 +177,7 @@ public class Street extends Property {
 	@Override
 	public void mortgageProperty() {
 		if (this.numHouses > 0) {
-			this.getOwner().earn(this.numHouses * (this.housingCost / 2));
+			this.getOwner().earn(this.numHouses * (this.structureCost / 2));
 			this.numHouses = 0;
 		}
 		this.getOwner().earn(this.getMortgage());

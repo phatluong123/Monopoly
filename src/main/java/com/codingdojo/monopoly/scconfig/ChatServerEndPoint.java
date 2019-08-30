@@ -1,7 +1,6 @@
 package com.codingdojo.monopoly.scconfig;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,6 +24,7 @@ import com.codingdojo.monopoly.models.Game;
 import com.codingdojo.monopoly.models.Player;
 import com.codingdojo.monopoly.models.Property;
 import com.codingdojo.monopoly.scmodels.ActionMessage;
+import com.codingdojo.monopoly.scmodels.BuildMessage;
 import com.codingdojo.monopoly.scmodels.ChatMessage;
 import com.codingdojo.monopoly.scmodels.DiceMessage;
 import com.codingdojo.monopoly.scmodels.GamestateMessage;
@@ -165,14 +165,22 @@ public class ChatServerEndPoint {
 			    	currentSocket.getBasicRemote().sendObject(otherPlayersTurnMessage);
 			    }
 			}
-			InetAddress ip = InetAddress.getLocalHost();
-            String hostname = ip.getHostName();
-            System.out.println("Your current IP address : " + ip);
-            System.out.println("Your current Hostname : " + hostname);
 			GamestateMessage gamestateMessage = generateGamestateMessage();
 			Iterator<Session> iterator = chatroomUsers.iterator();
 			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(gamestateMessage);
 			
+		} else if (incomingMessage instanceof BuildMessage) {
+			BuildMessage buildMessage = (BuildMessage) incomingMessage;
+			if(buildMessage.getStreet().buyStructure()) {
+				String activity = new StringBuilder(Game.getCurrentPlayer().getName())
+						.append(" bought a new structure at ")
+						.append(buildMessage.getStreet().getName())
+						.toString();
+				Game.addActivityLogItem(activity);
+			}
+			GamestateMessage gamestateMessage = generateGamestateMessage();
+			Iterator<Session> iterator = chatroomUsers.iterator();
+			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(gamestateMessage);
 		} else if (incomingMessage instanceof ChatMessage) {
 			
 			ChatMessage incomingChatMessage = (ChatMessage) incomingMessage;
