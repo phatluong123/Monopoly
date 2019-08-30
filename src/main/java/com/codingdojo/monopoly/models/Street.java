@@ -1,5 +1,7 @@
 package com.codingdojo.monopoly.models;
 
+import java.util.ArrayList;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -134,11 +136,24 @@ public class Street extends Property {
 	 * has max numHouses value, else if player has insufficient funds
 	 */
 	public boolean buyStructure() {
-		if(!Game.ownsFullSet(this.getOwner(), this.getSet())) return false;
-		if(this.numHouses >= 5) return false;
-		if(this.getOwner().getMoney() < this.getStructureCost()) return false;
-		this.getOwner().pay(this.getStructureCost());
+		Player owner = this.getOwner();
+		ArrayList<Property> properties = owner.getOwnedProperties();
+		String set = this.getSet();
+		if(!Game.ownsFullSet(owner, set)) 
+			return false;
+		if(this.numHouses >= 5) 
+			return false;
+		if(owner.getMoney() < this.getStructureCost()) 
+			return false;
+		owner.pay(this.getStructureCost());
 		this.numHouses++;
+		if (this.numHouses == 5) {
+			owner.setNumberOfHouses(owner.getNumberOfHouses() - 4);
+			owner.setNumberOfHotels(owner.getNumberOfHotels() + 1);
+		} else {
+			owner.setNumberOfHouses(owner.getNumberOfHouses() + 1);
+		}
+	
 		return true;
 	}
 	
@@ -147,7 +162,14 @@ public class Street extends Property {
 	 * @return true if and only if the sale was successful
 	 */
 	public boolean sellStructure() {
+		Player owner = this.getOwner();
 		if(this.numHouses < 1) return false;
+		if(this.numHouses == 5) {
+			owner.setNumberOfHotels(owner.getNumberOfHotels()-1);
+			owner.setNumberOfHouses(owner.getNumberOfHouses()+4);
+		} else {
+			owner.setNumberOfHouses(owner.getNumberOfHouses()-1);
+		}
 		this.numHouses--;
 		this.getOwner().earn(this.getStructureCost()/2);
 		return true;
