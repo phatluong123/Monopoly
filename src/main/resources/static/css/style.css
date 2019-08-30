@@ -158,9 +158,9 @@ div.dice-bar{
 #space-card{
 	height: 160px;
 	width: 140px;
-	position: relative;
-	left: 420px;
-	top: 100px;
+	position: absolute;
+	left: 520px;
+	top: 500px;
 	border: 3px solid black;
 	background: white;
 	display: none;
@@ -193,12 +193,18 @@ div.dice-bar{
 }
 #trade-zone{
 	border:1px solid red;
-	width:70%;
-	height:200px;
+	width:50%;
+	height:250px;
+	background-color:white;
+	padding:10px;
+	margin:10px;
+	display:none;
+
 }
 
 #trade-zone p{
 	font-size:12pt;
+
 }
 
 

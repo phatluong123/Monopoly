@@ -1,5 +1,6 @@
 package com.codingdojo.monopoly.models.cards;
 
+import com.codingdojo.monopoly.models.Game;
 import com.codingdojo.monopoly.models.Player;
 
 public class AdvanceToStCharlesPlace extends ChanceCard {
@@ -14,5 +15,8 @@ public class AdvanceToStCharlesPlace extends ChanceCard {
 	
 	public void action(Player player) {
 		player.moveTo(11);
+		if(Game.isSpaceOwned(player.getCurrentLocation())) {
+			player.payRent();
+		}
 	}
 }

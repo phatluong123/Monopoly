@@ -1,5 +1,6 @@
 package com.codingdojo.monopoly.models.cards;
 
+import com.codingdojo.monopoly.models.Game;
 import com.codingdojo.monopoly.models.Player;
 
 public class GoBack3Spaces extends ChanceCard {
@@ -14,5 +15,6 @@ public class GoBack3Spaces extends ChanceCard {
 	public void action(Player player) {
 		int location = (player.getCurrentLocation() + 37) % 40;
 		player.setCurrentLocation(location);
+		Game.spaceAction(player);
 	}
 }

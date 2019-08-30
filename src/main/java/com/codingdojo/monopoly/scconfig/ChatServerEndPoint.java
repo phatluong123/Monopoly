@@ -1,6 +1,7 @@
 package com.codingdojo.monopoly.scconfig;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -107,7 +108,7 @@ public class ChatServerEndPoint {
 							.concat(Integer.toString(dice1 + dice2))
 							.concat(")");
 					Game.addActivityLogItem(activity);
-					Game.doStuff(currentPlayer);
+					Game.spaceAction(currentPlayer);
 					diceoutgoingMessage.setName(username)
 							.setDice1(dice1)
 							.setDice2(dice2)
@@ -164,6 +165,10 @@ public class ChatServerEndPoint {
 			    	currentSocket.getBasicRemote().sendObject(otherPlayersTurnMessage);
 			    }
 			}
+			InetAddress ip = InetAddress.getLocalHost();
+            String hostname = ip.getHostName();
+            System.out.println("Your current IP address : " + ip);
+            System.out.println("Your current Hostname : " + hostname);
 			GamestateMessage gamestateMessage = generateGamestateMessage();
 			Iterator<Session> iterator = chatroomUsers.iterator();
 			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(gamestateMessage);
@@ -273,6 +278,9 @@ public class ChatServerEndPoint {
 					.getBasicRemote()
 					.sendObject(tradeoutgoingMessage);
 			}
+			GamestateMessage gamestateMessage = generateGamestateMessage();
+			Iterator<Session> iterator = chatroomUsers.iterator();
+			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(gamestateMessage);
 			
 		}
 	}

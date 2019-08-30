@@ -184,7 +184,7 @@ public class Game {
 	}
 	
 	//Incomplete method for the general action of the game
-	public static void doStuff(Player p) {
+	public static void spaceAction(Player p) {
 		Space[] board = Game.getBoard();
 		Space currentSpace = board[p.getCurrentLocation()];
 		String spaceName = currentSpace.getName();
@@ -215,24 +215,6 @@ public class Game {
 				}
 			}
 		}
-		else if(currentSpace instanceof OtherSpace) {
-			//Do nothing if go, free parking or jail
-			if(spaceName == "Go" || spaceName == "Free Parking" || spaceName == "Jail") {
-				String activity = p.getName()
-						.concat(" landed on ")
-						.concat(spaceName).concat(".");
-				Game.addActivityLogItem(activity);
-			}
-			else {
-				//Set in jail to true, set currentLocation to jail
-				p.goToJail();
-				String activity = p.getName()
-						.concat(" landed on ")
-						.concat(spaceName)
-						.concat(" and was sent to jail!");
-				Game.addActivityLogItem(activity);
-			}
-		}
 		else if(currentSpace instanceof ActionSpace) {
 			if(spaceName =="Community Chest") {
 				CommunityChestCard card = Game.drawCommunityChestCard();
@@ -254,6 +236,24 @@ public class Game {
 				if(!card.getName().equals("Get out of jail free!")) {
 					Game.putChanceCard(card);
 				}
+				Game.addActivityLogItem(activity);
+			}
+		}
+		else if(currentSpace instanceof OtherSpace) {
+			//Do nothing if go, free parking or jail
+			if(spaceName == "Go" || spaceName == "Free Parking" || spaceName == "Jail") {
+				String activity = p.getName()
+						.concat(" landed on ")
+						.concat(spaceName).concat(".");
+				Game.addActivityLogItem(activity);
+			}
+			else {
+				//Set in jail to true, set currentLocation to jail
+				p.goToJail();
+				String activity = p.getName()
+						.concat(" landed on ")
+						.concat(spaceName)
+						.concat(" and was sent to jail!");
 				Game.addActivityLogItem(activity);
 			}
 		}
