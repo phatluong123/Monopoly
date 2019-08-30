@@ -1,5 +1,6 @@
 package com.codingdojo.monopoly.models.cards;
 
+import com.codingdojo.monopoly.models.Game;
 import com.codingdojo.monopoly.models.Player;
 
 public class AdvanceToUtilityCard extends ChanceCard {
@@ -18,6 +19,8 @@ public class AdvanceToUtilityCard extends ChanceCard {
 		else {
 			player.moveTo(12);
 		}
-		//TODO NEED TO ADD LOGIC FOR CHECKING WHETHER OR NOT THE UTILITY IS OWNED.
+		if (Game.isSpaceOwned(12)) {
+			
+		}
 	}
 }

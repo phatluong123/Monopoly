@@ -188,30 +188,6 @@ public class Game {
 		Space[] board = Game.getBoard();
 		Space currentSpace = board[p.getCurrentLocation()];
 		String spaceName = currentSpace.getName();
-		if(currentSpace instanceof ActionSpace) {
-			if(spaceName =="Community Chest") {
-				CommunityChestCard card = Game.drawCommunityChestCard();
-				card.action(p);
-				String activity = p.getName()
-						.concat(" landed on the Community Chest and drew a card: ")
-						.concat(card.getName());
-				if(!card.getName().equals("Get out of jail free!")) {
-					Game.putChestCard(card);
-				}
-				Game.addActivityLogItem(activity);
-			}
-			else {
-				ChanceCard card = Game.drawChanceCard();
-				card.action(p);
-				String activity = p.getName()
-						.concat(" landed on Chance and drew a card: ")
-						.concat(card.getName());
-				if(!card.getName().equals("Get out of jail free!")) {
-					Game.putChanceCard(card);
-				}
-				Game.addActivityLogItem(activity);
-			}
-		}
 		if(currentSpace instanceof Property) {
 			Property currentProperty = (Property) currentSpace;
 			if(currentProperty.getOwnedBy() != null && currentProperty.getOwner() != p) {
@@ -237,6 +213,30 @@ public class Game {
 							.concat("!");
 					Game.addActivityLogItem(activity);
 				}
+			}
+		}
+		else if(currentSpace instanceof ActionSpace) {
+			if(spaceName =="Community Chest") {
+				CommunityChestCard card = Game.drawCommunityChestCard();
+				card.action(p);
+				String activity = p.getName()
+						.concat(" landed on the Community Chest and drew a card: ")
+						.concat(card.getName());
+				if(!card.getName().equals("Get out of jail free!")) {
+					Game.putChestCard(card);
+				}
+				Game.addActivityLogItem(activity);
+			}
+			else {
+				ChanceCard card = Game.drawChanceCard();
+				card.action(p);
+				String activity = p.getName()
+						.concat(" landed on Chance and drew a card: ")
+						.concat(card.getName());
+				if(!card.getName().equals("Get out of jail free!")) {
+					Game.putChanceCard(card);
+				}
+				Game.addActivityLogItem(activity);
 			}
 		}
 		else if(currentSpace instanceof OtherSpace) {
