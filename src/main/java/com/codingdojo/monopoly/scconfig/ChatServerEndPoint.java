@@ -104,7 +104,7 @@ public class ChatServerEndPoint {
 							.concat(dice1.toString())
 							.concat(" and ")
 							.concat(dice2.toString())
-							.concat("(")
+							.concat(" (")
 							.concat(Integer.toString(dice1 + dice2))
 							.concat(")");
 					Game.addActivityLogItem(activity);
@@ -146,8 +146,6 @@ public class ChatServerEndPoint {
 						Game.goBankrupt(currentPlayer);
 					}
 					currentPlayer.setDebtOwedTo(null);
-					String activity = currentPlayer.getName().concat(" ended their turn.");
-					Game.addActivityLogItem(activity);
 					Game.nextPlayer();
 				}
 			}

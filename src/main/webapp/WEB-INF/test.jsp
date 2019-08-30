@@ -61,8 +61,8 @@
 						<div class="row dice-bar mt-2">
 							<div class="my-auto ml-3"><button onclick="endTurn()" class='btn btn-info ' style="display:none" id="end-button">End Turn!</button></div>
 							<div class="my-auto ml-3"><button onclick="buy()" class='btn btn-info ' id="buy-button" style="display:none">Buy!</button></div>
-							<div class="my-auto ml-3"><button onclick="useCard()" class='btn btn-info ' id="useJailCard-button" style="display:none">Use Card</button></div>
-							<div class="my-auto ml-3"><button onclick="Pay()" class='btn btn-info ' id="Pay-button" style="display:none">Pay $50</button></div>
+							<div class="my-auto ml-3"><button onclick="useCard()" class='btn btn-info ' id="useJailCardButton" style="display:none">Use Card</button></div>
+							<div class="my-auto ml-3"><button onclick="pay()" class='btn btn-info ' id="payFineButton" style="display:none">Pay $50</button></div>
 							<div class='ml-auto mr-2 mt-3 d-inline-block my-auto'>
 								<button onclick="roll()" class='btn btn-info' style="display:none;" id="roll-button">Roll!</button>
 							</div>	

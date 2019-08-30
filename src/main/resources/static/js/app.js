@@ -251,6 +251,8 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 			$('#buy-button').hide();
 			$('#trade-button').hide();
 			$('#build-button').hide();
+			$('#payFineButton').hide();
+			$('#useJailCardButton').hide();
 		}
 		
 		else {
@@ -277,9 +279,9 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 				}
 			}
 			else {
-				$('#Pay-button').show();
+				$('#payFineButton').show();
 				if (playersList[currentIndex].ownsChanceJailCard=== true ||playersList[currentIndex].ownsChestJailCard=== true  ){
-					$('#useJailCard-button').show();
+					$('#useJailCardButton').show();
 				}
 			}
 
@@ -521,16 +523,17 @@ function roll(){
 
 
 function useCard(){
-	$('#Pay$50-button').hide();
-	$('#useJailCard-button').hide();
+	console.log("USED JAIL CARD.")
+	$('#payFineButton').hide();
+	$('#useJailCardButton').hide();
 	webSocket.send(JSON.stringify({
 		'action' : 'jail-card'
 	}));
 }
 
-function Pay(){
-	$('#useJailCard-button').hide();
-	$('#Pay-button').hide();
+function pay(){
+	$('#useJailCardButton').hide();
+	$('#payFineButton').hide();
 	webSocket.send(JSON.stringify({
 		'action' : 'jail-fine'
 	}));

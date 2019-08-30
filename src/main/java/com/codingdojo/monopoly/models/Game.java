@@ -431,6 +431,8 @@ public class Game {
 	public static void nextPlayer() {
 		Player.setHasRolled(false);
 		Player.setDoubleRolls(0);
+		String activity = Game.getCurrentPlayer().getName().concat(" ended their turn.");
+		Game.addActivityLogItem(activity);
 		if(Game.currentPlayerIndex >= Game.players.size() - 1) {
 			Game.nextTurn();
 			Game.currentPlayerIndex = 0;

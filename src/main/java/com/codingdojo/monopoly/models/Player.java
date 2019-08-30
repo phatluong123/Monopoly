@@ -159,6 +159,8 @@ public class Player {
     public void goToJail() {
     	setInJail(true);
     	setCurrentLocation(10);
+    	Game.addActivityLogItem(Game.getCurrentPlayer().getName().concat(" was sent to jail!"));
+    	Game.nextPlayer();
     }
 	public boolean isBankrupt() {
 		return isBankrupt;

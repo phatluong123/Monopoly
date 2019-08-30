@@ -36,6 +36,6 @@ public class Railroad extends Property {
 	}
 	
 	public int chanceRentCost() {
-		return (int) (rent * 2 * (Math.pow(2.0, this.getOwner().getNumOfSetOwned(this.getSet()) - 1)));
+		return (int) (2*(rent * (Math.pow(2.0, this.getOwner().getNumOfSetOwned(this.getSet()) - 1))));
 	}
 }
