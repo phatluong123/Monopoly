@@ -267,7 +267,8 @@ function sendTradeOffer() {
 			recipProps += recipArray[i];
 		}
 	}
-	
+	senderMoney = parseInt(document.getElementById("moneyOffer").value);
+	recipientMoney = parseInt(document.getElementById("moneyRequest").value);
 	webSocket.send(JSON.stringify({
 		'trade' : 'trade',
 		'accepted' :'false',
@@ -276,8 +277,8 @@ function sendTradeOffer() {
 		'recipient' : document.getElementById("tradeWith").value,
 		'senderProperties' : senderProps,
 		'recipientProperties' : recipProps,
-		'senderMoney' : document.getElementById("moneyOffer").value,
-		'recipientMoney' : document.getElementById("moneyRequest").value
+		'senderMoney' : senderMoney,
+		'recipientMoney' : recipientMoney
 	}))
 }
 
@@ -285,7 +286,7 @@ function sendTradeOffer() {
 function acceptedOffer(){
 	$('#trade-zone').hide();
 	var acceptedOffer = receivedTrade;
-	acceptedOffer.accepted = true;
+	acceptedOffer.accepted = 'true';
 	var senderArray = acceptedOffer.senderProperties;
 	var recipArray = acceptedOffer.recipientProperties;
 	console.log(senderArray);
@@ -293,29 +294,29 @@ function acceptedOffer(){
 	let senderProps = "";
 	for(let i = 0; i < senderArray.length; i++) {
 		if(i != senderArray.length-1) {
-			senderProps += senderArray[i] + ",";
+			senderProps += senderArray[i].name + ",";
 		}
 		else {
-			senderProps += senderArray[i];
+			senderProps += senderArray[i].name;
 		}
 	}
 	let recipProps = "";
 	for(let i = 0; i < recipArray.length; i++) {
 		if(i != recipArray.length-1) {
-			recipProps += recipArray[i] + ",";
+			recipProps += recipArray[i].name + ",";
 		}
 		else {
-			recipProps += recipArray[i];
+			recipProps += recipArray[i].name;
 		}
 	}
 	webSocket.send(JSON.stringify({
 		'trade': 'trade',
 		'accepted' : 'true',
-		'rejected' :'false',
+		'rejected' : 'false',
 		'sender' : acceptedOffer.sender,
 		'recipient' : acceptedOffer.recipient,
-		'senderProperties' : acceptedOffer.senderProperties,
-		'recipientProperties' : receivedTrade.recipientProperties,
+		'senderProperties' : senderProps,
+		'recipientProperties' : recipProps,
 		'senderMoney' : receivedTrade.senderMoney,
 		'recipientMoney' : receivedTrade.recipientMoney
 	}))
@@ -323,11 +324,43 @@ function acceptedOffer(){
 
 function rejectedOffer(){
 	$('#trade-zone').hide();
+	var acceptedOffer = receivedTrade;
+	acceptedOffer.accepted = 'false';
+	var senderArray = acceptedOffer.senderProperties;
+	var recipArray = acceptedOffer.recipientProperties;
+	console.log(senderArray);
+	console.log(recipArray);
+	let senderProps = "";
+	for(let i = 0; i < senderArray.length; i++) {
+		if(i != senderArray.length-1) {
+			senderProps += senderArray[i].name + ",";
+		}
+		else {
+			senderProps += senderArray[i].name;
+		}
+	}
+	let recipProps = "";
+	for(let i = 0; i < recipArray.length; i++) {
+		if(i != recipArray.length-1) {
+			recipProps += recipArray[i].name + ",";
+		}
+		else {
+			recipProps += recipArray[i].name;
+		}
+	}
+	console.log(senderProps);
+	console.log(recipProps);
 	webSocket.send(JSON.stringify({
-	'trade': 'trade',
-	'accepted' : 'true',
-	'rejected' :'true'
-	}))	
+		'trade': 'trade',
+		'accepted' : 'false',
+		'rejected' : 'true',
+		'sender' : acceptedOffer.sender,
+		'recipient' : acceptedOffer.recipient,
+		'senderProperties' : senderProps,
+		'recipientProperties' : recipProps,
+		'senderMoney' : receivedTrade.senderMoney,
+		'recipientMoney' : receivedTrade.recipientMoney
+	}))
 }
 
 function createPlayer() {

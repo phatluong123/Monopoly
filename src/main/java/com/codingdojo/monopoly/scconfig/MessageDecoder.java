@@ -46,12 +46,31 @@ public class MessageDecoder implements Decoder.Text<Message>{
 			return actionMessage;
 		} else if (jsonObject.containsKey("trade")) {
 			TradeMessage tradeMessage = new TradeMessage();
-			tradeMessage.setAccepted(Boolean.valueOf(jsonObject.getBoolean("accepted")));
-			tradeMessage.setRejected(Boolean.valueOf(jsonObject.getBoolean("rejected")));
+			System.out.println(jsonObject.getString("accepted"));
+			System.out.println(jsonObject.getString("rejected"));
+			if(jsonObject.getString("accepted").equals("true")) {
+				System.out.println("accepted true");
+				tradeMessage.setAccepted(true);
+			} else {
+				tradeMessage.setAccepted(false);
+				System.out.println("accepted false");
+			}
+			if(jsonObject.getString("rejected").equals("true")) {
+				System.out.println("rejected true");
+				tradeMessage.setRejected(true);
+			} else {
+				System.out.println("rejected false");
+				tradeMessage.setRejected(false);
+			}
+//			tradeMessage.setAccepted(jsonObject.getBoolean("accepted"));
+//			tradeMessage.setRejected(jsonObject.getBoolean("rejected"));
 			tradeMessage.setSender(jsonObject.getString("sender", Game.getCurrentPlayer().getPlayerID()));
 			tradeMessage.setRecipient(jsonObject.getString("recipient"));
-			tradeMessage.setSenderMoney(Integer.parseInt(jsonObject.getString("senderMoney")));
-			tradeMessage.setRecipientMoney(Integer.parseInt(jsonObject.getString("recipientMoney")));
+//			tradeMessage.setSenderMoney(Integer.parseInt(jsonObject.getString("senderMoney")));
+			tradeMessage.setSenderMoney(jsonObject.getInt("senderMoney"));
+//			tradeMessage.setRecipientMoney(Integer.parseInt(jsonObject.getString("recipientMoney")));
+			tradeMessage.setRecipientMoney(jsonObject.getInt("recipientMoney"));
+			System.out.println(jsonObject.getString("senderProperties"));
 			ArrayList<String> senderPropertyNames = new ArrayList<String>(Arrays.asList(jsonObject.getString("senderProperties").split(",")));
 			ArrayList<String> recipientPropertyNames = new ArrayList<String>(Arrays.asList(jsonObject.getString("recipientProperties").split(",")));
 			ArrayList<Property> senderProperties = new ArrayList<>();
