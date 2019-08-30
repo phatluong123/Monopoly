@@ -20,6 +20,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.stereotype.Component;
 
+import com.codingdojo.monopoly.MonopolyApplication;
 import com.codingdojo.monopoly.models.Game;
 import com.codingdojo.monopoly.models.Player;
 import com.codingdojo.monopoly.models.Property;
@@ -40,19 +41,26 @@ import com.google.gson.GsonBuilder;
 @Component
 @ServerEndpoint(value="/chatServerEndPoint", encoders= {MessageEncoder.class}, decoders = {MessageDecoder.class})
 public class ChatServerEndPoint {
-	
-	public static final Set<Session> chatroomUsers = Collections.synchronizedSet(new HashSet<Session>());
+	//public static final Set<Session> chatroomUsers = Collections.synchronizedSet(new HashSet<Session>());
 	@OnOpen
 	public void handleOpen(Session userSession) throws IOException, EncodeException {
-		chatroomUsers.add(userSession);	
-		
+		//chatroomUsers.add(userSession);	
+		System.out.println("new player joining");
+//		System.out.println(userSession.getUserProperties());
+//		System.out.println(MonopolyApplication.gameUsers);
+		if(!MonopolyApplication.gameUsers.contains(userSession)) {
+			MonopolyApplication.gameUsers.add(userSession);
+			
+		}
+		System.out.println(userSession.getUserProperties());
+		System.out.println(MonopolyApplication.gameUsers);
 	}
 	
 	@OnMessage
 	public void handleMessage(Message incomingMessage, Session userSession) throws IOException, EncodeException, NoSuchMethodException, ScriptException {
 		String username = (String) userSession.getUserProperties().get("username");
 
-		Iterator<Session> mapBuilderIterator = chatroomUsers.iterator();
+		Iterator<Session> mapBuilderIterator = MonopolyApplication.gameUsers.iterator();
 		HashMap<String, Session> socketMap = new HashMap<>();
 		while (mapBuilderIterator.hasNext()) {
 			Session nextSession = mapBuilderIterator.next();
@@ -114,7 +122,7 @@ public class ChatServerEndPoint {
 							.setDice2(dice2)
 							.setFinalLocation(currentPlayer.getCurrentLocation());
 					//userSession.getBasicRemote().sendObject(diceoutgoingMessage);
-					Iterator<Session> iterator = chatroomUsers.iterator();
+					Iterator<Session> iterator = MonopolyApplication.gameUsers.iterator();
 					
 					while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(diceoutgoingMessage);
 				} 
@@ -166,7 +174,7 @@ public class ChatServerEndPoint {
 			    }
 			}
 			GamestateMessage gamestateMessage = generateGamestateMessage();
-			Iterator<Session> iterator = chatroomUsers.iterator();
+			Iterator<Session> iterator = MonopolyApplication.gameUsers.iterator();
 			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(gamestateMessage);
 			
 		} else if (incomingMessage instanceof BuildMessage) {
@@ -186,7 +194,7 @@ public class ChatServerEndPoint {
 				Game.addActivityLogItem(activity);
 			}
 			GamestateMessage gamestateMessage = generateGamestateMessage();
-			Iterator<Session> iterator = chatroomUsers.iterator();
+			Iterator<Session> iterator = MonopolyApplication.gameUsers.iterator();
 			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(gamestateMessage);
 		} else if (incomingMessage instanceof ChatMessage) {
 			
@@ -204,11 +212,11 @@ public class ChatServerEndPoint {
 				ChatMessage outgoingChatMessage = new ChatMessage();
 				outgoingChatMessage.setName(username);
 				outgoingChatMessage.setMessage(incomingChatMessage.getMessage());
-				Iterator<Session> iterator = chatroomUsers.iterator();
+				Iterator<Session> iterator = MonopolyApplication.gameUsers.iterator();
 				
 				while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(outgoingChatMessage);
 			}
-			Iterator<Session> iterator = chatroomUsers.iterator();
+			Iterator<Session> iterator = MonopolyApplication.gameUsers.iterator();
 			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(new UserMessage(getIds()));
 		} else if (incomingMessage instanceof TradeMessage) {
 			TradeMessage tradeoutgoingMessage = new TradeMessage();
@@ -298,7 +306,7 @@ public class ChatServerEndPoint {
 					.sendObject(tradeoutgoingMessage);
 			}
 			GamestateMessage gamestateMessage = generateGamestateMessage();
-			Iterator<Session> iterator = chatroomUsers.iterator();
+			Iterator<Session> iterator = MonopolyApplication.gameUsers.iterator();
 			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(gamestateMessage);
 			
 		}
@@ -307,14 +315,16 @@ public class ChatServerEndPoint {
 	
 	@OnClose
 	public void handleClose(Session userSession) throws IOException, EncodeException {
-		chatroomUsers.remove(userSession);
-		Iterator<Session> iterator = chatroomUsers.iterator();
+		System.out.println("Connection closed:");
+		System.out.println(userSession);
+		MonopolyApplication.gameUsers.remove(userSession);
+		Iterator<Session> iterator = MonopolyApplication.gameUsers.iterator();
 		while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(new UserMessage(getIds()));
 	}
 	
 	public static Set<String> getIds(){
 		HashSet<String> returnSet = new HashSet<String>();
-		Iterator<Session> iterator = chatroomUsers.iterator();
+		Iterator<Session> iterator = MonopolyApplication.gameUsers.iterator();
 		while (iterator.hasNext()) returnSet.add(iterator.next().getUserProperties().get("username").toString());
 
 		
