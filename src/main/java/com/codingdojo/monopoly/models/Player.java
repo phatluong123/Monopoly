@@ -67,10 +67,18 @@ public class Player {
 	}
 	
 	public void addProperty(Property property) {
-    	ArrayList<Property> properties = getOwnedProperties();
+    	String set = property.getSet();
+    	ArrayList<Property> properties = this.getOwnedProperties();
+    	HashMap<String, Integer> sets = this.getSetsOwned();
+    	if(sets.containsKey(set)) {
+    		sets.put(set, sets.get(set) + 1);
+    	} else {
+    		sets.put(set, 1);
+    	}
     	property.setOwner(this);
     	properties.add(property);
     	setOwnedProperties(properties);
+    	this.setsOwned = sets;
     }
     
     public void buyProperty(Property property) {
@@ -268,12 +276,16 @@ public class Player {
 		}
 	}
 	public Property removeProperty(Property property) {
-    	if(getOwnedProperties().contains(property)) {
-    		ArrayList<Property> properties = getOwnedProperties();
+    	String set = property.getSet();
+    	ArrayList<Property> properties = this.getOwnedProperties();
+    	HashMap<String, Integer> sets = this.getSetsOwned();
+    	if(properties.contains(property)) {
     		properties.remove(property);
+    		sets.put(set, sets.get(set)-1);
     		property.setOwnedBy(null);
-    		setOwnedProperties(properties);
     	}
+    	this.setsOwned = sets;
+		setOwnedProperties(properties);
     	return property;
     }
 	/**
