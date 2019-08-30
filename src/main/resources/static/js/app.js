@@ -70,6 +70,7 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 				var ul = document.getElementById("listproperties"+(i+1));
 				var li = document.createElement("li");
 				li.className = "list-group-item";
+				li.style.backgroundColor = playersList[i].ownedProperties[j].color;
 				  li.appendChild(document.createTextNode(playersList[i].ownedProperties[j].name));
 				  ul.appendChild(li);
 			}	
@@ -99,6 +100,7 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 			givePropertiesOption.text = playersList[gamestate.currentPlayerIndex].ownedProperties[i].name;
 			givePropertiesOption.value = playersList[gamestate.currentPlayerIndex].ownedProperties[i].name;
 			givePropertiesOption.id = playersList[gamestate.currentPlayerIndex].name;
+			givePropertiesOption.style.backgroundColor = playersList[gamestate.currentPlayerIndex].ownedProperties[i].color;
 			giveProperties.add(givePropertiesOption);
 		}
 		
@@ -115,6 +117,7 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 							console.log(playersList[i].ownedProperties[j].name);
 							wantPropertiesOption.text = playersList[i].ownedProperties[j].name;
 							wantPropertiesOption.value = playersList[i].ownedProperties[j].name;
+							wantPropertiesOption.style.backgroundColor = playersList[i].ownedProperties[j].color;
 							wantPropertiesOption.id = playersList[i].name;
 							wantProperties.add(wantPropertiesOption);
 						}
