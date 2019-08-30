@@ -283,13 +283,13 @@
 				</datalist>
 				<input type="button" value="Send Message" onClick="send()">
 			<div id="accordion">
-				<div id="playerbox1" class="card mt-2" style="display:none; background-color:#e9ede8;">
+				<div id="playerbox1" class="btn mt-2 w-100" data-toggle="collapse" data-target="#playerbox1toggle" style="display:none; background-color:#e9ede8;">
 					<div class='card-header'>
 						<h5>
 				<div id="player1info" class="row"><div>
 						
 						</h5>
-						<button class='btn btn-primary btn-sm w-100' data-toggle="collapse" data-target="#playerbox1toggle">List of Properties</button>
+						<!--  <button class='btn btn-primary btn-sm w-100' data-target="#playerbox1toggle">List of Properties</button>-->
 					</div>	
 					<div id="playerbox1toggle" class='collapse hide' data-parent="#accordion">
 						<div class='card-body'>
