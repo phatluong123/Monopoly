@@ -14,7 +14,7 @@ import com.codingdojo.monopoly.models.Game;
 import com.codingdojo.monopoly.models.Player;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
+//
 @Controller
 //@RequestMapping("/game")
 public class GameController {
@@ -23,9 +23,9 @@ public class GameController {
 	// process game actions and the like.
 	private static ArrayList<Player> playerArray = new ArrayList<>();
 
-	@RequestMapping("/gameboardtest")
+	@RequestMapping("/")
 	public String gameBoardPage() {
-		return "test.jsp";
+		return "redirect:/newplayer";
 	}
 	
 	@RequestMapping("/newplayer")

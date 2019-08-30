@@ -427,7 +427,7 @@ public class Game {
 	public static void putChestCard(CommunityChestCard card) {
 		communityDeck.add(0, card);
 	}
-	
+	//
 	public static void nextPlayer() {
 		Player.setHasRolled(false);
 		Player.setDoubleRolls(0);
