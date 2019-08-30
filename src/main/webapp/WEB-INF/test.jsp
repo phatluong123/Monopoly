@@ -10,6 +10,9 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/style.css">
 <link rel="stylesheet" type="text/css" href="../css/wade.css">
+<link rel="stylesheet" type="text/css" href="../css/eric.css">
+<link rel="stylesheet" type="text/css" href="../css/phat.css">
+<link rel="stylesheet" type="text/css" href="../css/michael.css">
 
 <!-- <script type="text/javascript" src="js/script.js"></script> -->
  <link rel="stylesheet"
