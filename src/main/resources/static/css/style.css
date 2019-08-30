@@ -187,9 +187,9 @@ div.dice-bar{
 
 
 .active-player {
--webkit-box-shadow:0px 0px 5px 5px #00fff9 ;
--moz-box-shadow:0px 0px 5px 5px #00fff9 ;
-box-shadow:0px 0px 5px 5px #00fff9 ;
+-webkit-box-shadow:0px 0px 5px 5px #6d94fd ;
+-moz-box-shadow:0px 0px 5px 5px #6d94fd ;
+box-shadow:0px 0px 5px 5px #6d94fd ;
 }
 #trade-zone{
 	border:1px solid red;
