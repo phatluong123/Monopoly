@@ -14,7 +14,7 @@ public class ChairmanOfTheBoard extends ChanceCard {
 		super(name);
 	
 	}
-	public void PayOther50(Player player) {
+	public void action(Player player) {
 		List<Player> allPlayers = Game.getPlayers();
 		player.addDebt(allPlayers.size()*50);
 		if (player.getMoney() >= player.getDebt()) {
