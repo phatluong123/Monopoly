@@ -14,8 +14,6 @@ function myMove(player, index1, index2){
 	}
 }
 
-
-
 var gamestate = "";
 var webSocket = new WebSocket('ws://localhost:8080/chatServerEndPoint');
 var myTurn = false;
@@ -31,13 +29,10 @@ window.onload = function() {
 	}));
 	};
 
-	
-
 webSocket.onmessage = function processMessage(incomingMessage) {
 	var jsonData = JSON.parse(incomingMessage.data);
 	console.log(jsonData);
 
-	
 	if (jsonData.messageType == "ChatMessage"){		
 		messagesTextArea.value += jsonData.name+ ":  " + jsonData.message + '\n';		
 	}
@@ -75,7 +70,6 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 				  ul.appendChild(li);
 			}	
 		}
-		
 		// Start of trade window logic
 		var tradeWith = document.getElementById("tradeWith");
 		$("#tradeWith").empty();
@@ -91,7 +85,6 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 				tradeOption.id = playersList[i].name;
 				tradeWith.add(tradeOption);
 			}
-
 		}
 		var giveProperties = document.getElementById("offerProperties");
 		$("#offerProperties").empty();
@@ -240,10 +233,8 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 		for (var a=0; a<gamestate.activityLog.length;a++){
 			var p = document.createElement("P");
 			p.innerHTML = gamestate.activityLog[a];
-			document.getElementById('activity-log').appendChild(p);
-			
+			document.getElementById('activity-log').appendChild(p);	
 		}
-		
 		
 		if(myTurn == false){
 			$('#end-button').hide();
@@ -264,9 +255,7 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 				if (playersList[currentIndex].doubleRolls == 0  && playersList[currentIndex].hasRolled == false ){
 					$('#end-button').hide();
 					$('#roll-button').show();
-				
 				}
-				
 				else if (gamestate.board[playersList[currentIndex].currentLocation].ownedBy === null  ){
 					$('#buy-button').show();
 				}
@@ -285,12 +274,9 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 					$('#useJailCardButton').show();
 				}
 			}
-
 		}
-
 		console.log(gamestate);
 	}
-	
 	else if (jsonData.messageType == "DiceMessage"){
 		var dice = jsonData.dice1 + jsonData.dice2;
 		rolldice(jsonData.dice1, jsonData.dice2);
@@ -328,8 +314,6 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 	    		count++;
 	    	}
 	    }
-		
-		
 	} else if (jsonData.messageType == "TradeMessage") {
 		document.getElementById('trade-zone').innerHTML = '';
 		$('#trade-zone').show();
@@ -356,10 +340,8 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 		span1.innerHTML = "<button id='accept ' class='btn btn-primary btn-sm'  onclick='acceptedOffer()' >Accepted</button>";
 		span2.innerHTML = "<button id='reject ' class='btn btn-danger btn-sm'  onclick='rejectedOffer()' >Reject</button>";
 		document.getElementById('trade-zone').appendChild(span1);
-		document.getElementById('trade-zone').appendChild(span2);
-		
+		document.getElementById('trade-zone').appendChild(span2);	
 	}
-	
 	else if (jsonData.messageType == "UserMessage") {
 		usersTextArea.value = "";
 		var i = 0;
@@ -368,11 +350,9 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 			i++;
 		}
 	}
-
 }
 
 function sendTradeOffer() {
-	
 	var senderArray = $('#offerProperties').val();
 	var recipArray = $('#requestProperties').val();
 	console.log(senderArray);
@@ -410,7 +390,6 @@ function sendTradeOffer() {
 	}))
 	$('#trade').modal('hide');
 }
-
 
 function acceptedOffer(){
 	$('#trade-zone').hide();
@@ -522,7 +501,6 @@ function roll(){
 	}));
 }
 
-
 function useCard(){
 	console.log("USED JAIL CARD.")
 	$('#payFineButton').hide();
@@ -541,9 +519,7 @@ function pay(){
 }
 
 window.onbeforeunload = function (){
-//	alert("Bye...");
-	
-// return 'You have unsaved changes!';
+
 	webSocket.onclose = function () {};
 	webSocket.close();
 };
