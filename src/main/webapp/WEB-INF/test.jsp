@@ -9,12 +9,6 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/style.css">
-<link rel="stylesheet" type="text/css" href="../css/wade.css">
-<link rel="stylesheet" type="text/css" href="../css/eric.css">
-<link rel="stylesheet" type="text/css" href="../css/phat.css">
-<link rel="stylesheet" type="text/css" href="../css/michael.css">
-
-<!-- <script type="text/javascript" src="js/script.js"></script> -->
  <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -23,11 +17,6 @@
 <script type="text/javascript" src="../js/app.js"></script>
 <script type="text/javascript" src="../js/formSubmit.js"></script>
 <script type="text/javascript" src="../js/jquery-ui.js"></script>
-<!--  <script type="text/javascript" src="../js/WadeApp.js"></script>
-<script type="text/javascript" src="../js/EricApp.js"></script>
-<script type="text/javascript" src="../js/app.js"></script>
-<script type="text/javascript" src="../js/MichaelApp.js"></script>
-<script type="text/javascript" src="../js/PhatApp.js"></script> -->
 </head>
 <body>
 	<div class="wrapper">
@@ -59,24 +48,24 @@
 				</div>
 				<div class="mid-col">
 						<div class="row dice-bar mt-2">
-							<div class="my-auto ml-3"><button onclick="endTurn()" class='btn btn-info ' style="display:none" id="end-button">End Turn!</button></div>
-							<div class="my-auto ml-3"><button onclick="buy()" class='btn btn-info ' id="buy-button" style="display:none">Buy!</button></div>
-							<div class="my-auto ml-3"><button onclick="useCard()" class='btn btn-info ' id="useJailCardButton" style="display:none">Use Card</button></div>
-							<div class="my-auto ml-3"><button onclick="pay()" class='btn btn-info ' id="payFineButton" style="display:none">Pay $50</button></div>
+							<div class="my-auto ml-3"><button onclick="endTurn()" class='btn btn-info ' id="end-button">End Turn!</button></div>
+							<div class="my-auto ml-3"><button onclick="buy()" class='btn btn-info ' id="buy-button">Buy!</button></div>
+							<div class="my-auto ml-3"><button onclick="useCard()" class='btn btn-info ' id="useJailCardButton">Use Card</button></div>
+							<div class="my-auto ml-3"><button onclick="pay()" class='btn btn-info ' id="payFineButton">Pay $50</button></div>
 							<div class='ml-auto mr-2 mt-3 d-inline-block my-auto'>
-								<button onclick="roll()" class='btn btn-info' style="display:none;" id="roll-button">Roll!</button>
+								<button onclick="roll()" class='btn btn-info' id="roll-button">Roll!</button>
 							</div>	
-							<div class='left-die my-auto mr-2' style="height: 50px; width: 50px;">
-								<img id="dice1" src='../images/dice1.png' style="height: 50px; width: 50px;">
+							<div class='left-die my-auto mr-2'>
+								<img id="dice1" src='../images/dice1.png'>
 							</div>
-							<div class='right-die my-auto mr-2' style="height: 50px; width: 50px;">
-								<img id="dice2" src='../images/dice1.png'style="height: 50px; width: 50px;">
+							<div class='right-die my-auto mr-2'>
+								<img id="dice2" src='../images/dice1.png'>
 							</div>
 						</div>
 						<div>
 						
 						</div>
-					<div id="activity-log"  class="activity-log mx-auto mt-2" style="  padding:0; margin:0; font-size:12pt;"></div>
+					<div id="activity-log"  class="activity-log mx-auto mt-2" ></div>
 					<div class='row justify-content-center'>
 						<button class='btn btn-primary mt-2' data-toggle='modal' data-target="#trade" type="submit" id="trade-button">Trade</button>
 						<button class='btn btn-primary mt-2 ml-5' data-toggle='modal' data-target="#housing" type="submit" id="build-button">Build</button>
@@ -139,7 +128,7 @@
 				                			<option value="tomato">Tomato</option>
 				                			<option value="royal blue">Royal Blue</option>
 					                    </select>
-					            	<div id="buildingBody" style="display:none">
+					            	<div id="buildingBody">
 										<table class='table table-borderless text-center mt-3'>
 											<thead>
 												<tr>
@@ -196,8 +185,7 @@
 						<div id="player1"></div>
 						<div id="player2"></div>
 						<div id="player3"></div>
-						<div id="player4"></div>
-						
+						<div id="player4"></div>		
 					</div>
 				</div>
 			</div>
@@ -258,7 +246,7 @@
 				</datalist>
 				<input type="button" value="Send Message" onClick="send()">
 			<div id="accordion">
-				<div id="playerbox1" class="card mt-2" data-toggle="collapse" data-target="#playerbox1toggle" style="display:none; background-color:#e9ede8;">
+				<div id="playerbox1" class="card mt-2" data-toggle="collapse" data-target="#playerbox1toggle">
 					<div class="playerInfo">
 						<div id="player1info" class="row justify-content-center font-14"></div>
 					</div>	
@@ -270,39 +258,33 @@
 						</div>
 					</div>
 				</div>
-				<div id="playerbox2" class="card mt-2" data-toggle="collapse" data-target="#playerbox2toggle" style="display:none; background-color:#e9ede8;">
+				<div id="playerbox2" class="card mt-2" data-toggle="collapse" data-target="#playerbox2toggle">
 					<div class="playerInfo">
-							<div id="player2info" class="row justify-content-center font-14"></div>
+						<div id="player2info" class="row justify-content-center font-14"></div>
 					</div>	
 					<div id="playerbox2toggle" class='collapse hide' data-parent="#accordion">
 						<div class='card-body'>
-							<ul id="listproperties2" class='list-group'>
-								
-							</ul>
+							<ul id="listproperties2" class='list-group'></ul>
 						</div>
 					</div>
 				</div>
-				<div id="playerbox3" class="card mt-2" data-toggle="collapse" data-target="#playerbox3toggle" style="display:none; background-color:#e9ede8;">
+				<div id="playerbox3" class="card mt-2" data-toggle="collapse" data-target="#playerbox3toggle">
 					<div class="playerInfo">
 						<div id="player3info" class="row justify-content-center font-14"></div>
 					</div>	
 					<div id="playerbox3toggle" class='collapse hide' data-parent="#accordion">
 						<div class='card-body'>
-							<ul id="listproperties3" class='list-group'>
-								
-							</ul>
+							<ul id="listproperties3" class='list-group'></ul>
 						</div>
 					</div>
 				</div>
-				<div id="playerbox4" class="card mt-2" data-toggle="collapse" data-target="#playerbox4toggle" style="display:none; background-color:#e9ede8;">
+				<div id="playerbox4" class="card mt-2" data-toggle="collapse" data-target="#playerbox4toggle">
 					<div class="playerInfo">
 						<div id="player4info" class="row justify-content-center font-14"></div>
 					</div>	
 					<div id="playerbox4toggle" class='collapse hide' data-parent="#accordion">
 						<div class='card-body'>
-							<ul id="listproperties4" class='list-group'>
-								
-							</ul>
+							<ul id="listproperties4" class='list-group'></ul>
 						</div>
 					</div>
 				</div>		

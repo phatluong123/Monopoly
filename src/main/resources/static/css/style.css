@@ -37,7 +37,22 @@
 	display:inline-block;
 	vertical-align: top;
 }
-
+#playerbox1{
+	display:none; 
+	background-color:#e9ede8;
+}
+#playerbox2{
+	display:none; 
+	background-color:#e9ede8;
+}
+#playerbox3{
+	display:none; 
+	background-color:#e9ede8;
+}
+#playerbox4{
+	display:none; 
+	background-color:#e9ede8;
+}
 .top-row{
 	height:100px;
 	width:100%;
@@ -242,4 +257,88 @@ box-shadow:0px 0px 5px 5px #6d94fd ;
 }
 .playerInfo{
 	height: 30px;
+}
+
+.railroad-card-top{
+	height: 30%;
+	width: 100%;
+	text-align: center;
+	align-content: center;
+}
+
+.railroad-name{
+	width: 80%;
+	
+}
+
+.railroad-card-top img{
+	height: 50px;
+	width: 50px;
+}
+.train-name{
+	width: 100%;
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+	font-size: 8pt;
+	font-weight: bold;
+}
+
+.utility-or-railroad{
+	padding-top: 5px;
+	padding-left: 5px
+}
+
+#inner-space-card{
+	height: 145px;
+	width: 125px;
+	border: 2px solid black;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.utility-card-text{
+	font-size: 6pt;
+	margin: 0px;
+	text-indent: 15px;
+	line-height: 1;
+}
+
+.left-die{
+	height: 50px;
+	width: 50px;
+}
+.right-die{
+	height: 50px;
+	width: 50px;
+}
+#buy-button{
+	display:none;
+}
+#end-button{
+	display:none;
+}
+#useJailCardButton{
+	display:none;
+}
+#payFineButton{
+	display:none;
+}
+#roll-button{
+	display:none;
+}
+#dice1{
+	height: 50px;
+	width: 50px;
+}
+#dice2{
+	height: 50px;
+	width: 50px;
+}
+#buildingBody{
+	display: none;
+}
+.activity-log{
+	padding:0; 
+	margin:0; 
+	font-size:12pt;
 }

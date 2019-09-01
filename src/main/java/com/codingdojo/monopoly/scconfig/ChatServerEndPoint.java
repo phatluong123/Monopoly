@@ -72,6 +72,10 @@ public class ChatServerEndPoint {
 							String activity = currentPlayer.getName().concat(" failed to roll out of jail and paid $50!");
 							Game.addActivityLogItem(activity);
 							currentPlayer.payFine();
+							currentPlayer.movePlayer();
+							Game.spaceAction(currentPlayer);
+							//If a player doesn't roll out of jail by their third turn, they pay 50 and will move forward the number of spaces
+							//according to their third attempt.  They will then be able to act as normal.
 						} else {
 							String activity = currentPlayer.getName().concat(" failed to roll out of jail!");
 							Game.addActivityLogItem(activity);
@@ -80,6 +84,10 @@ public class ChatServerEndPoint {
 					} else {
 						String activity = currentPlayer.getName().concat(" successfully rolled out of jail!");
 						Game.addActivityLogItem(activity);
+						currentPlayer.movePlayer();
+						Game.spaceAction(currentPlayer);
+						//If a player successfully rolls out of jail, they will move forward according to the dice roll.
+						//They will then be able to act as normal.
 					}
 				} else if (action.equals("jail-fine")) {
 					String activity = currentPlayer.getName().concat(" paid $50 to get out of jail.");

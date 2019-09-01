@@ -260,8 +260,8 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 			$('#build-button').show();
 			let currentIndex = gamestate.currentPlayerIndex;
 			if (playersList[currentIndex].inJail == false ){
+				$("payFineButton").hide();
 				if (playersList[currentIndex].doubleRolls == 0  && playersList[currentIndex].hasRolled == false ){
-					
 					$('#end-button').hide();
 					$('#roll-button').show();
 				
@@ -280,6 +280,7 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 			}
 			else {
 				$('#payFineButton').show();
+				$('#roll-button').show();
 				if (playersList[currentIndex].ownsChanceJailCard=== true ||playersList[currentIndex].ownsChestJailCard=== true  ){
 					$('#useJailCardButton').show();
 				}
