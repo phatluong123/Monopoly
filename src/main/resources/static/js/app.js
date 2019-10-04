@@ -40,6 +40,26 @@ webSocket.onmessage = function processMessage(incomingMessage) {
 		myTurn = jsonData.myTurn;
 		console.log("Received turn message. Value: " + jsonData.myTurn);
 	}
+	else if(jsonData.messageType == "ResetMessage") {
+		if (jsonData.type == "request"){
+			$('#resetWindow').show();
+			document.getElementById('resetMessage').innerHTML = jsonData.reset ;
+		}
+		else if (jsonData.type == "reject") {
+			$('#resetWindow').show();
+			document.getElementById('resetMessage').innerHTML = jsonData.reset ;
+		    setTimeout(function () {
+		    	$('#resetWindow').hide();
+		    }, 3000);
+			
+		}
+		else if (jsonData.type == "accept") {
+			$('#resetWindow').show();
+			document.getElementById('resetMessage').innerHTML = jsonData.reset ;
+
+		}
+		
+	}
 	
 	else if(jsonData.messageType == "GamestateMessage") {
 		gamestate = JSON.parse(jsonData.gamestate);	
@@ -518,11 +538,31 @@ function pay(){
 	}));
 }
 
+function reset(){
+	webSocket.send(JSON.stringify({
+		'reset' : 'requestReset'
+	}));
+}
+function acceptResest(){
+	$('#button-div').hide();
+	webSocket.send(JSON.stringify({
+		'reset' : 'acceptReset'
+	}));
+}
+function rejectReset(){
+	$('#button-div').hide();
+	webSocket.send(JSON.stringify({
+		'reset' : 'rejectReset'
+	}));
+}
 window.onbeforeunload = function (){
 
 	webSocket.onclose = function () {};
 	webSocket.close();
 };
+
+
+
 function rolldice(d1, d2 ){
     var diceImages=[
         "../images/dice1.png",
@@ -573,6 +613,7 @@ $(document).ready(function() {
 	setInterval(function(){
 		document.getElementById('messagesTextArea').scrollTop = document.getElementById('messagesTextArea').scrollHeight;
 	}, 1);	
+	$('#resetWindow').hide();
 $(".property").hover(function(){
 	console.log("hovering");
 	const board = gamestate.board;

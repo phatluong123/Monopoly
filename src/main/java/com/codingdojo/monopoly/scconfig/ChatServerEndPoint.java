@@ -18,6 +18,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties.Lettuce;
 import org.springframework.stereotype.Component;
 
 import com.codingdojo.monopoly.models.Game;
@@ -29,6 +30,7 @@ import com.codingdojo.monopoly.scmodels.ChatMessage;
 import com.codingdojo.monopoly.scmodels.DiceMessage;
 import com.codingdojo.monopoly.scmodels.GamestateMessage;
 import com.codingdojo.monopoly.scmodels.Message;
+import com.codingdojo.monopoly.scmodels.ResetMessage;
 import com.codingdojo.monopoly.scmodels.TradeMessage;
 import com.codingdojo.monopoly.scmodels.TurnMessage;
 import com.codingdojo.monopoly.scmodels.UserMessage;
@@ -40,12 +42,13 @@ import com.google.gson.GsonBuilder;
 @Component
 @ServerEndpoint(value="/chatServerEndPoint", encoders= {MessageEncoder.class}, decoders = {MessageDecoder.class})
 public class ChatServerEndPoint {
-	
+
+	public static int numberOfPlayerReset = 0;
 	public static final Set<Session> chatroomUsers = Collections.synchronizedSet(new HashSet<Session>());
 	@OnOpen
 	public void handleOpen(Session userSession) throws IOException, EncodeException {
 		chatroomUsers.add(userSession);	
-		
+
 	}
 	
 	@OnMessage
@@ -89,6 +92,7 @@ public class ChatServerEndPoint {
 						//If a player successfully rolls out of jail, they will move forward according to the dice roll.
 						//They will then be able to act as normal.
 					}
+					
 				} else if (action.equals("jail-fine")) {
 					String activity = currentPlayer.getName().concat(" paid $50 to get out of jail.");
 					Game.addActivityLogItem(activity);
@@ -307,7 +311,41 @@ public class ChatServerEndPoint {
 			Iterator<Session> iterator = chatroomUsers.iterator();
 			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(gamestateMessage);
 			
-		}
+		} else if (incomingMessage instanceof ResetMessage) {
+			
+			Player currentPlayer = Game.getCurrentPlayer();
+			ResetMessage resetMessage = new ResetMessage();
+			String reset = ((ResetMessage) incomingMessage).getMessage();
+			if (reset.endsWith("requestReset")) {
+				resetMessage.setMessage( currentPlayer.getName().concat(" wants to reset the game. Do you agree?"));
+				resetMessage.setType("request");
+				userSession.getBasicRemote().sendObject(resetMessage);
+			}
+			else if (reset.endsWith("acceptReset")) {
+				numberOfPlayerReset++;
+				System.out.println(numberOfPlayerReset);
+				System.out.println(chatroomUsers.size());
+				
+				if (numberOfPlayerReset > chatroomUsers.size()/2) {
+					resetTheGame();
+					numberOfPlayerReset =0;
+					GamestateMessage gamestateMessage = generateGamestateMessage();
+					Iterator<Session> iterator = chatroomUsers.iterator();
+					while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(gamestateMessage);
+				}
+				resetMessage.setMessage( " you accepted the request for reseting the game, please wait for others");
+				resetMessage.setType("accept");
+				userSession.getBasicRemote().sendObject(resetMessage);
+				
+			}
+			else if (reset.endsWith("rejectReset")) {
+				resetMessage.setMessage( currentPlayer.getName().concat(" rejected the request for reseting the game"));
+				resetMessage.setType("reject");
+				userSession.getBasicRemote().sendObject(resetMessage);
+			}
+			Iterator<Session> iterator = chatroomUsers.iterator();
+			while (iterator.hasNext()) iterator.next().getBasicRemote().sendObject(resetMessage);
+		} 
 	}
 	
 	
@@ -343,6 +381,19 @@ public class ChatServerEndPoint {
 				.create();
 		g.setGamestate(gson.toJson(new Game()));
 		return g;
+		
+	}
+	private void resetTheGame() {
+		ArrayList<Player> playerList = new ArrayList<>(Game.getPlayers());
+		ArrayList<Player> newPlayerList = new ArrayList<>();
+		// For each player in the game currently:
+		for (int i = 0; i < playerList.size(); i++) {
+			newPlayerList.add(new Player(playerList.get(i).getName()));
+		}
+		
+		Game.init();
+		Game.setPlayers(newPlayerList);
+
 		
 	}
 

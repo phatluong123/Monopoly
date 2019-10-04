@@ -290,7 +290,22 @@
 				</div>		
 			</div>
 		</div>
+	<div class="row mt-3">
+		<button class="btn btn-primary ml-auto mr-3" onClick="reset(); disabled=true;">Reset Game</button>
 	</div>
+	<div class="row mt-3 justify-content-end">
+		<div id="resetWindow" class="col-10 mr-3">
+			<div class="row justify-content-center">
+				<textarea class="col" id="resetMessage">Do you want to reset the game?</textarea>
+			</div>
+			<div class="row justify-content-center mt-3" id="button-div">
+				<button class="btn btn-primary ml-auto mr-3" onClick="acceptResest()">Accept Reset Game</button>
+				<button class="btn btn-danger ml-auto" onClick="rejectReset()">Reject Reset Game</button>
+			</div>
+		</div>
+	</div>
+	</div>
+	
 </div>
 </body>
 </html>

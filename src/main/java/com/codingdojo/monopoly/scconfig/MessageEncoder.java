@@ -1,5 +1,6 @@
 package com.codingdojo.monopoly.scconfig;
 
+import java.io.Console;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ import com.codingdojo.monopoly.scmodels.ChatMessage;
 import com.codingdojo.monopoly.scmodels.DiceMessage;
 import com.codingdojo.monopoly.scmodels.GamestateMessage;
 import com.codingdojo.monopoly.scmodels.Message;
+import com.codingdojo.monopoly.scmodels.ResetMessage;
 import com.codingdojo.monopoly.scmodels.TradeMessage;
 import com.codingdojo.monopoly.scmodels.TurnMessage;
 import com.codingdojo.monopoly.scmodels.UserMessage;
@@ -96,6 +98,14 @@ public class MessageEncoder implements Encoder.Text<Message>{
 					.add("myTurn", turnMessage.isMyTurn())
 					.build().toString();
 		}
+		else if (message instanceof ResetMessage) {
+			ResetMessage resetMessage = (ResetMessage) message;
+			returnString = Json.createObjectBuilder().add("messageType", resetMessage.getClass().getSimpleName())
+					.add("reset", resetMessage.getMessage())
+					.add("type", resetMessage.getType())
+					.build().toString();
+		}
+		System.out.println("out message "+returnString);
 		return returnString;
 	}
 	

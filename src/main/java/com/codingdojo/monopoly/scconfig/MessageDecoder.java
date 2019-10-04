@@ -18,6 +18,7 @@ import com.codingdojo.monopoly.scmodels.ActionMessage;
 import com.codingdojo.monopoly.scmodels.BuildMessage;
 import com.codingdojo.monopoly.scmodels.ChatMessage;
 import com.codingdojo.monopoly.scmodels.Message;
+import com.codingdojo.monopoly.scmodels.ResetMessage;
 import com.codingdojo.monopoly.scmodels.TradeMessage;
 
 public class MessageDecoder implements Decoder.Text<Message>{
@@ -42,6 +43,10 @@ public class MessageDecoder implements Decoder.Text<Message>{
 			ChatMessage chatMessage = new ChatMessage();
 			chatMessage.setMessage(jsonObject.getString("message"));
 			return chatMessage;
+		} else if (jsonObject.containsKey("reset")) {
+			ResetMessage resetMessage = new ResetMessage();
+			resetMessage.setMessage(jsonObject.getString("reset"));
+			return resetMessage;
 		} else if (jsonObject.containsKey("action")) {
 			ActionMessage actionMessage = new ActionMessage();
 			actionMessage.setAction(jsonObject.getString("action"));
