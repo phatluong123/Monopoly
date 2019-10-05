@@ -539,6 +539,7 @@ function pay(){
 }
 
 function reset(){
+	$('#button-div').show();
 	webSocket.send(JSON.stringify({
 		'reset' : 'requestReset'
 	}));

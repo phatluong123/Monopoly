@@ -291,7 +291,7 @@
 			</div>
 		</div>
 	<div class="row mt-3">
-		<button class="btn btn-primary ml-auto mr-3" onClick="reset(); disabled=true;">Reset Game</button>
+		<button class="btn btn-primary ml-auto mr-3" onClick="reset()">Reset Game</button>
 	</div>
 	<div class="row mt-3 justify-content-end">
 		<div id="resetWindow" class="col-10 mr-3">
