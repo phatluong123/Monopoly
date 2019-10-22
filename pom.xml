@@ -9,8 +9,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.codingdojo.monopoly</groupId>
-	<artifactId>Monopoly</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>dojopoly</artifactId>
+	<version>1.0</version>
 	<packaging>war</packaging>
 	<name>Monopoly</name>
 	<description>spring boot and websocket</description>

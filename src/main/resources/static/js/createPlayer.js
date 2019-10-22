@@ -1,7 +1,7 @@
 /**
  * 
  */
-var webSocket = new WebSocket('ws://localhost:8080/chatServerEndPoint');
+var webSocket = new WebSocket('ws://54.153.37.22:8080/chatServerEndPoint');
 
 webSocket.onmessage = function processMessage(incomingMessage) {
 	var jsonData = JSON.parse(incomingMessage.data);

@@ -15,7 +15,7 @@ function myMove(player, index1, index2){
 }
 
 var gamestate = "";
-var webSocket = new WebSocket('ws://localhost:8080/chatServerEndPoint');
+var webSocket = new WebSocket('ws://54.153.37.22:8080/chatServerEndPoint');
 var myTurn = false;
 var receivedTrade = "";
 window.onload = function() {
